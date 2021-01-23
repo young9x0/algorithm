@@ -64,7 +64,7 @@ const LinkedList = (function () {
   };
   return LinkedList;
 })();
-let list = new LinkedList();
+const list = new LinkedList();
 list.add(2);
 list.add(3);
 list.add(4);

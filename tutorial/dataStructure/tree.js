@@ -97,7 +97,7 @@ const Tree = (function () {
   };
   return Tree;
 })();
-let tree = new Tree();
+const tree = new Tree();
 tree.add(5); // 1
 tree.add(3); // 2
 tree.add(4); // 3

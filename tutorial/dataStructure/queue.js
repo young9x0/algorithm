@@ -35,7 +35,7 @@ const Queue = (function () {
   };
   return Queue;
 })();
-let queue = new Queue();
+const queue = new Queue();
 queue.enqueue(1);
 queue.enqueue(5);
 // queue.dequeue();
