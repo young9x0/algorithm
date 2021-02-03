@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>antagonism</title>
+  </head>
+  <body>
+    <div id="element_container">
+      <label for="element_select_box">토양에 </span>
+      <select name="element" id="element_select_box">
+        <option value="">비료성분</option>
+        <option value="질소">질소</option>
+        <option value="인">인</option>
+        <option value="칼륨">칼륨</option>
+        <option value="칼슘">칼슘</option>
+        <option value="마그네슘">마그네슘</option>
+        <option value="붕소">붕소</option>
+        <option value="철">철</option>
+        <option value="구리">구리</option>
+        <option value="몰리브덴">몰리브덴</option>
+        <option value="망간">망간</option>
+        <option value="아연">아연</option>
+      </select>
+      <button>넣기</button>
+    </div>
+    <div id="result_box">
+    <div id="soil">
+       
+    </div>
+    <div id="result_log"></div>
+    </div>
+    <script src="antagonism.js"></script>
+  </body>
+  <style>
+        #element_container{
+            padding:5%;
+           
+        }
+    
+         #result_box{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+                    }
+
+          #soil{
+            width:500px;
+            height:500px;
+            background-color:blanchedalmond;
+            border:1px solid black;
+            display:flex;
+            justify-content: center;
+            align-items:center;
+            flex-wrap: wrap;
+        }
+         #soil .selected_element{
+            border:1px solid black;
+            border-radius:100%;
+            width:60px;
+            height:60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            margin:2px;
+            background-color: yellow;
+                    }
+
+            #result_log .stack_plus{
+                margin-bottom:5px;
+                border:1px solid greenyellow;
+            }
+            #result_log .stack_minus{
+                margin-bottom:5px;
+                border:1px solid red;
+            }
+  </style>
+</html>
