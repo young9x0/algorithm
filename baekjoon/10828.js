@@ -1,45 +1,45 @@
-function solution(input) {
-  let answer = "";
-  const stack = [];
-  const push = (val) => stack.push(val);
-  const size = () => (answer += `\n` + stack.length);
-  const pop = () =>
-    !!size ? (answer += `\n` + stack.shift()) : (answer += `\n` + -1);
-  const empty = () => (size ? (answer += `\n` + 1) : (answer += `\n` + 0));
-  const top = () =>
-    !!size ? (answer += `\n` + stack[0]) : (answer += `\n` + -1);
+// const array = require("fs")
+//   .readFileSync("/dev/stdin", "utf8")
+//   .trim()
+//   .split("\n");
+// array.shift();
 
-  input.map((val) => {
-    if (!parseInt(val)) {
-      const inputStr = val?.slice(0, 2);
-      const value = val.replace(/[^0-9]/g, " ");
-      //   console.log("inputStr", inputStr);
-      //   console.log("value", value);
+// const array = [
+//   14,
+//   "push 1",
+//   "push 2",
+//   "top",
+//   "size",
+//   "empty",
+//   "pop",
+//   "pop",
+//   "pop",
+//   "size",
+//   "empty",
+//   "pop",
+//   "push 3",
+//   "empty",
+//   "top",
+// ];
+const array = [7, "pop", "top", "pop", "push 123", "top", "pop", "top", "pop"];
 
-      !!inputStr && inputStr === "pu"
-        ? push(parseInt(value))
-        : inputStr === "si"
-        ? size()
-        : inputStr === "po"
-        ? pop()
-        : inputStr === "em"
-        ? empty()
-        : inputStr === "to" && top();
-    }
-  });
-  //   console.log("stack", stack);
-  return answer;
-}
-// const input = ["3", "push 1", "push 2", "top"];
-// console.log("answer", solution(input));
+array.shift();
 
-const input = [];
-require("readline")
-  .createInterface(process.stdin, process.stdout)
-  .on("line", (line) => {
-    input.push(line);
-  })
-  .on("close", () => {
-    solution(input); // 이 부분에서 함수를 실행하고 정답을 출력한다.
-    process.exit();
-  });
+const stack = [];
+
+const stackFun = {
+  pop: () => stack.pop() || -1,
+  size: () => stack.length,
+  empty: () => (stack[0] ? 0 : 1),
+  top: () => stack[stack.length - 1] || -1,
+  push: (item) => {
+    stack.push(item.split(" ")[1]);
+    return "";
+  },
+};
+console.log("test", "top".split(" "));
+const result = array.reduce((acc, val) => {
+  return acc + (stackFun[val] ? `${stackFun[val]()}\n` : stackFun.push(val));
+}, "");
+
+console.log(result);
