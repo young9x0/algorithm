@@ -37,7 +37,7 @@ const stackFun = {
     return "";
   },
 };
-console.log("test", "top".split(" "));
+
 const result = array.reduce((acc, val) => {
   return acc + (stackFun[val] ? `${stackFun[val]()}\n` : stackFun.push(val));
 }, "");
