@@ -14,21 +14,19 @@ const array = require("fs")
 // ];
 let answer = "";
 
+// for (let i = 1; i <= 1; i++) {
 for (let i = 1; i <= array[0]; i++) {
-  let left = [],
-    right = [],
-    result = [];
-
-  array[i].split("").map((ps) => {
-    ps === "(" ? left.push(ps) : right.push(ps);
-    left.length > right.length ? result.push(true) : result.push(false);
+  let temp = [];
+  array[i].split("").map((ps, idx) => {
+    temp.push(ps);
+    idx >= 1 &&
+      temp[temp.length - 2] === "(" &&
+      temp[temp.length - 1] === ")" &&
+      temp.splice(temp.length - 2, 2);
+    // console.log(idx, "temp", temp);
   });
-  // console.log(result);
-  answer +=
-    left.length === right.length &&
-    !result[result.length - 1] &&
-    result.filter((res) => res).length > result.filter((res) => !res).length
-      ? "YES\n"
-      : "NO\n";
+
+  // console.log(" last temp", temp);
+  answer += temp.length > 0 ? "NO\n" : "YES\n";
 }
 console.log(answer);
