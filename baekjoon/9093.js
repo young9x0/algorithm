@@ -1,3 +1,4 @@
+//단어뒤집기
 const array = require("fs")
   .readFileSync("/dev/stdin", "utf8")
   .trim()

@@ -1,3 +1,4 @@
+//괄호
 const array = require("fs")
   .readFileSync("/dev/stdin", "utf8")
   .trim()
