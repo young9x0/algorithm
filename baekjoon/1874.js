@@ -1,38 +1,29 @@
 // //스택수열
-// const result = require("fs")
+// const input = require("fs")
 //   .readFileSync("/dev/stdin", "utf8")
 //   .trim()
 //   .split("\n");
-const result = [8, 4, 3, 6, 8, 7, 5, 2, 1];
-// const result = [5, 1, 2, 5, 3, 4];
-// const result = [5, 1, 2, 5, 4, 3];
-// const result = [5, 3, 5, 4, 2, 1];
+
+//둘째 줄부터 n개의 줄에는 수열을 이루는 1이상 n이하의 정수가 하나씩 순서대로 주어진다.
+// const input = [8, 4, 3, 6, 8, 7, 5, 2, 1];
+input.shift();
+const nums = input.map((v) => +v);
 
 let answer = "",
   stack = [],
-  resultTemp = [],
-  lastIdx = 0;
+  lastIdx = 1;
 
-result.shift();
-
-result.map((res) => {
-  //res =
-  if (res > lastIdx) {
-    for (let i = lastIdx + 1; i <= res; i++) {
-      answer += "+\n";
-      stack.push(i);
-      // stack=
-    }
-    lastIdx = res;
-    //lastIdx =
+nums.map((res) => {
+  while (res >= lastIdx) {
+    stack.push(lastIdx);
+    answer += "+\n";
+    lastIdx++;
   }
-  if (res <= lastIdx && stack[stack.length - 1] <= res) {
-    resultTemp.push(res); //
+  // console.log(stack);
+  if (stack[stack.length - 1] === res) {
     stack.pop();
-    //stack=
     answer += "-\n";
   }
 });
-// console.log(result, resultTemp);
-resultTemp.some((res, idx) => res !== result[idx]) && (answer = "No");
+stack.length > 0 && (answer = "NO");
 console.log(answer);
