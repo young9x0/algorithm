@@ -35,7 +35,7 @@ const input = [
 // 0
 // 3
 
-let answer = [],
+let output = "",
   queue = [];
 
 // console.log([1, 2, 3].pop());
@@ -48,29 +48,40 @@ input.map((order, idx) => {
     switch (cmd) {
       case "push":
         queue.push(+num);
+
         break;
+
       case "pop":
         if (!!queue.length) {
-          answer.push(queue[0]);
+          output += queue[0] + "\n";
           queue = queue.slice(1);
         } else {
-          answer.push(-1);
+          output += -1 + "\n";
         }
+
         break;
+
       case "size":
-        answer.push(queue.length);
+        output += queue.length + "\n";
+
         break;
+
       case "empty":
-        !queue.length ? answer.push(1) : answer.push(0);
+        output += (queue.length === 0 ? 1 : 0) + "\n";
+
         break;
+
       case "front":
-        !!queue.length && answer.push(queue[0]);
+        output += (queue.length === 0 ? -1 : queue[0]) + "\n";
+
         break;
+
       case "back":
-        !!queue.length && answer.push(queue[queue.length - 1]);
+        output += (queue.length === 0 ? -1 : queue[queue.length - 1]) + "\n";
+
         break;
     }
   }
 });
 
-console.log(answer.join("\n"));
+console.log(output);
