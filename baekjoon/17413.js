@@ -5,57 +5,44 @@
 //   .split("\n");
 
 // const input = ["baekjoon online judge"];
-// const input = ["<open>tag<close>"];
+const input = ["<open>tag<close>"];
 // const input = ["<ab cd>ef gh<ij kl>"];
 // const input = ["one1 two2 three3 4fourr 5five 6six"];
 // const input = ["<int><max>2147483647<long long><max>9223372036854775807"];
-const input = ["<problem>17413<is hardest>problem ever<end>"];
+// const input = ["<problem>17413<is hardest>problem ever<end>"];
 // const input = ["<   space   >space space space<    spa   c e>"];
 
-let reverseArr = [],
-  splitStr = [];
+// console.time("algorithm");
+let result = "",
+  temp = [],
+  canFlip = true;
 
-if (input[0][0] !== "<") {
-  splitStr = input[0].split(" ");
+const str = input[0];
 
-  splitStr.map((str) =>
-    str.split(" ").length > 1
-      ? str
-          .split(" ")
-          .map((space, idx) =>
-            reverseArr.push(
-              space.split("").reverse().join("") +
-                (idx < str.split(" ").length - 1 ? " " : "")
-            )
-          )
-      : reverseArr.push(str.split("").reverse())
-  );
-} else {
-  splitStr = input[0].split("<");
-  console.log("splitStr", splitStr);
-  splitStr.map((str) => {
-    if (!!str) {
-      const [lStr, rStr] = str.split(">");
-      // console.log("lStr", lStr);
-      // console.log("rStr", rStr);
-      reverseArr.push(`<${lStr}>`);
-      rStr &&
-        (rStr.split(" ").length > 1
-          ? rStr
-              .split(" ")
-              .map((space, idx) =>
-                reverseArr.push(
-                  space.split("").reverse().join("") +
-                    (idx < rStr.split(" ").length - 1 ? " " : "")
-                )
-              )
-          : reverseArr.push(rStr.split("").reverse().join("")));
+for (let i = 0; i < str.length; i++) {
+  if (str[i] === "<") {
+    canFlip = false;
+  }
+  if (str[i] === ">") {
+    canFlip = true;
+    result += str[i];
+    continue;
+  }
+
+  if (canFlip && str[i] !== " ") {
+    temp.push(str[i]);
+  } else if (!canFlip || str[i] === " ") {
+    while (temp.length) {
+      // console.log(temp);
+      result += temp.pop();
     }
-  });
+    result += str[i];
+  }
 }
 
-// console.log("reverseArr", reverseArr);
-const result = reverseArr.reduce((acc, val, idx) => {
-  return reverseArr[0][0] !== "<" ? acc + val.join("") + " " : acc + val;
-}, "");
+while (temp.length) {
+  result += temp.pop();
+}
+
 console.log(result);
+// console.timeEnd("algorithm");
