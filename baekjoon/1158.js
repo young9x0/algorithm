@@ -4,8 +4,6 @@
 //   .trim()
 //   .split("\n");
 
-//https://kscodebase.tistory.com/413
-
 const input = ["7 3"]; // <3, 6, 2, 7, 5, 1, 4>
 
 const [N, K] = input[0].split(" ").map((x) => Number(x));
