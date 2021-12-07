@@ -1,18 +1,23 @@
 // 오큰수  NGE
-// const input = require("fs")
-//   .readFileSync("/dev/stdin", "utf8")
-//   .trim()
-//   .split("\n");
+const fs = require("fs");
+const input = (
+  process.platform === "linux"
+    ? fs.readFileSync("/dev/stdin").toString()
+    : `4
+9 5 4 8`
+)
+  .split("\n")[1]
+  .split(" ")
+  .map((a) => +a);
 
-const input = ["4 3 5 2 7"]; // 5 7 7 -1
-// const input = ["4 9 5 4 8"]; // -1 8 8 -1
-// console.time("test");
-let stack = [],
-  result = 0,
-  splitInput = [],
-  before = "";
+let result = new Array(input.length).fill(-1),
+  stack = [];
 
-splitInput = input[0].split(" ");
+input.map((num, idx) => {
+  while (stack.length && input[stack[stack.length - 1]] < num) {
+    result[stack.pop()] = num;
+  }
+  stack.push(idx);
+});
 
-console.log(splitInput);
-// console.timeEnd("test");
+console.log(result.join(" "));
