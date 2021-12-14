@@ -1,8 +1,8 @@
 // 후위 표기식2
 
-const question = `A*(B+C)`;
+// const question = `A*(B+C)`;
 // const question = `A+B*C`;
-// const question = `A+B*C-D/E`;
+const question = `A+B*C-D/E`;
 // const question = `(A+B*C)-D`;
 
 const fs = require("fs");
@@ -12,55 +12,34 @@ const input =
     : question;
 
 const inputArr = input.split("");
-const operator = [],
-  postFix = [],
-  alphabet = [];
-let result = "",
-  rFlag = false;
-
+let stack = [],
+  result = [];
 inputArr.map((str) => {
-  if (str.charCodeAt() >= 65) {
-    alphabet.push(str);
-  }
-
-  if (str.charCodeAt() < 65) {
-    operator.push(str);
-  }
-
-  if (operator[operator.length - 1] === ")") {
-    operator.pop();
-    rFlag = false;
-  } else if (operator[operator.length - 1] === "(") {
-    operator.pop();
-    rFlag = true;
-  }
-
-  if (operator.length + 1 === alphabet.length && !rFlag) {
-    if (
-      operator[operator.length - 1] === "*" ||
-      operator[operator.length - 1] === "/"
+  if (str === "(") {
+    stack.push(str);
+  } else if (str === "*" || str === "/") {
+    while (
+      !!stack.length &&
+      (stack[stack.length - 1] === "*" || stack[stack.length - 1] === "/")
     ) {
-      while (alphabet.length > 0) {
-        result += alphabet.shift();
-      }
-      while (0 < operator.length) {
-        if (!rFlag) {
-          result += operator.pop();
-        } else {
-          postFix.push(operator.pop());
-        }
-
-        while (!rFlag && postFix.length > 0) {
-          result += postFix.pop();
-        }
-      }
+      result.push(stack.pop());
     }
+    stack.push(str);
+  } else if (str === "+" || str === "-") {
+    while (!!stack.length && stack[stack.length - 1] !== "(") {
+      result.push(stack.pop());
+    }
+    stack.push(str);
+  } else if (str === ")") {
+    while (stack[stack.length - 1] !== "(") {
+      result.push(stack.pop());
+    }
+    stack.pop();
+  } else {
+    result.push(str);
   }
 });
-while (alphabet.length > 0) {
-  result += alphabet.shift();
+while (stack.length > 0) {
+  result.push(stack.pop());
 }
-while (0 < operator.length) {
-  result += operator.pop();
-}
-console.log(result);
+console.log(result.join(""));
