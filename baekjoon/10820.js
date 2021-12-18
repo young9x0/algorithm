@@ -1,5 +1,5 @@
-//문자열 분석
-//소문자, 대문자, 숫자, 공백
+// 문자열 분석
+// 소문자, 대문자, 숫자, 공백
 
 const question = `This is String
 SPACE    1    SPACE
@@ -11,15 +11,16 @@ SPACE    1    SPACE
 // 0 8 9 0
 // console.time('test')
 const fs = require("fs");
-const input =
+const input = (
   process.platform === "linux"
-    ? fs.readFileSync("/dev/stdin", "utf8").trim().split("")
-    : question;
+    ? fs.readFileSync("/dev/stdin", "utf8").toString() //trim()쓰면 틀림
+    : question
+).split("\n");
 
-const inputArr = input.split("\n");
-let answer = [];
+let answer = "";
 
-inputArr.map((str) => {
+input.map((str) => {
+  if (str === "") return; //이 부분 빼면 틀림
   //This is String
   const result = {
     smallcaseLen: 0,
@@ -27,26 +28,52 @@ inputArr.map((str) => {
     numberLen: 0,
     spaceLen: 0,
   };
-  const split1 = str.split(" ");
-  result.spaceLen = split1.length - 1;
-  split1.map((str1) => {
-    //[This, is, String]
-    const split2 = str1.split("");
-    split2.map((str2) => {
-      //[T, h, i, s]
-      // console.log(str2, str2.charCodeAt());
-      if (str2.charCodeAt() > 47 && str2.charCodeAt() < 58) {
-        result.numberLen += 1;
-      } else if (str2.charCodeAt() > 64 && str2.charCodeAt() < 91) {
-        result.uppercaseLen += 1;
-      } else if (str2.charCodeAt() > 96 && str2.charCodeAt() < 123) {
-        result.smallcaseLen += 1;
-      }
-    });
-  });
+  let i = 0;
+  const strLen = str.length;
+  // console.log(strLen)
+  while (i < strLen) {
+    if (str[i].charCodeAt() > 47 && str[i].charCodeAt() < 58) {
+      result.numberLen += 1;
+    } else if (str[i].charCodeAt() > 64 && str[i].charCodeAt() < 91) {
+      result.uppercaseLen += 1;
+    } else if (str[i].charCodeAt() > 96 && str[i].charCodeAt() < 123) {
+      result.smallcaseLen += 1;
+    } else {
+      result.spaceLen += 1;
+    }
+    i++;
+  }
+
   // console.log(result, str);
-  answer.push(Object.values(result).join(" "));
+  answer += Object.values(result).join(" ") + "\n";
 });
 
-console.log(answer.join("\n"));
-// console.timeEnd('test')
+console.log(answer);
+
+//https://leylaoriduck.tistory.com/488 참고
+input.map((str) => {
+  //This is String
+  // console.log(idx, str);
+  if (str === "") return;
+  const result = [0, 0, 0, 0];
+
+  const strLen = str.length;
+  // console.log(strLen)
+  for (let i = 0; i < strLen; i++) {
+    // console.log(i,str[i])
+    if (str[i].charCodeAt() > 96 && str[i].charCodeAt() < 123) {
+      result[0] += 1;
+    } else if (str[i].charCodeAt() > 64 && str[i].charCodeAt() < 91) {
+      result[1] += 1;
+    } else if (str[i].charCodeAt() > 47 && str[i].charCodeAt() < 58) {
+      result[2] += 1;
+    } else {
+      result[3] += 1;
+    }
+  }
+
+  answer += result.join(" ") + "\n";
+});
+
+console.log(answer.trim());
+// // console.timeEnd('test')
