@@ -11,7 +11,7 @@ const question = `3
 const fs = require("fs");
 const input = (
   process.platform === "linux"
-    ? fs.readFileSync("/dev/stdin", "utf8").toString()
+    ? fs.readFileSync("/dev/stdin", "utf8").trim() //toString()으로 하면 틀림
     : question
 ).split("\n");
 input.shift();
@@ -23,8 +23,10 @@ input.map((splited) => {
   let limit = 1;
   if (fir < sec) {
     limit = fir;
-  } else {
+  } else if (fir > sec) {
     limit = sec;
+  } else {
+    limit = fir;
   }
   for (let i = 1; i <= limit; i++) {
     fir % i === 0 && factors[0].push(i);
@@ -33,11 +35,9 @@ input.map((splited) => {
   // console.log("factors", factors);
   let largeFactorIdx = 0,
     GCF = "";
-  if (factors[0].length < factors[1].length) {
-    largeFactorIdx = 1;
-  }
-  factors[largeFactorIdx].map((el) => {
-    factors[!largeFactorIdx ? 1 : 0].map((other) => {
+
+  factors[0].map((el) => {
+    factors[1].map((other) => {
       if (el === other) GCF = el;
     });
   });
