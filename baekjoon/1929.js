@@ -1,6 +1,6 @@
 //소수 구하기
 
-const question = `3 16`;
+const question = `3 100`;
 // 3
 // 5
 // 7
@@ -14,24 +14,21 @@ const input = (
     : question
 ).split("\n");
 
-let result = "";
+const [startNum, lastNum] = input[0].split(" ").map(Number);
+let isPrimeNumber = Array(lastNum + 1).fill(true);
+isPrimeNumber[0] = isPrimeNumber[1] = false;
+const results = [];
 
-const [startIdx, lastIdx] = input[0].split(" ").map(Number);
-
-for (let num = startIdx; num <= lastIdx; num++) {
-  for (let j = 2; j <= num; ) {
-    if (j === num) {
-      result += num + "\n";
-      break;
-    } else if (num % j === 0 && num !== j) {
-      break;
-    }
-    j++;
+for (let i = 2; i <= Math.ceil(Math.sqrt(lastNum)); i++) {
+  let mutipleIdx = 2;
+  while (i * mutipleIdx <= lastNum) {
+    isPrimeNumber[i * mutipleIdx] = false;
+    mutipleIdx++;
   }
 }
-// console.log("inputs", inputs);
 
-console.log(result);
+isPrimeNumber.filter(
+  (list, idx) => idx > startNum - 1 && list && results.push(idx)
+);
 
-// console.log("factors", factors.filter((list) => list[0] > startIdx).join("\n"));
-// console.log(result);
+console.log(results.join("\n"));
