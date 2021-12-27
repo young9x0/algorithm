@@ -19,28 +19,40 @@ const input = (
 
 const result = [];
 
-input.map((num, idx) => {
-  console.log("num", num);
-  const int = Number(num);
-  let isPrimeNumber = Array(int + 1).fill(true);
-  isPrimeNumber[0] = isPrimeNumber[1] = false;
-  console.log("1 isPrimeNumber", isPrimeNumber);
-  for (
-    let multipleIdx = 2;
-    multipleIdx <= Math.ceil(Math.sqrt(int));
-    multipleIdx++
-  ) {
-    let count = 1;
-    console.log("multipleIdx", multipleIdx);
-    console.log("count", count);
-    while (multipleIdx * count < int) {
-      if (isPrimeNumber[multipleIdx * count]) {
-        isPrimeNumber[multipleIdx * count] = false;
+input.map((num, index) => {
+  result[index] = [];
+  if (index < input.length - 1) {
+    // console.log("num", num);
+    const int = Number(num);
+    let isPrimeNumber = Array(int + 1).fill(true);
+    isPrimeNumber[0] = isPrimeNumber[1] = false;
+
+    for (
+      let multipleIdx = 2;
+      multipleIdx <= Math.ceil(Math.sqrt(int));
+      multipleIdx++
+    ) {
+      let count = 2;
+      while (multipleIdx * count <= int) {
+        // console.log("multipleIdx", multipleIdx);
+        // console.log("count", count);
+        if (isPrimeNumber[multipleIdx * count]) {
+          isPrimeNumber[multipleIdx * count] = false;
+        }
+        count++;
       }
-      count++;
     }
+    // result.push(`${num} = ${pn} + ${num-pn}`);
+    // console.log("2 isPrimeNumber", isPrimeNumber);
+    isPrimeNumber.map((pn, idx) => {
+      if (!result[index].length) {
+        if (pn && isPrimeNumber[int - idx]) {
+          return result[index].push(`${num} = ${idx} + ${int - idx}`);
+        }
+      }
+    });
+    if (!result[index].length)
+      result[index].push(`Goldbach's conjecture is wrong.`);
   }
-  // result.push(`${num} = ${pn} + ${num-pn}`);
-  console.log("2 isPrimeNumber", isPrimeNumber);
 });
-// console.log(result.join("\n"));
+console.log(result.join("\n"));
