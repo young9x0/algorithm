@@ -17,42 +17,47 @@ const input = (
     : question
 ).split("\n");
 
-const result = [];
+const sortedNums = input.map((list) => Number(list)).sort((a, b) => a - b);
 
-input.map((num, index) => {
-  result[index] = [];
-  if (index < input.length - 1) {
-    // console.log("num", num);
-    const int = Number(num);
-    let isPrimeNumber = Array(int + 1).fill(true);
-    isPrimeNumber[0] = isPrimeNumber[1] = false;
+const result = [],
+  biggestInt = sortedNums[sortedNums.length - 1];
 
-    for (
-      let multipleIdx = 2;
-      multipleIdx <= Math.ceil(Math.sqrt(int));
-      multipleIdx++
-    ) {
-      let count = 2;
-      while (multipleIdx * count <= int) {
-        // console.log("multipleIdx", multipleIdx);
-        // console.log("count", count);
-        if (isPrimeNumber[multipleIdx * count]) {
-          isPrimeNumber[multipleIdx * count] = false;
-        }
-        count++;
-      }
+let isPrimeNumber = Array(biggestInt + 1).fill(true);
+isPrimeNumber[0] = isPrimeNumber[1] = false;
+
+for (
+  let multipleIdx = 2;
+  multipleIdx <= Math.ceil(Math.sqrt(biggestInt));
+  multipleIdx++
+) {
+  let count = 2;
+  while (multipleIdx * count <= biggestInt) {
+    // console.log("multipleIdx", multipleIdx);
+    // console.log("count", count);
+    if (isPrimeNumber[multipleIdx * count]) {
+      isPrimeNumber[multipleIdx * count] = false;
     }
-    // result.push(`${num} = ${pn} + ${num-pn}`);
-    // console.log("2 isPrimeNumber", isPrimeNumber);
+    count++;
+  }
+}
+
+// console.log(" isPrimeNumber", isPrimeNumber);
+
+input.map((str, index) => {
+  if (index > 0) {
+    const num = Number(str);
+    result[index - 1] = [];
+
     isPrimeNumber.map((pn, idx) => {
-      if (!result[index].length) {
-        if (pn && isPrimeNumber[int - idx]) {
-          return result[index].push(`${num} = ${idx} + ${int - idx}`);
+      if (!result[index - 1].length) {
+        if (pn && isPrimeNumber[num - idx]) {
+          return result[index - 1].push(`${num} = ${idx} + ${num - idx}`);
         }
       }
     });
-    if (!result[index].length)
-      result[index].push(`Goldbach's conjecture is wrong.`);
+    if (!result[index - 1].length)
+      result[index - 1].push(`Goldbach's conjecture is wrong.`);
   }
 });
+
 console.log(result.join("\n"));
