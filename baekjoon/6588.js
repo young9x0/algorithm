@@ -11,48 +11,38 @@ const question = `8
 //Goldbach's conjecture is wrong.
 
 const fs = require("fs");
+
 const input = (
   process.platform === "linux"
     ? fs.readFileSync("/dev/stdin", "utf8").trim()
     : question
 ).split("\n");
 
-const result = [];
+const inputNums = input.map((list) => Number(list));
 
-input.map((num, index) => {
-  result[index] = [];
-  if (index < input.length - 1) {
-    // console.log("num", num);
-    const int = Number(num);
-    let isPrimeNumber = Array(int + 1).fill(true);
-    isPrimeNumber[0] = isPrimeNumber[1] = false;
+const primeNumber = [],
+  biggestInt = Math.max(...inputNums);
+let result = "",
+  isWrong = true;
 
-    for (
-      let multipleIdx = 2;
-      multipleIdx <= Math.ceil(Math.sqrt(int));
-      multipleIdx++
-    ) {
-      let count = 2;
-      while (multipleIdx * count <= int) {
-        // console.log("multipleIdx", multipleIdx);
-        // console.log("count", count);
-        if (isPrimeNumber[multipleIdx * count]) {
-          isPrimeNumber[multipleIdx * count] = false;
-        }
-        count++;
-      }
+for (let i = 0; i <= biggestInt; i++) {
+  primeNumber[i] = i;
+}
+for (let i = 2; i <= biggestInt; i++) {
+  if (primeNumber[i] === 0) continue;
+  for (let j = i + i; j <= biggestInt; j += i) primeNumber[j] = 0;
+}
+
+// console.log(" primeNumber", primeNumber);
+for (let i = 0; i < input.length; i++) {
+  for (let j = 3; j <= input[i]; j++) {
+    if (primeNumber[j] && primeNumber[input[i] - j]) {
+      isWrong = false;
+      result += `${input[i]} = ${j} + ${input[i] - j}\n`;
+      break;
     }
-    // result.push(`${num} = ${pn} + ${num-pn}`);
-    // console.log("2 isPrimeNumber", isPrimeNumber);
-    isPrimeNumber.map((pn, idx) => {
-      if (!result[index].length) {
-        if (pn && isPrimeNumber[int - idx]) {
-          return result[index].push(`${num} = ${idx} + ${int - idx}`);
-        }
-      }
-    });
-    if (!result[index].length)
-      result[index].push(`Goldbach's conjecture is wrong.`);
   }
-});
-console.log(result.join("\n"));
+  if (isWrong) result += `Goldbach's conjecture is wrong.\n`;
+}
+
+console.log(result);
