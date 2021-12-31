@@ -2,9 +2,8 @@
 
 // const question = `500`;
 // const question = `3`;
-const question = `0`;
 //0
-// const question = `10`;
+const question = `100`;
 // 3628800
 
 const fs = require("fs");
@@ -14,7 +13,19 @@ const input = (
     : question
 ).split("\n");
 
-let count = 0;
+// console.time("test");
+let result = 1,
+  count = 0;
+for (let i = 1; i <= Number(input[0]); i++) {
+  if (!(i % 10) || !(i % 5) || !(i % 2)) {
+    result *= i;
+  }
+  if (!(result % 10)) {
+    result = divide(result);
+  }
+  // console.log(i, result, count);
+}
+
 function divide(result) {
   // console.log("result", result);
   // console.log("count", count);
@@ -22,24 +33,11 @@ function divide(result) {
     if (!(result % 10)) {
       count++;
       return divide(result / 10);
-    } else if (!(result % 5)) {
-      count++;
-      return divide(result / 5 / 2);
+    } else {
+      return result;
     }
   }
-  return count;
-}
-// console.time("test");
-function factorial(N) {
-  // console.log("N", N);
-  if (N - 2 > 0) {
-    factorial(N - 1);
-    return divide(N);
-  } else {
-    return 0;
-  }
 }
 
-console.log(factorial(Number(input[0])));
-
-// console.timeEnd("test");
+// console.log(result);
+console.log(count);
