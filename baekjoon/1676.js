@@ -1,4 +1,5 @@
 //팩토리얼 0의 개수
+//수학에서 정수는 양의 정수, 음의 정수 및 0으로 이루어진 수의 체계이다.
 
 // const question = `500`;
 // const question = `3`;
@@ -13,34 +14,6 @@ const input = (
     : question
 ).split("\n");
 
-// console.time("test");
-let result = 1,
-  count = 0;
-for (let i = 1; i <= Number(input[0]); i++) {
-  if (!(i % 10) || !(i % 5) || !(i % 2)) {
-    result *= i;
-  }
-  if (!(result % 10)) {
-    result = divide(result);
-  }
-  // console.log(i, result, count);
-}
-
-function divide(result) {
-  // console.log("result", result);
-  // console.log("count", count);
-  if (result > 0) {
-    if (!(result % 10)) {
-      count++;
-      return divide(result / 10);
-    } else {
-      return result;
-    }
-  }
-}
-const [fir, sec] = result.toString().split("e+");
-// console.log(count, sec, fir.split(".")[1]?.length);
-if (!!sec) {
-  count += sec - fir.split(".")[1]?.length;
-}
-console.log(count);
+console.log(
+  parseInt(input[0] / 5) + parseInt(input[0] / 25) + parseInt(input[0] / 125)
+);
