@@ -4,7 +4,7 @@
 // const question = `500`;
 // const question = `3`;
 //0
-const question = `10`;
+const question = `12`;
 // 3628800
 
 const fs = require("fs");
