@@ -3,7 +3,7 @@
 // const question = `500`;
 // const question = `3`;
 //0
-const question = `100`;
+const question = `10`;
 // 3628800
 
 const fs = require("fs");
@@ -38,6 +38,9 @@ function divide(result) {
     }
   }
 }
-
-// console.log(result);
+const [fir, sec] = result.toString().split("e+");
+// console.log(count, sec, fir.split(".")[1]?.length);
+if (!!sec) {
+  count += sec - fir.split(".")[1]?.length;
+}
 console.log(count);
