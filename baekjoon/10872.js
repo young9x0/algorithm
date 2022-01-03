@@ -1,6 +1,6 @@
 //팩토리얼
 
-const question = `10`;
+const question = `0`;
 // 3628800
 
 const fs = require("fs");
@@ -9,13 +9,17 @@ const input = (
     ? fs.readFileSync("/dev/stdin", "utf8").trim()
     : question
 ).split("\n");
-let result = 0;
+
 function factorial(N) {
-  console.log("N", N);
+  // console.log("N", N);
 
   if (N - 2 > 0) {
     return N * factorial(N - 1);
+  } else if (N === 0) {
+    return 1;
+  } else {
+    return N;
   }
 }
-result = factorial(Number(input[0]));
-console.log(result);
+
+console.log(factorial(Number(input[0])));
