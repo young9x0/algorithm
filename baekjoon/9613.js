@@ -25,21 +25,25 @@ input.map((str, idx) => {
       biggestFactors = [];
     const splited = str.split(" ").map(Number);
 
-    splited.shift();
+    const len = splited.shift();
     splited.sort((a, b) => a - b);
-    // console.log("splited", splited);
+    console.log("splited", splited);
 
-    for (let i = 1; i <= splited[splited.length - 1]; i++) {
+    for (let i = 2; i <= splited[splited.length - 1]; i++) {
       if (splited[splited.length - 1] % i === 0) {
         biggestFactors.push(i);
       }
     }
 
-    // console.log("biggestFactors", biggestFactors);
+    console.log("biggestFactors", biggestFactors);
     splited.map((nums, index) => {
       for (let i = 1; i < splited.length; i++) {
         if (splited[i + index]) {
-          result += FindGCD(nums, splited[i + index], biggestFactors);
+          if (FindGCD(nums, splited[i + index], biggestFactors) > 1) {
+            result += FindGCD(nums, splited[i + index], biggestFactors);
+          } else {
+            result = len;
+          }
         }
       }
     });
@@ -54,19 +58,11 @@ function FindGCD(fir, sec, biggestFactors) {
 
   biggestFactors.map((factor) => {
     if (fir % factor === 0 && sec % factor === 0) {
-      // console.log(fir, sec, factor, GCD);
+      console.log(fir, sec, factor, GCD);
 
       (!GCD || GCD < factor) && (GCD = factor);
     }
   });
-
-  if (GCD === 1) {
-    if (fir > sec) {
-      GCD = sec;
-    } else {
-      GCD = fir;
-    }
-  }
 
   return GCD;
 }
