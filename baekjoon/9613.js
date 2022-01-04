@@ -21,17 +21,25 @@ let answer = [];
 
 input.map((str, idx) => {
   if (idx > 0) {
-    let result = 0;
-    const splited = str.split(" ");
+    let result = 0,
+      biggestFactors = [];
+    const splited = str.split(" ").map(Number);
 
-    console.log("splited", splited);
+    splited.shift();
+    splited.sort((a, b) => a - b);
+    // console.log("splited", splited);
 
+    for (let i = 1; i <= splited[splited.length - 1]; i++) {
+      if (splited[splited.length - 1] % i === 0) {
+        biggestFactors.push(i);
+      }
+    }
+
+    // console.log("biggestFactors", biggestFactors);
     splited.map((nums, index) => {
-      if (index > 0) {
-        for (let i = 1; i < splited.length; i++) {
-          if (splited[i + index]) {
-            result += FindGCD(nums, splited[i + index]);
-          }
+      for (let i = 1; i < splited.length; i++) {
+        if (splited[i + index]) {
+          result += FindGCD(nums, splited[i + index], biggestFactors);
         }
       }
     });
@@ -39,22 +47,27 @@ input.map((str, idx) => {
   }
 });
 
-function FindGCD(fir, sec) {
+function FindGCD(fir, sec, biggestFactors) {
   // console.log("fir", fir);
   // console.log("sec", sec);
-  let GCD = 1,
-    limit = fir;
+  let GCD = 1;
 
-  if (fir > sec) {
-    limit = sec;
-  }
+  biggestFactors.map((factor) => {
+    if (fir % factor === 0 && sec % factor === 0) {
+      // console.log(fir, sec, factor, GCD);
 
-  for (let i = 2; i <= limit; i++) {
-    if (fir % i === 0 && sec % i === 0) {
-      console.log(fir, sec, i, GCD);
-      (!GCD || GCD < i) && (GCD = i);
+      (!GCD || GCD < factor) && (GCD = factor);
+    }
+  });
+
+  if (GCD === 1) {
+    if (fir > sec) {
+      GCD = sec;
+    } else {
+      GCD = fir;
     }
   }
+
   return GCD;
 }
 
