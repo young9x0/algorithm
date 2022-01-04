@@ -1,5 +1,6 @@
 //GCD 합
 //최대공약수(Greatest Common Divisor, GCD)
+//유클리드 호제법
 
 const question = `3
 4 10 20 30 40
@@ -25,24 +26,14 @@ input.map((str, idx) => {
       biggestFactors = [];
     const splited = str.split(" ").map(Number);
 
-    const len = splited.shift();
-    splited.sort((a, b) => a - b);
-    console.log("splited", splited);
+    // console.log("splited", splited);
 
-    for (let i = 2; i <= splited[splited.length - 1]; i++) {
-      if (splited[splited.length - 1] % i === 0) {
-        biggestFactors.push(i);
-      }
-    }
-
-    console.log("biggestFactors", biggestFactors);
+    // console.log("biggestFactors", biggestFactors);
     splited.map((nums, index) => {
-      for (let i = 1; i < splited.length; i++) {
-        if (splited[i + index]) {
-          if (FindGCD(nums, splited[i + index], biggestFactors) > 1) {
-            result += FindGCD(nums, splited[i + index], biggestFactors);
-          } else {
-            result = len;
+      if (index > 0) {
+        for (let i = 1; i < splited.length; i++) {
+          if (splited[i + index]) {
+            result += FindGCD(nums, splited[i + index]);
           }
         }
       }
@@ -51,20 +42,14 @@ input.map((str, idx) => {
   }
 });
 
-function FindGCD(fir, sec, biggestFactors) {
+function FindGCD(fir, sec) {
   // console.log("fir", fir);
   // console.log("sec", sec);
-  let GCD = 1;
-
-  biggestFactors.map((factor) => {
-    if (fir % factor === 0 && sec % factor === 0) {
-      console.log(fir, sec, factor, GCD);
-
-      (!GCD || GCD < factor) && (GCD = factor);
-    }
-  });
-
-  return GCD;
+  if (sec === 0) {
+    return fir;
+  } else {
+    return FindGCD(sec, fir % sec);
+  }
 }
 
 console.log(answer.join("\n"));
