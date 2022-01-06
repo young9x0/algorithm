@@ -22,13 +22,11 @@ let answer = [];
 
 input.map((str, idx) => {
   if (idx > 0) {
-    let result = 0,
-      biggestFactors = [];
+    let result = 0;
     const splited = str.split(" ").map(Number);
 
     // console.log("splited", splited);
 
-    // console.log("biggestFactors", biggestFactors);
     splited.map((nums, index) => {
       if (index > 0) {
         for (let i = 1; i < splited.length; i++) {

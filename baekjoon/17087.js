@@ -15,7 +15,26 @@ const input = (
     : question
 ).split("\n");
 
-const pos = [];
+let result = 0;
 const [N, S] = input[0].split(" ");
-// pos.length = ;
-console.log(pos);
+const Ds = input[1].split(" ").map((pos) => Math.abs(S - pos));
+
+if (N < 2) {
+  result = Ds[0];
+} else {
+  Ds.map((D, idx) => {
+    if (Ds[idx + 1] && (!result || result > findGCD(D, Ds[idx + 1]))) {
+      result = findGCD(D, Ds[idx + 1]);
+    }
+  });
+}
+
+function findGCD(fir, sec) {
+  // console.log(fir, sec, fir % sec);
+  if (sec === 0) {
+    return fir;
+  } else {
+    return findGCD(sec, fir % sec);
+  }
+}
+console.log(result);
