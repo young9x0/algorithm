@@ -1,6 +1,6 @@
 // 8진수 2진수
 
-const question = "3147"; //11001100
+const question = "314"; //11001100
 
 const fs = require("fs");
 const input = (
@@ -11,19 +11,33 @@ const input = (
 
 let result = [];
 
-input[0].split("").map((str) => {
-  const num = Number(str);
+input[0]
+  .split("")
+  .reverse()
+  .map((str) => {
+    let flag = true;
+    divideWithTwo(Number(str), flag);
 
+    // console.log("result", result);
+  });
+function divideWithTwo(num, flag) {
   // console.log("num", num);
-  if (num < 2) {
-    result.push(num % 2 ? "001" : "000");
-  } else if (num < 4 && num >= 2) {
-    result.push(num % 2 ? "011" : "010");
-  } else if (num < 6 && num >= 4) {
-    result.push(num % 2 ? "101" : "100");
-  } else if (num >= 6) {
-    result.push(num % 2 ? "111" : "110");
+  // console.log("flag", flag);
+
+  if (num > 1) {
+    if (!(num % 2)) {
+      flag && result.push(0);
+      divideWithTwo(num / 2, flag);
+    } else {
+      flag = false;
+      result.push(1);
+      divideWithTwo(num - 1, flag);
+    }
+  } else {
+    num ? result.push(1) : result.push(0);
   }
-  // console.log("result", result);
-});
-console.log(Number(result.join("")));
+  if (result.length % 3) {
+    for (let i = 0; i < result.length % 3; i++) result.push(0);
+  }
+}
+console.log(Number(result.reverse().join("")));
