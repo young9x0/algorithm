@@ -9,35 +9,15 @@ const input = (
     : question
 ).split("\n");
 
-let result = [];
+let result = "";
 
-input[0]
-  .split("")
-  .reverse()
-  .map((str) => {
-    let flag = true;
-    divideWithTwo(Number(str), flag);
-
-    // console.log("result", result);
-  });
-function divideWithTwo(num, flag) {
-  // console.log("num", num);
-  // console.log("flag", flag);
-
-  if (num > 1) {
-    if (!(num % 2)) {
-      flag && result.push(0);
-      divideWithTwo(num / 2, flag);
-    } else {
-      flag = false;
-      result.push(1);
-      divideWithTwo(num - 1, flag);
-    }
-  } else {
-    num ? result.push(1) : result.push(0);
+input[0].split("").map((str, idx) => {
+  const dex = parseInt(str, 8);
+  let binary = dex.toString(2);
+  // console.log(str, binary);
+  while (idx > 0 && binary.length < 3) {
+    binary = "0" + binary;
   }
-  if (result.length % 3) {
-    for (let i = 0; i < result.length % 3; i++) result.push(0);
-  }
-}
-console.log(Number(result.reverse().join("")));
+  result += binary;
+});
+console.log(result);
