@@ -1,6 +1,6 @@
 //-2진수
 
-const question = "-13"; //110111
+const question = "7"; //110111
 
 const fs = require("fs");
 const input = (
@@ -9,12 +9,13 @@ const input = (
     : question
 ).split("\n");
 
-let list = [],
+let list = [1],
   N = input[0];
 if (N === 0) console.log(N);
 
-while (N !== 0) {
-  list.push(Math.abs(N % -2));
-  N = Math.ceil(N / -2);
+while (N !== 1) {
+  list.push(Math.abs(N % 2));
+  N = Math.floor(N / 2);
+  console.log(N);
 }
 console.log(list.reverse().join(""));
