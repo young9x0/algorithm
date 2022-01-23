@@ -1,2 +1,4 @@
 test.js
 teacher.js
+/node_modules
+package-lock.json
