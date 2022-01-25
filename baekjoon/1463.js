@@ -13,46 +13,49 @@ const input = (
 ).split('\n');
 
 const num = Number(input[0]);
-let prev = [num],
-  next = [];
 let count = 0;
 // 1. depth+, makeNext
 // 2. check one
 // 3. depth+, makeNext
 // ...
 
-if (next.length === 0) {
+if (num === 1) {
+  console.log(count);
+} else if (num === 2) {
   count++;
-  checkOne(makeNext(prev, next));
+  console.log(count);
+} else {
+  count++;
+  checkOne(makeNext([num]));
 }
 
-function makeNext(prev, next) {
+function makeNext(prev) {
+  const next = [];
   // console.log('prev', count, prev);
-  prev.map((num) => {
-    if (!(num % 3)) {
-      next.push(num / 3);
-    }
-    if (!(num % 2)) {
-      next.push(num / 2);
-    }
 
-    if (num > 1) {
-      next.push(num - 1);
+  for (let i = 0; i < prev.length; i++) {
+    if (!(prev[i] % 3)) {
+      next.push(prev[i] / 3);
     }
-  });
+    if (!(prev[i] % 2)) {
+      next.push(prev[i] / 2);
+    }
+    if (prev[i] > 1) {
+      next.push(prev[i] - 1);
+    }
+  }
 
   return next;
 }
 
 function checkOne(next) {
   // console.log('next', count, next);
-  const filterOne = next.filter((res) => res === 1);
-  if (filterOne.length) {
-    return console.log(count);
-  } else {
-    count++;
-    prev = next;
-    next = [];
-    checkOne(makeNext(prev, next));
+  for (let i = 0; i < next.length; i++) {
+    if (next[i] === 1) {
+      return console.log(count);
+    }
   }
+
+  count++;
+  checkOne(makeNext(next));
 }
