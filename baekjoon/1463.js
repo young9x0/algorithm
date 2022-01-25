@@ -33,29 +33,25 @@ function makeNext(prev) {
   const next = [];
   // console.log('prev', count, prev);
 
-  for (let i = 0; i < prev.length; i++) {
-    if (!(prev[i] % 3)) {
-      next.push(prev[i] / 3);
+  prev.map((num) => {
+    if (!(num % 3)) {
+      next.push(num / 3);
     }
-    if (!(prev[i] % 2)) {
-      next.push(prev[i] / 2);
+    if (!(num % 2)) {
+      next.push(num / 2);
     }
-    if (prev[i] > 1) {
-      next.push(prev[i] - 1);
+    if (num > 1) {
+      next.push(num - 1);
     }
-  }
+  });
 
   return next;
 }
 
 function checkOne(next) {
   // console.log('next', count, next);
-  for (let i = 0; i < next.length; i++) {
-    if (next[i] === 1) {
-      return console.log(count);
-    }
-  }
 
-  count++;
-  checkOne(makeNext(next));
+  return next.filter((num) => num === 1).length > 0
+    ? console.log(count)
+    : (count++, checkOne(makeNext(next)));
 }
