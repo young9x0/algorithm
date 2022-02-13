@@ -1,5 +1,4 @@
 //1로 만들기
-//https://mizzo-dev.tistory.com/entry/baekjoon1463
 
 // const question = `25`; //6
 // const question = `2`; //1
