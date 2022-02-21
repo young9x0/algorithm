@@ -5,11 +5,9 @@
 const question = `10`; //3
 
 const fs = require('fs');
-const input = (
-  process.platform === 'linux'
-    ? fs.readFileSync('/dev/stdin', 'utf8').toString().trim()
-    : question
-).split('\n');
+const input = (process.platform === 'linux' ? fs.readFileSync('/dev/stdin', 'utf8').toString().trim() : question).split(
+  '\n',
+);
 
 const num = Number(input[0]);
 let count = 0;
@@ -50,7 +48,5 @@ function makeNext(prev) {
 function checkOne(next) {
   // console.log('next', count, next);
 
-  return next.filter((num) => num === 1).length > 0
-    ? console.log(count)
-    : (count++, checkOne(makeNext(next)));
+  return next.filter((num) => num === 1).length > 0 ? console.log(count) : (count++, checkOne(makeNext(next)));
 }
