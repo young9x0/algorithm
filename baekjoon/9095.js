@@ -23,13 +23,28 @@ const input = (process.platform === 'linux' ? fs.readFileSync('/dev/stdin', 'utf
 
 const checkLength = {
   1: 0,
-  2: 0,
-  3: 0,
+  2: { 1: 1 },
+  3: { 1: 2, 2: 1, 3: 0 }, //3
+  4: { 1: 4, 2: 2, 3: 1 }, //7
+  5: { 1: 7, 2: 4, 3: 2 }, //12
+  6: { 1: 12, 2: 7, 3: 4 }, //23
+  7: { 1: 23, 2: 9, 3: 5 },
 };
-function checkFactors(num) {
-  for (let idx = 1; num >= 3 * idx; idx++) {
-    checkLength[3]++;
+function makeCheckLength(raw) {
+  for (let num = 4; num <= raw; num++) {
+    let twoDivideCheck = 2,
+      threeDivideCheck = 1;
+    if (num % 2 === 0) twoDivideCheck = 3;
+    if (num % 3 === 0) threeDivideCheck = 2;
+    console.log('num', num);
+    console.log('twoDivideCheck', twoDivideCheck);
+    console.log('threeDivideCheck', threeDivideCheck);
+    checkLength[num] = {
+      1: checkLength[num - 1][1] + checkLength[num - 1][2] + checkLength[num - 1][3],
+      2: checkLength[num - 1][2] + twoDivideCheck,
+      3: checkLength[num - 1][3] + threeDivideCheck,
+    };
+    console.log(checkLength);
   }
-  console.log(checkLength);
 }
-checkFactors(6);
+makeCheckLength(7);
