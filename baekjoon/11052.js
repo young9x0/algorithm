@@ -27,33 +27,42 @@ for (let i = 1; i < wanted + 1; i++) {
 
 // console.log('PList', PList);
 for (let i = 1; i < wanted + 1; i++) {
-  // console.log('i', i, result);
+  // console.log('i', i, 'result', result);
   result = PList[1] * wanted;
-  let max = checkDividedMax(i, wanted - i);
-  //1, 3
-
-  if (result < max) result = max;
+  let temp = checkDividedMax(i, wanted - i, 0);
+  //1,4
+  if (result < temp) result = temp;
 }
 
-function checkDividedMax(fixed, excepted) {
-  // console.log('fixed', fixed, 'excepted', excepted);
+function checkDividedMax(fixed, excepted, acc) {
+  // console.log('fixed', fixed, 'excepted', excepted, 'acc', acc);
+
   let next = 0,
-    cur = PList[fixed] + PList[excepted];
+    cur = acc + makeSum(fixed, excepted);
+  //1 4 = 10 7=17
+  //1 3 1= 10 8 10 = 28
 
-  //1, 3
-  //1, 2
+  if (excepted > 2) {
+    next = acc + PList[fixed] + makeSum(excepted - 1, 1);
+    //1 3 1=10 8 10 = 28
+  } else {
+    next = acc + PList[fixed] + PList[1] * excepted;
+    // 10 40=50
+  }
 
-  if (excepted > 2) next = PList[fixed] + checkDividedMax(excepted - 1, excepted - 2);
-
-  //1, 2
-  //1, 1
   // console.log('cur', cur);
   // console.log('next', next);
   if (cur < next) {
+    if (excepted > 2) {
+      checkDividedMax(excepted - 1, 1, PList[fixed]);
+    }
     cur = next;
   }
-
   return cur;
+}
+
+function makeSum(fixed, excepted) {
+  return PList[fixed] + PList[excepted];
 }
 
 console.log(result);
