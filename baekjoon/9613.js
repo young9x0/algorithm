@@ -11,19 +11,15 @@ const question = `3
 // 3
 // 35
 
-const fs = require("fs");
-const input = (
-  process.platform === "linux"
-    ? fs.readFileSync("/dev/stdin", "utf8").toString()
-    : question
-).split("\n");
+const fs = require('fs');
+const input = (process.platform === 'linux' ? fs.readFileSync('/dev/stdin', 'utf8').toString() : question).split('\n');
 
 let answer = [];
 
 input.map((str, idx) => {
   if (idx > 0) {
     let result = 0;
-    const splited = str.split(" ").map(Number);
+    const splited = str.split(' ').map(Number);
 
     // console.log("splited", splited);
 
@@ -50,4 +46,4 @@ function FindGCD(fir, sec) {
   }
 }
 
-console.log(answer.join("\n"));
+console.log(answer.join('\n'));
