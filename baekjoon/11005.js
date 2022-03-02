@@ -4,14 +4,10 @@ const question = `60466175 36`;
 // const question = `13 11`;
 // ZZZZZ
 
-const fs = require("fs");
-const input = (
-  process.platform === "linux"
-    ? fs.readFileSync("/dev/stdin", "utf8").trim()
-    : question
-).split("\n");
+const fs = require('fs');
+const input = (process.platform === 'linux' ? fs.readFileSync('/dev/stdin', 'utf8').trim() : question).split('\n');
 
-const [N, radix] = input[0].split(" ");
+const [N, radix] = input[0].split(' ');
 let num = Number(N);
 
 const result = [];
@@ -25,4 +21,4 @@ while (num !== 0) {
   num = Math.floor(num / radix);
 }
 
-console.log(result.reverse().join(""));
+console.log(result.reverse().join(''));
