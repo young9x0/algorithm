@@ -17,37 +17,16 @@ const fs = require('fs');
 const input = (process.platform === 'linux' ? fs.readFileSync('/dev/stdin', 'utf8').toString().trim() : question).split(
   '\n',
 );
-const pList = [0],
-  nList = [0],
-  wanted = Number(input[0]),
-  splited = input[1].split(' ');
-let result = 0;
+const N = +input[0];
+const splited = input[1].split(' ').map(Number);
+let dp = [0, ...splited];
+// console.log('dp', dp);
 
-for (let i = 1; i < wanted + 1; i++) {
-  pList.push(Number(splited[i - 1]));
-  let cardLen = wanted;
-  while (i * cardLen > wanted) {
-    cardLen--;
-  }
-  // console.log('cardLen', cardLen);
-  nList.push(cardLen);
-}
-// console.log('pList', pList);
-// console.log('nList', nList);
-
-for (let i = 1; i < wanted + 1; i++) {
-  let temp = 0;
-  if (wanted % i === 0 && wanted / i > 1) {
-    temp = pList[i] * nList[i];
-  } else {
-    temp = pList[wanted - i] + pList[i];
-  }
-  // console.log('i', i);
-  // console.log('temp', temp);
-  // console.log('result', result);
-  if (result < temp) {
-    result = temp;
+for (let i = 2; i < dp.length; i++) {
+  for (let j = 1; j < i; j++) {
+    // console.log(i, j, dp[i], dp[i - j], dp[j]);
+    dp[i] = Math.max(dp[i], dp[i - j] + dp[j]);
   }
 }
-
-console.log(result);
+// console.log('dp', dp);
+console.log(dp[N]);
