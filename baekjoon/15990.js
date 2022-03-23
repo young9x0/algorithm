@@ -22,75 +22,41 @@ input.map((N, idx) => {
   }
 });
 
+const addFactors = {
+  1: [],
+  2: [],
+  3: [],
+};
+
 function test(num) {
-  const addTypeTemp = {
-    1: [],
-    2: [],
-    3: [],
-  };
   //{
   // 1:[[1,2,1],[1,3]],
   // 2:[[]],
   // 3:[[3,1]]
   //}
-  let max = 3;
-  if (max > num) max = num;
-  for (let startIdx = 1; startIdx < max + 1; startIdx++) {
-    addTypeTemp[startIdx].push(makeAddTypeTempResult(num, startIdx));
-    console.log('addTypeTemp', addTypeTemp);
+  for (let i = 1; i < 4; i++) {
+    let prev = 0;
+    checkPrev(num, i, prev);
   }
 }
 
-function makeAddTypeTempResult(num, startIdx) {
-  let result = [];
-  console.log('1 num', num); //4
-  console.log('1 startIdx', startIdx); //1
-  result = [startIdx];
-
-  for (let i = 1; i < 4 && num >= i; i++) {
-    console.log('1 i', i);
-
-    let prev = result[result.length - 1];
-    console.log('1 prev', prev); //1
-    const acc = result.reduce((acc, cur) => acc + cur);
-    console.log('1 acc', acc);
-    if (acc < num) {
-      if (i !== prev) {
-        if (num === i) {
-          result.push(i); //1
-          break;
-        } else if (num > i && i !== prev) {
-          result.push(i); //2
-          checkDoubleNum(num - i - startIdx, i, result);
-        }
-      }
-    }
-    //[1,2,1]}
-    console.log('1 result', result);
-  }
-  return result;
-}
-
-function checkDoubleNum(num, prev, result) {
-  console.log('2 num', num); //1
-  console.log('2 prev', prev); //2
-  console.log('2 result', result); //[1,2]
-
-  for (let i = 1; i < 4 && num >= i; i++) {
-    console.log('2 i', i); //1
-    if (i !== prev) {
-      if (num === i) {
-        result.push(i);
-        break;
-      } else if (num > i && i !== prev) {
-        result.push(i);
-        checkDoubleNum(num - i, i); //1,1
+function checkPrev(num, idx, prev) {
+  console.log(num, idx, prev, addFactors);
+  for (let i = 1; i < 4; i++) {
+    if (prev !== i) {
+      addFactors[idx] = [];
+      addFactors[idx].push(i);
+      prev = i;
+      if (num > i) {
+        checkPrev(idx, prev);
+      } else if (num === i) {
+        addFactors[idx].push(i);
       }
     }
   }
 }
 
-console.log(test(4));
+console.log(test(5));
 // console.log(result.join('\n'));
 //i=1
 //[1]
