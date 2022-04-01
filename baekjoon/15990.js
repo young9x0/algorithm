@@ -10,89 +10,56 @@ const question = `3
 
 const fs = require('fs');
 const input = (process.platform === 'linux' ? fs.readFileSync('/dev/stdin', 'utf8').trim() : question).split('\n');
-let result = [];
+const result = [];
 
 input.map((N, idx) => {
   if (idx > 0) {
     const num = Number(N);
-    let count = 0;
 
-    // console.log('count', count);
-    // result.push(count / 1000000009);
+    result.push(makeAddFactors(num) % 1000000009);
   }
 });
 
-const addFactors = {
-  1: [],
-  2: [],
-  3: [],
-};
-
-function test(num) {
-  //{
-  // 1:[[1,2,1],[1,3]],
-  // 2:[[]],
-  // 3:[[3,1]]
-  //}
+function makeAddFactors(num) {
+  let count = 0;
+  // console.log('------------input num', num);
   for (let i = 1; i < 4; i++) {
-    let prev = 0;
-    checkPrev(num, i, prev);
-  }
-}
+    if (num === i) {
+      count += 1;
+    } else {
+      const addFactors = [];
 
-function checkPrev(num, idx, prev) {
-  console.log(num, idx, prev, addFactors);
-  for (let i = 1; i < 4; i++) {
-    if (prev !== i) {
-      addFactors[idx] = [];
-      addFactors[idx].push(i);
-      prev = i;
-      if (num > i) {
-        checkPrev(idx, prev);
-      } else if (num === i) {
-        addFactors[idx].push(i);
-      }
+      count += checkPrev(num, [i], addFactors).length;
+      // console.log('================count is', count);
     }
   }
+
+  return count;
 }
 
-console.log(test(5));
-// console.log(result.join('\n'));
-//i=1
-//[1]
+function checkPrev(num, temp, addFactors) {
+  // console.log('temp', temp);
+  const tempReduce = temp.reduce((acc, cur) => acc + cur, 0);
+  // console.log('num-tempReduce', num - tempReduce);
+  for (let i = 1; i < 4; i++) {
+    if (temp[temp.length - 1] !== i) {
+      // console.log('i', i);
+      // console.log('reduce', tempReduce);
+      if (tempReduce !== num)
+        if (num - tempReduce > i) {
+          // console.log('again------------------');
 
-//i=2
-//[2]
+          checkPrev(num, temp.concat(i), addFactors);
+        } else if (num - tempReduce === i) {
+          // console.log('num === i', num - tempReduce === i);
+          // console.log('temp final', temp.concat(i));
+          temp.concat(i);
+          addFactors.push(temp);
+        }
+    }
+  }
 
-//i=3
-//[1,2]
+  return addFactors;
+}
 
-//[2,1]
-
-//[3]
-
-//i=4
-//[1,2,1]
-//[1,3]
-
-//[3,1]
-
-//i=5
-//[1,3,1]
-
-//[2,1,2]
-//[2,3]
-
-//[3,2]
-
-//i=6
-//[1,2,1,2]
-//[1,2,3]
-//[1,3,2]
-
-//[2,1,2,1]
-//[2,1,3]
-//[2,3,1]
-
-//[3,1,2]
-//[3,2,1]
+console.log(result.join('\n'));
