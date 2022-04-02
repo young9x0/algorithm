@@ -10,54 +10,23 @@ const question = `3
 
 const fs = require('fs');
 const input = (process.platform === 'linux' ? fs.readFileSync('/dev/stdin', 'utf8').trim() : question).split('\n');
-const result = [];
+const SIZE = 100000;
+const MOD = 1000000009;
+const dp = Array.from({ length: SIZE + 1 }, () => new Array(4).fill(0));
+dp[1][1] = dp[2][2] = dp[3][1] = dp[3][2] = dp[3][3] = 1;
+for (let i = 4; i < SIZE + 1; i++) {
+  dp[i][1] = (dp[i - 1][2] + dp[i - 1][3]) % MOD;
+  dp[i][2] = (dp[i - 2][1] + dp[i - 2][3]) % MOD;
+  dp[i][3] = (dp[i - 3][1] + dp[i - 3][2]) % MOD;
+}
+// console.log(dp);
 
-input.map((N, idx) => {
+let result = '';
+input.map((num, idx) => {
   if (idx > 0) {
-    const num = Number(N);
-    result.push(makeAddFactors(num) % 1000000009);
+    const N = Number(num);
+    result += `${(dp[N][1] + dp[N][2] + dp[N][3]) % MOD}\n`;
   }
 });
 
-// makeAddFactors(7);
-function makeAddFactors(num) {
-  const checkCount = { count: 0 };
-  let history = { sum: 0, prev: 0 };
-  // console.log('------------input num', num);
-  for (let i = 1; i < 4; i++) {
-    if (num === i) {
-      checkCount.count += 1;
-    } else {
-      history.prev = i;
-      history.sum = i;
-      checkPrev(num, checkCount, history);
-      // console.log('input result', checkCount.count);
-    }
-  }
-
-  return checkCount.count;
-}
-
-function checkPrev(num, checkCount, history) {
-  // console.log('count', checkCount.count);
-  // console.log('sum', history.sum);
-  for (let i = 1; i < 4; i++) {
-    if (history.prev !== i) {
-      // console.log('i', i);
-
-      if (history.sum !== num) {
-        if (num - history.sum > i) {
-          // console.log('again------------------');
-
-          checkPrev(num, checkCount, { sum: history.sum + i, prev: i });
-        } else if (num - history.sum === i) {
-          // console.log('final', history);
-
-          checkCount.count++;
-        }
-      }
-    }
-  }
-}
-
-console.log(result.join('\n'));
+console.log(result);
