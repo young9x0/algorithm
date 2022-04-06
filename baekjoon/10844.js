@@ -3,35 +3,27 @@
 // const question = `1`; //9
 // const question = `2`; //17
 const question = `3`; //32
+// const question = `4`; //338
+// const question = `5`; //3398
+// const question = `6`; //33998
 
 const fs = require('fs');
 const input = (process.platform === 'linux' ? fs.readFileSync('/dev/stdin', 'utf8').trim() : question).split('\n');
 const num = +input[0];
+const mod = 1000000000;
+const memo = [[0, 1, 1, 1, 1, 1, 1, 1, 1, 1]];
 
-let result = 0;
-if (num > 2) {
-  for (let i = 10; i < 10 ** (num - 1); i++) {
-    const temp = i + '';
-    const splited = temp.split('');
-    // console.log('splited', splited);
-    const lastNum = splited[splited.length - 1];
-    const prevNum = splited[splited.length - 2];
-
-    if (+splited[0] !== 0 && Math.abs(lastNum - prevNum) === 1) {
-      //   console.log('lastNum', lastNum);
-      //   console.log('prevNum', prevNum);
-      if (+lastNum === 0 || +lastNum === 9) {
-        result += 1;
-      } else {
-        result += 2;
-      }
-    }
-    // console.log('result', result);
-  }
-} else if (num > 1) {
-  result = 17;
-} else {
-  result = 9;
+let Arrlen = num - 1;
+while (Arrlen--) {
+  memo.push([...Array(10)]);
 }
 
-console.log(result % 1000000000);
+for (let pos = 1; pos < num; pos++) {
+  for (let idx = 0; idx < 10; idx++) {
+    memo[pos][idx] = ((memo[pos - 1][idx - 1] || 0) + (memo[pos - 1][idx + 1] || 0)) % mod;
+  }
+}
+
+// console.log(memo);
+const result = memo[num - 1].reduce((acc, cur) => (acc + cur) % mod, 0);
+console.log(result);
