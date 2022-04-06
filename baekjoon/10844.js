@@ -6,26 +6,30 @@ const question = `3`; //32
 
 const fs = require('fs');
 const input = (process.platform === 'linux' ? fs.readFileSync('/dev/stdin', 'utf8').trim() : question).split('\n');
-const num = Number(input[0]);
-
-const nextChildLenType = [1, 2, 2, 2, 2, 2, 2, 2, 2, 1];
+const num = +input[0];
 
 let result = 0;
-if (num > 1) {
+if (num > 2) {
   for (let i = 10; i < 10 ** (num - 1); i++) {
     const temp = i + '';
     const splited = temp.split('');
     // console.log('splited', splited);
     const lastNum = splited[splited.length - 1];
-    const secLastNum = splited[splited.length - 2];
+    const prevNum = splited[splited.length - 2];
 
-    if (+splited[0] !== 0 && Math.abs(lastNum - secLastNum) === 1) {
+    if (+splited[0] !== 0 && Math.abs(lastNum - prevNum) === 1) {
       //   console.log('lastNum', lastNum);
-      //   console.log('secLastNum', secLastNum);
-      result += nextChildLenType[lastNum];
+      //   console.log('prevNum', prevNum);
+      if (+lastNum === 0 || +lastNum === 9) {
+        result += 1;
+      } else {
+        result += 2;
+      }
     }
     // console.log('result', result);
   }
+} else if (num > 1) {
+  result = 17;
 } else {
   result = 9;
 }
