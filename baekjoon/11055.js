@@ -1,5 +1,5 @@
 //60. 11055 가장 큰 증가 부분 수열
-//1/20 pm 8:50 - 1/21 am 12:30
+//1/20 pm 8:50 - 1/21 am 12:45
 //해설: https://leylaoriduck.tistory.com/527
 const question = `10
 1 100 2 50 60 3 5 6 7 8`;
