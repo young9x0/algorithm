@@ -10,8 +10,8 @@ const question = `6
 // 10 9 30 20 10 8 7 6 20 20 10`;
 
 const fs = require('fs');
-
 const inputs = (process.platform === 'linux' ? fs.readFileSync('/dev/stdin', 'utf8').toString() : question).split('\n');
+
 const [total, str] = inputs;
 const arr = str.split(' ').map(Number);
 const N = Number(total);
