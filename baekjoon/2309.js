@@ -1,6 +1,6 @@
 // 66. 2309 일곱 난쟁이
-//3/5 pm 6:07 - pm 6:39
-//해설:
+//3/5 pm 6:39 - pm 7:24
+//해설: https://velog.io/@rkio/%EB%B0%B1%EC%A4%80-Javascript-2309
 
 const question = `20
 7
@@ -21,20 +21,23 @@ const question = `20
 // 23;
 
 const fs = require('fs');
-const inputs = (process.platform === 'linux' ? fs.readFileSync('/dev/stdin', 'utf8').toString() : question).split('\n');
+const inputs = (
+  process.platform === 'linux' ? fs.readFileSync('/dev/stdin', 'utf8').toString().trim() : question
+).split('\n');
 
 const heights = inputs.map(Number);
 // console.log(heights);
 
-const totalSum = heights.reduce((acc, cur) => (acc += cur), 0);
-// console.log(totalSum);
-const needSub = totalSum - 100;
+const sub = heights.reduce((acc, cur) => acc + cur, 0) - 100;
+let result;
 
 for (let i = 0; i < heights.length; i++) {
   for (let j = i + 1; j < heights.length; j++) {
-    if (heights[i] + heights[j] === needSub) {
-      const result = heights.filter((_, idx) => idx !== i && idx !== j);
-      console.log(result.sort((a, b) => a - b).join('\n'));
+    if (heights[i] + heights[j] === sub) {
+      result = heights.filter((height) => height !== heights[i] && height !== heights[j]);
+      // console.log(result.sort((a, b) => a - b).join('\n')); //안에서 콘솔찍으면 틀림
+      break;
     }
   }
 }
+console.log(result.sort((a, b) => a - b).join('\n'));
