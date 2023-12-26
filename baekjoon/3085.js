@@ -4,30 +4,8 @@
 // 오른쪽, 아래쪽 방향으로만 바꾸면 된다. 위쪽, 왼쪽 방향으로 바꾸는 것과 오른쪽, 아래쪽 방향으로 바꾸는 결과는 동일하기 때문이다.
 
 
-const question = `3
-CCP
-CCP
-PPC`;
-// 3
-
-// const question = `4
-// PPPP
-// CYZY
-// CCPY
-// PPCC`
-//4
-
-// const question = `5
-// YCPZY
-// CYZZP
-// CCPPP
-// YCYZC
-// CPPZZ`;
-// 4
-
-
-const fs = require('fs');
-const [size, ...boardString] = (process.platform === 'linux' ? fs.readFileSync('/dev/stdin', 'utf8').toString() : question).trim().split('\n');
+const INPUT_FILE = process.platform === 'linux' ? '/dev/stdin' : './input';
+const [size, ...boardString] = require('fs').readFileSync(INPUT_FILE).toString().trim().split('\n');
 
 const N = Number(size);
 const board = boardString.map((row) => row.split(""))
