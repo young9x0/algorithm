@@ -1,13 +1,7 @@
 //택배 배달과 수거하기
 function solution(cap, n, deliveries, pickups) {
-  let answer = 0;
-
-  // (deliveries || pickups total)/cap
   const deliveriesTotal = deliveries.reduce((acc, cur) => acc + cur, 0)
   const pickupsTotal = pickups.reduce((acc, cur) => acc + cur, 0)
-  const maxCount = Math.max(
-      Math.ceil(deliveriesTotal / cap),
-      Math.ceil(pickupsTotal / cap))
 
   let dRemain = deliveriesTotal
   let dSum = deliveries[n - 1]
