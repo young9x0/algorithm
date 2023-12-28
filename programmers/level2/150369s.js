@@ -1,7 +1,7 @@
 //택배 배달과 수거하기 정답
 function solution(cap, n, deliveries, pickups) {
   let answer = 0;
-  let [dIndex, pIndex] = [n - 1, n - 1];//4, 4
+  let [dIndex, pIndex] = [n - 1, n - 1];
 
   while (dIndex >= 0 || pIndex >= 0) {
     console.log('---')
@@ -18,8 +18,8 @@ function solution(cap, n, deliveries, pickups) {
     }
     console.log('start pIndex', pIndex)
 
-    let [dCap, pCap] = [cap, cap];//4, 4
-    answer += Math.max(dIndex + 1, pIndex + 1) * 2;//5*2
+    let [dCap, pCap] = [cap, cap];
+    answer += Math.max(dIndex + 1, pIndex + 1) * 2;
     while (dCap > 0 && dIndex >= 0) {
       console.log('deliveries[dIndex], dIndex', deliveries[dIndex], dIndex)
       console.log('dCap', dCap)
