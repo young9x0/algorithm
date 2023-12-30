@@ -14,11 +14,16 @@ function solution(board) {
   if (oTotal === 0 && xTotal === 0) {
     return 1
   }
+  if (oTotal < xTotal) {
+    return 0
+  }
 
   function checkBingo(col) {
     if (col === 0) {
-      if (board[0][1] === 'O' && board[0][2] === 'O') {
-        return true
+      for (let row = 0; row < 3; row++) {
+        if (board[row][1] === 'O' && board[row][2] === 'O') {
+          return true
+        }
       }
     }
 
@@ -34,8 +39,7 @@ function solution(board) {
   }
 
   for (let col = 0; col < 3; col++) {
-    if (board[0][col] === 'O') {
-
+    if (col === 0 || board[0][col] === 'O') {
       const isBingo = checkBingo(col)
 
       if (isBingo) {
