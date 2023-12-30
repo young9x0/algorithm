@@ -54,16 +54,14 @@ function solution(board) {
     return false
   }
 
-  const isOBingo = checkBingo("O")
-  if (isOBingo) {
-    return oTotal === (xTotal + 1) ? 1 : 0
-  } else {
+  if (oTotal === xTotal) {
+    const isOBingo = checkBingo("O")
+    return isOBingo ? 0 : 1
+  }
+
+  if (oTotal === (xTotal + 1)) {
     const isXBingo = checkBingo("X")
-    if (isXBingo) {
-      return oTotal === xTotal ? 1 : 0
-    } else {
-      return 1
-    }
+    return isXBingo ? 0 : 1
   }
 
   return 0
