@@ -3,7 +3,6 @@
 
 function solution(board) {
   let answer = 0
-  const count = Array(3).fill(0)
   const oTotal = board.reduce((acc, cur) => {
     return acc += [...cur].filter((str) => str === 'O').length
   }, 0)
@@ -18,45 +17,59 @@ function solution(board) {
     return 0
   }
 
-  function checkBingo(col) {
+  function checkBingo(col, player) {
     if (col === 0) {
       for (let row = 0; row < 3; row++) {
-        if (board[row][1] === 'O' && board[row][2] === 'O') {
+        if (board[row][0] === player
+            && board[row][1] === player
+            && board[row][2] === player) {
           return true
         }
       }
     }
 
-    if (board[1][col] === 'O' && board[2][col] === 'O') {
+    if (board[0][col] === player
+        && board[1][col] === player
+        && board[2][col] === player) {
       return true
     }
 
-    if (board[1][col + 1] === 'O' && board[2][col + 2] === 'O') {
+    if (board[0][col] === player
+        && board[1][col + 1] === player
+        && board[2][col + 2] === player) {
       return true
     }
 
     return false
   }
 
-  for (let col = 0; col < 3; col++) {
-    if (col === 0 || board[0][col] === 'O') {
-      const isBingo = checkBingo(col)
+  for (let oCol = 0; oCol < 3; oCol++) {
+    const isOBingo = checkBingo(oCol, 'O')
 
-      if (isBingo) {
-        return (xTotal + 1) === oTotal ? 1 : 0
-      }
+    if (isOBingo) {
+      return (xTotal + 1) === oTotal ? 1 : 0
+    }
 
-      if (!isBingo && xTotal === oTotal) {
-        count[0] = 1
+    if (!isOBingo) {
+      for (let xCol = 0; xCol < 3; xCol++) {
+        const isXBingo = checkBingo(xCol, 'X')
+        // console.log('isXBingo', isXBingo)
+        if (isXBingo) {
+          return xTotal === oTotal ? 1 : 0
+        } else {
+          return 1
+        }
       }
     }
   }
-  return count.some((val) => val === 1) ? 1 : 0
+
+  return 0
 }
 
-// console.log(solution(["O.X", ".O.", "..X"]))//    1
+console.log(solution(["O.X", ".O.", "..X"]))//    1
 // console.log(solution(["OOO", "...", "XXX"]))//    0
 // console.log(solution(["...", ".X.", "..."]))//    0
 // console.log(solution(["...", "...", "..."]))//    1
-console.log(solution(["O.O", "OX.", "OXX"]))//    1
+// console.log(solution(["O.O", "OX.", "OXX"]))//    1
+// console.log(solution(["X..", "OX.", "OOX"]))//    0
 
