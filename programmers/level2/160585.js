@@ -1,5 +1,6 @@
 //https://school.programmers.co.kr/learn/courses/30/lessons/160585
 //혼자서 하는 틱택토
+//해법:https://velog.io/@sean2337/Programmers-%ED%98%BC%EC%9E%90%EC%84%9C-%ED%95%98%EB%8A%94-%ED%8B%B1%ED%83%9D%ED%86%A0-JavaScript
 
 function solution(board) {
   let answer = 0
@@ -17,49 +18,51 @@ function solution(board) {
     return 0
   }
 
-  function checkBingo(col, player) {
-    if (col === 0) {
-      for (let row = 0; row < 3; row++) {
-        if (board[row][0] === player
-            && board[row][1] === player
-            && board[row][2] === player) {
-          return true
-        }
+  function checkBingo(player) {
+    //가로 확인
+    for (let row = 0; row < 3; row++) {
+      if (board[row][0] === player
+          && board[row][1] === player
+          && board[row][2] === player) {
+        return true
       }
     }
 
-    if (board[0][col] === player
-        && board[1][col] === player
-        && board[2][col] === player) {
-      return true
+    //세로 확인
+    for (let col = 0; col < 3; col++) {
+      if (board[0][col] === player
+          && board[1][col] === player
+          && board[2][col] === player) {
+        return true
+      }
     }
 
-    if (board[0][col] === player
-        && board[1][col + 1] === player
-        && board[2][col + 2] === player) {
-      return true
+    //대각선 확인
+    for (let row = 0; row < 3; row++) {
+      if (board[0][0] === player
+          && board[1][1] === player
+          && board[2][2] === player) {
+        return true
+      }
+      if (board[0][2] === player
+          && board[1][1] === player
+          && board[2][0] === player) {
+        return true
+      }
     }
 
     return false
   }
 
-  for (let oCol = 0; oCol < 3; oCol++) {
-    const isOBingo = checkBingo(oCol, 'O')
-
-    if (isOBingo) {
-      return (xTotal + 1) === oTotal ? 1 : 0
-    }
-
-    if (!isOBingo) {
-      for (let xCol = 0; xCol < 3; xCol++) {
-        const isXBingo = checkBingo(xCol, 'X')
-        // console.log('isXBingo', isXBingo)
-        if (isXBingo) {
-          return xTotal === oTotal ? 1 : 0
-        } else {
-          return 1
-        }
-      }
+  const isOBingo = checkBingo("O")
+  if (isOBingo) {
+    return oTotal === (xTotal + 1) ? 1 : 0
+  } else {
+    const isXBingo = checkBingo("X")
+    if (isXBingo) {
+      return oTotal === xTotal ? 1 : 0
+    } else {
+      return 1
     }
   }
 
