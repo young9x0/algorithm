@@ -1,50 +1,42 @@
 //https://school.programmers.co.kr/learn/courses/30/lessons/12936
 //줄 서는 방법
+//해법: https://velog.io/@longroadhome/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4-LV.3-%EC%A4%84-%EC%84%9C%EB%8A%94-%EB%B0%A9%EB%B2%95-JS
+
+function factorial(n) {
+  let res = 1
+  for (let i = 2; i <= n; i++) {
+    res *= i
+  }
+  return res
+}
 
 function solution(n, k) {
   let answer = []
-  const elements = []
-
-  for (let i = 1; i < n + 1; i++) {
-    elements.push(i)
+  const elements = new Array(n).fill(1)
+  for (let i = 0; i < n; i++) {
+    elements[i] = i + 1
   }
 
-  function makeComb(remainList, type) {
-    // console.log('makeComb start---')
-    // console.log('remainList', remainList)
-    // console.log('type', type)
-    if (remainList.length === 0) {
-      answer.push(type)
-      // console.log('answer', answer)
-      return
+  let nth = k - 1
+  while (elements.length) {
+    // console.log('nth', nth)
+    // console.log('answer', answer)
+    if (nth === 0) {
+      answer.push(...elements)
+      break
     }
-
-    remainList.forEach((item) => {
-      // console.log('forEach--', item)
-      let temp = []
-      if (temp.length === 0) {
-        temp = [...type]
-      }
-      temp.push(item)
-      // console.log('after push temp', temp)
-      const filtered = remainList.filter((num) => num !== item)
-      // console.log('filtered', filtered)
-      makeComb(filtered, temp)
-    })
-
+    // console.log('elements', elements)
+    const fact = factorial(elements.length - 1)
+    // console.log('fact', fact)
+    const index = Math.floor(nth / fact)
+    // console.log('index', index)
+    nth = nth % fact
+    // console.log('nth', nth)
+    answer.push(elements[index])
+    elements.splice(index, 1)
   }
 
-  for (let i = 1; i < n + 1; i++) {
-    const type = [i]
-    // console.log('---start', i)
-    const orderList = [...elements]
-    const filtered = orderList.filter((num) => num !== i)
-    // console.log('filtered', filtered)
-    makeComb(filtered, type)
-
-  }
-  // console.log('answer', answer)
-  return answer[k - 1]
+  return answer
 }
 
 console.log(solution(4, 5))
