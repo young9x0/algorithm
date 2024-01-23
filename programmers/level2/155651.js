@@ -1,77 +1,61 @@
 //https://school.programmers.co.kr/learn/courses/30/lessons/155651
 // 호텔 대실
+//해답: https://leejams.github.io/%ED%98%B8%ED%85%94%EB%8C%80%EC%8B%A4/
 function solution(book_time) {
-  let convertToNumber = book_time.map((book) => {
-    return [book[0].split(':').map(Number), book[1].split(':').map(Number)];
+  let room = [];
+  // console.log('book_time', book_time);
+  const convertToMinute = ([time, minute]) => {
+    return Number(time) * 60 + Number(minute);
+  };
+  const convertedBookTime = book_time.sort().map(([start, end]) => {
+    return [convertToMinute(start.split(':')), convertToMinute(end.split(':'))];
   });
-  // console.log('convertToNumber', convertToNumber);
-  let roomCount = 0;
-  const sortedBookTime = convertToNumber.sort((a, b) => {
-    if (a[0][0] === b[0][0]) {
-      if (a[0][1] > b[0][1]) {
-        return 1;
-      }
-      if (a[0][1] < b[0][1]) {
-        return -1;
-      }
-      if (a[0][1] === b[0][1]) {
-        roomCount++;
-        return;
-      }
-    }
+  // sort는 배열에 숫자가 있다면 string으로 변환해서 정렬을 시도함
+  // 따라서 숫자 자체를 정렬하려면 함수를 만들어주어야 함
+  // https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+  // convertedBookTime.sort((a, b) => {
+  //   if (a[0] > b[0]) {
+  //     return 1;
+  //   }
+  //   if (a[0] < b[0]) {
+  //     return -1;
+  //   } else {
+  //     if (a[1] > b[1]) {
+  //       return 1;
+  //     }
+  //     if (a[1] < b[1]) {
+  //       return -1;
+  //     }
+  //     return 0;
+  //   }
+  // });
 
-    if (a[0][0] > b[0][0]) {
-      return 1;
+  // console.log('convertedBookTime', convertedBookTime);
+
+  convertedBookTime.forEach(([start, end]) => {
+    // console.log('----start', start);
+    const findBeforeBookTimeIdx = room.findIndex((checkout) => checkout <= start);
+    // console.log('findBeforeBookTimeIdx', findBeforeBookTimeIdx);
+    if (findBeforeBookTimeIdx === -1) {
+      room.push(end + 10);
+    } else {
+      room[findBeforeBookTimeIdx] = end + 10;
     }
-    if (a[0][0] < b[0][0]) {
-      return -1;
-    }
-    if (a[0][0] === b[0][0]) {
-      roomCount++;
-    }
+    // console.log('room', room);
   });
-  // console.log('sortedBookTime', sortedBookTime);
-  // console.log('roomCount', roomCount);
 
-  if (book_time.length === roomCount + 1) {
-    return roomCount + 1;
-  }
-
-  for (let i = 0; i < book_time.length; i++) {
-    let lastTime = convertToNumber[i][1];
-    // console.log('----lastTime', lastTime);
-    for (let j = i + 1; j < book_time.length; j++) {
-      // console.log('convertToNumber[j][0]', convertToNumber[j][0]);
-      if (lastTime[0] < convertToNumber[j][0][0]) {
-        lastTime = convertToNumber[j][0];
-        convertToNumber[j][0] = convertToNumber[i][0];
-        // console.log('time check', convertToNumber);
-        roomCount--;
-        continue;
-      } else if (lastTime[0] === convertToNumber[j][0][0] && lastTime[1] + 10 <= convertToNumber[j][0][1]) {
-        lastTime = convertToNumber[j][0];
-        convertToNumber[j][0] = convertToNumber[i][0];
-        // console.log('minute check', convertToNumber);
-        roomCount--;
-        continue;
-      }
-    }
-    roomCount++;
-    // console.log('roomCount', roomCount);
-  }
-
-  return roomCount;
+  return room.length;
 }
 
-// console.log(
-//   solution([
-//     ['15:00', '17:00'],
-//     ['16:40', '18:20'],
-//     ['14:20', '15:20'],
-//     ['14:10', '19:20'],
-//     ['18:20', '21:20'],
-//   ]),
-// ); //3
+console.log(
+  solution([
+    ['15:00', '17:00'],
+    ['16:40', '18:20'],
+    ['14:20', '15:20'],
+    ['14:10', '19:20'],
+    ['18:20', '21:20'],
+  ]),
+); //3
 //
 // console.log(
 //   solution([
@@ -80,10 +64,10 @@ function solution(book_time) {
 //   ]),
 // ); //1
 //
-console.log(
-  solution([
-    ['10:20', '12:30'],
-    ['10:20', '12:30'],
-    ['10:20', '12:30'],
-  ]),
-); //3
+// console.log(
+//   solution([
+//     ['10:20', '12:30'],
+//     ['10:20', '12:30'],
+//     ['10:20', '12:30'],
+//   ]),
+// ); //3
