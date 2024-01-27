@@ -1,31 +1,25 @@
 //https://school.programmers.co.kr/learn/courses/30/lessons/42883
 //큰 수 만들기
+//해법:https://han-joon-hyeok.github.io/posts/programmers-making-the-biggest-number/
 
 function solution(number, k) {
-  let answer = '';
-  const splited = number.split('');
+  const stack = [];
 
-  function joinArr(fixedStr, idx) {
-    // console.log('joinArr fixedStr', fixedStr);
-    if (fixedStr.length === splited.length - k) {
-      // console.log('===answer', answer);
-      return (answer = String(Math.max(Number(answer), Number(fixedStr))));
+  for (const num of number) {
+    console.log('stack', stack);
+    console.log('num', num);
+    while (k > 0 && stack[stack.length - 1] < num) {
+      const popNum = stack.pop();
+      console.log('popNum', popNum);
+      k--;
+      console.log('k', k);
     }
-
-    for (let i = idx + 1; i < splited.length; i++) {
-      joinArr(fixedStr + splited[i], i);
-    }
+    stack.push(num);
+    console.log('push', stack);
   }
 
-  for (let i = 0; i < splited.length; i++) {
-    // console.log('===i', i);
-    for (let j = i + 1; j < splited.length; j++) {
-      joinArr(splited[i] + splited[j], j);
-    }
-  }
-
-  // console.log('answer', answer);
-  return answer;
+  stack.splice(stack.length - k, k);
+  return stack.join('');
 }
 
 // console.log(solution('1924', 2)); //"94"
