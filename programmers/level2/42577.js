@@ -1,34 +1,17 @@
 // https://school.programmers.co.kr/learn/courses/30/lessons/42577
 // 전화번호 목록
+// 해답: https://velog.io/@eldoradodo/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4-JavaScript-%EC%A0%84%ED%99%94%EB%B2%88%ED%98%B8-%EB%AA%A9%EB%A1%9D
 function solution(phone_book) {
-  let answer = true;
-  phone_book.sort()
+  phone_book.sort();
 
-  for (let i = 0; i < phone_book.length; i++) {
+  for (let i = 0; i < phone_book.length - 1; i++) {
     // console.log('i', i);
-    for (let j = i + 1; j < phone_book.length; j++) {
-      // console.log('j', j);
-
-      for (let k = 0; k < phone_book[i].length; k++) {
-        // console.log('phone_book[i][k]', phone_book[i][k]);
-        // console.log('phone_book[j][k]', phone_book[j][k]);
-        if (phone_book[i][k] !== phone_book[j][k]) {
-          // console.log('k', k);
-          // console.log('break');
-          break;
-        } else {
-          if (k === phone_book[i].length - 1) {
-            // console.log('return');
-            return (answer = false);
-          }
-          // console.log('continue');
-          continue;
-        }
-      }
+    if (phone_book[i] === phone_book[i + 1].substring(0, phone_book[i].length)) {
+      return false;
     }
   }
 
-  return answer;
+  return true;
 }
 
 // console.log(solution(['119', '97674223', '1195524421'])); //false
