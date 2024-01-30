@@ -2,6 +2,7 @@
 // 전화번호 목록
 function solution(phone_book) {
   let answer = true;
+  phone_book.sort()
 
   for (let i = 0; i < phone_book.length; i++) {
     // console.log('i', i);
