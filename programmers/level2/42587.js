@@ -1,39 +1,26 @@
 // https://school.programmers.co.kr/learn/courses/30/lessons/42587
 // 프로세스
+//해답: https://velog.io/@cyd5538/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4-%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4JS
 
 function solution(priorities, location) {
-  const originIdx = priorities.reduce((acc, cur, idx) => {
-    acc[idx] = cur;
-    return acc;
-  }, {});
+  let answer = 0;
+  const list = priorities.map((process, idx) => ({ process, idx }));
 
-  // console.log('originIdx', originIdx)
-  const list = [...priorities];
-  let keyList = Object.keys(originIdx).map(Number);
-  let temp = [list.shift()];
-  let keyTemp = [keyList.shift()];
-
-  while (list.length > 0) {
-    // console.log('temp', temp);
-    // console.log('list', list);
-    if (temp[0] >= list[0]) {
-      temp.push(list.shift());
-      keyTemp.push(keyList.shift());
-      // console.log('---temp', temp);
+  while (list.length) {
+    const queue = list.shift();
+    // console.log('queue', queue);
+    if (list.some((el) => el.process > queue.process)) {
+      list.push(queue);
       // console.log('list', list);
     } else {
-      list.push(...temp);
-      keyList.push(...keyTemp);
-      temp = [list.shift()];
-      keyTemp = [keyList.shift()];
-      // console.log('+++temp', temp);
-      // console.log('list', list);
+      answer++;
+      // console.log('answer', answer);
+      if (queue.idx === location) break;
     }
   }
 
-  // console.log('keyTemp',keyTemp)
-  return keyTemp.indexOf(location) + 1;
+  return answer;
 }
 
-console.log(solution([2, 1, 3, 2], 2)); //1
-// console.log(solution([1, 1, 9, 1, 1, 1]		, 0))//5
+// console.log(solution([2, 1, 3, 2], 2)); //1
+console.log(solution([1, 1, 9, 1, 1, 1]		, 0))//5
