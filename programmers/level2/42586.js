@@ -1,6 +1,6 @@
 //https://school.programmers.co.kr/learn/courses/30/lessons/42586
 //기능개발
-
+//해답: https://miiingo.tistory.com/355
 function solution(progresses, speeds) {
   const answer = [];
 
