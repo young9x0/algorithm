@@ -5,7 +5,7 @@ function solution(people, limit) {
   let answer = 0;
 
   const temp = [...people];
-
+  temp.sort((a,b)=> b-a)
   let weight = temp.shift();
   answer++;
   let idx = 0;
