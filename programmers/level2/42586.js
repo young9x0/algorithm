@@ -2,7 +2,7 @@
 //기능개발
 
 function solution(progresses, speeds) {
-  let answer = [];
+  const answer = [];
 
   const temp = [];
   progresses.forEach((progress, idx) => {
@@ -20,7 +20,7 @@ function solution(progresses, speeds) {
   let first = temp.shift();
   let deployLen = 1;
   while (temp.length > 0) {
-    if (first > temp[0]) {
+    if (first >= temp[0]) {
       temp.shift();
       deployLen++;
       // console.log('add');
@@ -37,4 +37,5 @@ function solution(progresses, speeds) {
 }
 
 // console.log(solution([93, 30, 55], [1, 30, 5])); //[2, 1]
-console.log(solution([95, 90, 99, 99, 80, 99]		, [1, 1, 1, 1, 1, 1]		))//[1,3,2]
+// console.log(solution([95, 90, 99, 99, 80, 99]		, [1, 1, 1, 1, 1, 1]		))//[1,3,2]
+console.log(solution([95, 99, 99, 99], [1, 1, 1, 1])); //[1,3,2]
