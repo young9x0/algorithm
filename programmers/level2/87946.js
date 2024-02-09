@@ -3,42 +3,35 @@
 
 function solution(k, dungeons) {
   let answer = -1;
+  const visited = new Array(dungeons.length).fill(0);
+  function dfs(k, cnt) {
+    console.log('dfs---');
+    console.log('k', k);
+    console.log('cnt', cnt);
 
-  function recursive(result, remain) {
-    // console.log('result', result);
-    // console.log('remain', remain);
+    answer = Math.max(cnt, answer);
 
-    if (result.length === dungeons.length) {
-      // console.log('----result', result);
-      let power = k;
-      const count = result.reduce((acc, cur) => {
-        if (power >= cur[0]) {
-          power -= cur[1];
-          acc++;
-        }
-        // console.log('acc', acc);
-        return acc;
-      }, 0);
-
-      answer = Math.max(answer, count);
-      return;
-    }
-
-    for (let i = 0; i < remain.length; i++) {
-      const rCopy = Array.from(result, ([a, b]) => [a, b]);
-      const newResult = [...rCopy, [remain[i][0], remain[i][1]]];
-      const rest = remain.filter((_, idx) => idx !== i);
-      recursive(newResult, [...rest]);
+    for (let i = 0; i < dungeons.length; i++) {
+      console.log('===i', i);
+      console.log('visited', visited);
+      console.log('dungeons[i]', dungeons[i]);
+      if (k >= dungeons[i][0] && !visited[i]) {
+        visited[i] = 1;
+        console.log('go!');
+        let power = cnt + 1;
+        console.log('power', power);
+        // cnt+1: for 반복문과 상관없이 고정된 값이 dfs 함수의 매개변수로 넘어간다
+        // cnt++: for 반복문이 한바퀴 돌고나서 cnt값이 1 증가
+        // ++cnt:for 반복문을 기준으로 값이 증가한 후 한바퀴를 돈다
+        dfs(k - dungeons[i][1], power);
+        console.log('---');
+        visited[i] = 0;
+      }
+      console.log('pass!');
     }
   }
 
-  for (let i = 0; i < dungeons.length; i++) {
-    const dCopy = Array.from(dungeons, ([a, b]) => [a, b]);
-    const temp = [[dCopy[i][0], dCopy[i][1]]];
-    const rest = dCopy.filter((_, idx) => idx !== i);
-    recursive(temp, [...rest]);
-  }
-
+  dfs(k, 0);
   return answer;
 }
 
