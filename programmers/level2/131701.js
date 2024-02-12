@@ -2,30 +2,28 @@
 // 연속 부분 수열 합의 개수
 
 function solution(elements) {
-  let answer = 0;
   const sumSet = new Set();
 
   function sum(list) {
     // console.log('list', list);
     for (let i = 0; i < elements.length; i++) {
-      const dp = Array(elements.length).fill(0);
-      dp[0] = list[i];
-      sumSet.add(dp[0]);
+      let prev = list[i];
+      sumSet.add(prev);
+
       for (let j = i + 1; j < elements.length; j++) {
-        const sum = dp[j - 1] + list[j];
+        const sum = prev + list[j];
         // console.log('sum', sum)
         if (!sumSet.has(sum)) {
           sumSet.add(sum);
         }
 
-        dp[j] = sum;
+        prev = sum;
       }
-      // console.log('dp', dp);
       // console.log('sumSet', sumSet);
     }
   }
 
-    const temp = [...elements];
+  const temp = [...elements];
   for (let i = 0; i < elements.length; i++) {
     const first = temp.shift();
     temp.push(first);
