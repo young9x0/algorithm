@@ -1,7 +1,4 @@
 def solution(array):
-  if len(array) == 1:
-    return 1
-
   dict={}
   for key in array:
     dict[key]=0
