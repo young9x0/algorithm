@@ -1,27 +1,17 @@
 def solution(array):
-  dict={}
-  for key in array:
-    dict[key]=0
+  print(set(array))
+  while len(array) != 0:
+    print('start', array)
+    for i, a in enumerate(set(array)):
+      print('i,a',i, a)
+      array.remove(a)
+    print('array', array)
+    print('i', i)
+    if i == 0:
+      print('a',a)
+      return a
 
-  for num in array:
-    dict[num] += 1
-
-
-  sdict = sorted(dict.items(), key=lambda item: item[1], reverse=True)
-
-  answer = 0
-  max = 0
-  for key, val in sdict:
-    # print('key, val', key, val)
-    # print('max', max)
-    if max < val:
-      max = val
-      answer = key
-    elif max == val:
-      return -1
-
-
-  return answer
+  return -1
 
 # print(solution([1, 2, 3, 3, 3, 4]))
 print(solution([1, 1, 2, 2]))
