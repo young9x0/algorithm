@@ -1,12 +1,11 @@
 def solution(common):
-  [fir, sec, thr, *rest] = common
-  last = common[len(common)-1]
+  fir, sec, thr = common[:3]
   minus = sec - fir
 
   if sec + minus == thr:
-    return last + minus
+    return common[-1] + minus
   else:
-    return last * (sec/fir)
+    return common[-1] * (sec/fir)
 
 
 
