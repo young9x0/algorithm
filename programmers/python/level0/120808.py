@@ -1,21 +1,12 @@
 def solution(numer1, denom1, numer2, denom2):
-  gcd = findGCD(denom2, denom1)
-  gcd2=1
-  nVal = 1
-  dVal=1
+  # denominator 분모
+  # numerator 분자
 
-  if gcd == 1:
-    nVal = numer1*denom2 + numer2*denom1
-    dVal = denom1*denom2
-    gcd2 = findGCD(nVal, dVal)
-  else:
-    multi1 = denom1 // gcd
-    multi2 = denom2 // gcd
-    nVal = numer1 * multi2+numer2*multi1
-    dVal = multi2 * multi1 * gcd
-    gcd2 = findGCD(nVal, dVal)
+  denom = denom1* denom2
+  numer =  numer1 * denom2 + numer2 * denom1
 
-  return [nVal//gcd2, dVal//gcd2]
+  gcd = findGCD(numer, denom)
+  return [numer//gcd, denom//gcd]
 
 # greatest common divisor
 def findGCD(a,b):
@@ -24,7 +15,7 @@ def findGCD(a,b):
   elif a % b == 1:
     return a%b
   else:
-    return findGCD(b, a%b )
+    return findGCD(b, a%b)
 
 # print(solution(1,	2,	3,	4))
 print(solution(9,	2,	1,	3))
