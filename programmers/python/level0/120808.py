@@ -1,26 +1,32 @@
 def solution(numer1, denom1, numer2, denom2):
-  lcm = findLCM(denom2, denom1)
+  gcd = findGCD(denom2, denom1)
+  gcd2=1
+  nVal = 1
+  dVal=1
 
-  if lcm == 1:
-    return [numer1*denom2 + numer2*denom1, denom1*denom2]
+  if gcd == 1:
+    nVal = numer1*denom2 + numer2*denom1
+    dVal = denom1*denom2
+    gcd2 = findGCD(nVal, dVal)
   else:
-    multi1 = denom1 // lcm
-    multi2 = denom2 // lcm
-    return [numer1 * multi2+numer2*multi1, multi2 * multi1 * lcm ]
+    multi1 = denom1 // gcd
+    multi2 = denom2 // gcd
+    nVal = numer1 * multi2+numer2*multi1
+    dVal = multi2 * multi1 * gcd
+    gcd2 = findGCD(nVal, dVal)
 
+  return [nVal//gcd2, dVal//gcd2]
 
-
-
-# least common multiple
-def findLCM(a,b):
+# greatest common divisor
+def findGCD(a,b):
   if a % b == 0:
     return b
   elif a % b == 1:
-    return 1
+    return a%b
   else:
-    findLCM(b, a%b )
+    return findGCD(b, a%b )
 
-print(solution(1,	2,	3,	4))
+# print(solution(1,	2,	3,	4))
 print(solution(9,	2,	1,	3))
 
 # 1	2	3	4	[5, 4]
