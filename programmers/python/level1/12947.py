@@ -1,6 +1,5 @@
-def solution(x):
-  sVal = sum(list(map(int, str(x))))
-  return x % sVal == 0
+def solution(n):
+  return n % sum(int(x) for x in str(n)) == 0
 
 
 print(solution(10))
