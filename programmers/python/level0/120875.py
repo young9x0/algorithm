@@ -7,13 +7,7 @@ def solution(dots):
   c= checkGradient( [[x1, y1], [x4, y4]], [[x3, y3], [x2, y2] ])
 
 
-  if a or b or c:
-    return 1
-  else:
-    return 0
-
-
-  return answer
+  return 1 if a or b or c else 0
 
 def checkGradient(line1, line2):
   [x1, y1], [x2, y2] = line1
