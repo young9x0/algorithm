@@ -1,16 +1,13 @@
 def solution(number):
   answer = 0
-  for i, num in enumerate(number):
-    j = i +1
-    while j < len(number):
-      k = j +1
-      while k < len(number):
-        # print('i,j,k', i,j,k)
-        # print('number[i] + number[j] + number[k]',num ,number[j] , number[k])
-        if num + number[j] + number[k] == 0:
+
+  l = len(number)
+  for i in range(l-2):
+   for j in range(i+1, l-1):
+     for k in range(j+1, l):
+        # print(i,j,k)
+        if number[i] + number[j] + number[k] == 0:
           answer += 1
-        k += 1
-      j+=1
 
   return answer
 
