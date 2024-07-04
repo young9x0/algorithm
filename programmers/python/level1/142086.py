@@ -1,24 +1,20 @@
 def solution(s):
   answer = []
-  dict = {}
-  for w in s:
-    dict[w] = -1
-
-  for idx, word in enumerate(list(s)):
-    if dict[word] == -1:
-      dict[word] = idx
+  dic = dict()
+  print(dic)
+  for i in range(len(s)):
+    if s[i] not in dic:
       answer.append(-1)
     else:
-      # print('word,dict[word]',word, dict[word])
-      # print('idx',idx)
-      answer.append(idx -dict[word])
-      dict[word] = idx
-  print(dict)
+      print(i,dic[s[i]] )
+      answer.append(i - dic[s[i]])
+
+    dic[s[i]] = i
 
   return answer
 
-# print(solution("banana"))
-print(solution("foobar"))
+print(solution("banana"))
+# print(solution("foobar"))
 
 # "banana"	[-1, -1, -1, 2, 2, 2]
 # "foobar"	[-1, -1, 1, -1, -1, -1]
