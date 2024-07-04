@@ -1,7 +1,5 @@
 def solution(price, money, count):
-
-  answer= (sum(i for i in range(count+1)) *price) -money
-  return 0 if answer <0 else answer
+  return max(0, price * (count +1) * count // 2 - money)
 
 print(solution(3,	20,	4))
 
