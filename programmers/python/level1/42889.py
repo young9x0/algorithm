@@ -1,41 +1,14 @@
 def solution(N, stages):
-
+  result = {}
   userLen = len(stages)
-  dict = {}
-  i = 1
-
-  while i <= N:
-   dict[i] =[ 0, userLen]
-   i+=1
-
-
-  for  stage in (stages):
-    if stage == N+1:
-      continue
-
+  for stage in range(1,N+1):
+    if userLen !=0:
+      cnt = stages.count(stage)
+      result[stage] = cnt/userLen
+      userLen -= cnt
     else:
-      dict[stage][0] += 1
-
-
-  for key, value in dict.items():
-    if key == 1:
-      continue
-    else:
-      dict[key][1] = dict[key-1][1] - dict[key-1][0]
-
-  # print(dict)
-
-
-  for key, value in dict.items():
-    dict[key] = (value[0]/ value[1])
-
-  result = sorted(dict.items(), key= lambda x: x[1], reverse=True)
-  # print(result)
-  answer = []
-  for (key, value) in result:
-    answer.append(key)
-
-  return answer
+      result[stage] = 0
+  return sorted(result, key= lambda x: result[x], reverse=True)
 
 print(solution(5,	[2, 1, 2, 6, 2, 4, 3, 3]))
 # print(solution( 4,	[4,4,4,4,4]))
