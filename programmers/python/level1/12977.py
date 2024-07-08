@@ -1,31 +1,22 @@
-def solution(nums):
-  nLen = len(nums)
-  sList = []
-  for idx, num in enumerate(nums):
-    for sIdx in range(idx+1, nLen):
-      for tIdx in range(sIdx+1, nLen):
-       sList.append(sum([num, nums[sIdx], nums[tIdx]]))
-
-  sList.sort()
-  print(sList)
-  pList = [num  for num in range(4, sList[-1]+1)]
-  for divide in range(2, sList[-1]+1):
-    for num in pList:
-      if num != divide and num % divide == 0:
-        pList.remove(num)
-
-  # print(pList)
-
+from itertools import combinations
+def prime_number(num):
   answer = 0
-  for pNum in pList:
-    for sNum in sList:
-      if sNum == pNum:
-        answer +=1
+  for i in range(1, int(num**0.5)+1):
+    print('num', num)
+    print('i', i)
+    if num%i == 0:
+      answer += 1
+  print('answer', answer)
+  return 1 if answer == 1 else 0
 
-  return answer
+
+def solution(nums):
+  return sum([prime_number(sum(sNum)) for sNum in combinations(nums, 3)])
 
 
-# print(solution([1,2,3,4]))
-print(solution([1,2,7,6,4]))
+
+
+print(solution([1,2,3,4]))
+# print(solution([1,2,7,6,4]))
 # [1,2,3,4]	1
 # [1,2,7,6,4]	4
