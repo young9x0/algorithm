@@ -6,7 +6,8 @@ def solution(nums):
       for tIdx in range(sIdx+1, nLen):
        sList.append(sum([num, nums[sIdx], nums[tIdx]]))
 
-  # print(sList)
+  sList.sort()
+  print(sList)
   pList = [num  for num in range(4, sList[-1]+1)]
   for divide in range(2, sList[-1]+1):
     for num in pList:
