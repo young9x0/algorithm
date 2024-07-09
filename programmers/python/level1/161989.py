@@ -1,10 +1,15 @@
 import math
 def solution(n, m, section):
-  first, *rest, last = section
-  # print(first, last)
-  sLen = last - first +1
-  # print(math.ceil(sLen / m))
-  return math.ceil(sLen / m)
+  section.sort(reverse=True)
+
+  idx = 0
+  cnt = 1
+  while idx < len(section)-1:
+    cnt += section[idx] - section[idx+1]
+    idx += 1
+  # print(cnt)
+  return math.ceil(cnt / m)
+
 
 print(solution(8,	4,	[2, 3, 6]))
 print(solution( 5,	4,	[1, 3]))
