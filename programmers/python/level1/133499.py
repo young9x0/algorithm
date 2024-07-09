@@ -1,33 +1,17 @@
-import re
 def solution(babbling):
-
-
-  reg = re.compile('aya|ye|woo|ma')
   answer = 0
-
   for ba in babbling:
-    result = reg.findall(ba)
-    cnt = 0
-
-
-    # print('result', result)
-    for ex in set(result):
-      cnt += len(ex)
-
-
-    # print('ba, cnt', ba, cnt)
-    if len(ba) == cnt:
-      # print('same len')
+    for wo in ['aya','ye','woo','ma']:
+      if wo*2 not in ba:
+        ba = ba.replace(wo,' ')
+    if len(ba.strip()) == 0:
       answer += 1
-
-    else:
-      # print('different len')
-      continue
 
 
   return answer
 
+print(solution(["aywa", "yemae", "aauy", "mawaoo"]))
 print(solution(["aya", "yee", "u", "maa"]))
-# print(solution(["ayaye", "uuu", "yeye", "yemawoo", "ayaayaa"]))
+print(solution(["ayaye", "uuu", "yeye", "yemawoo", "ayaayaa"]))
 # ["aya", "yee", "u", "maa"]	1
 # ["ayaye", "uuu", "yeye", "yemawoo", "ayaayaa"]	2
