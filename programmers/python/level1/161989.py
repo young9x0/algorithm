@@ -1,24 +1,11 @@
 def solution(n, m, section):
-  dict = {}
-  for sec in section:
-    dict[sec] = 0
-
   answer = 1
   idx = section[0] -1
-  for key, val in dict.items():
-    # print('key, val', key, val)
-    if  val == 1:
-      continue
-    else:
-      # print('idx', idx)
-      # print('idx + m', idx + m)
-      if idx + m >= key:
-        if dict[key] == 0:
-          dict[key] = 1
-      else:
-        # print('next')
-        answer+=1
-        idx += m
+  for key in section:
+    if idx + m < key:
+      # print('next')
+      answer+=1
+      idx += m
 
   return answer
 
