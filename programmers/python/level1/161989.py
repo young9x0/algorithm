@@ -1,19 +1,30 @@
-import math
 def solution(n, m, section):
-  section.sort(reverse=True)
+  temp = [0]*(n+1)
+  for sec in section:
+    temp[sec] = 1
 
-  idx = 0
-  cnt = 1
-  while idx < len(section)-1:
-    cnt += section[idx] - section[idx+1]
-    idx += 1
-  # print(cnt)
-  return math.ceil(cnt / m)
+  answer = 0
+  while sum(temp) > 0:
+    for idx in range(section[0], section[-1]+1):
+      flag = False
+      for lIdx in range(idx, min(idx+m, n+1)):
+        # print('temp[lIdx]', temp[lIdx])
+        if temp[lIdx] == 1:
+          temp[lIdx] = 0
+          flag = True
+
+      # print('flag', flag)
+      # print('temp', temp)
+      if flag:
+        answer+=1
+
+  return answer
+
 
 
 print(solution(8,	4,	[2, 3, 6]))
-print(solution( 5,	4,	[1, 3]))
-print(solution( 4,	1,	[1, 2, 3, 4]))
+# print(solution( 5,	4,	[1, 3]))
+# print(solution( 4,	1,	[1, 2, 3, 4]))
 # 8	4	[2, 3, 6]	2
 # 5	4	[1, 3]	1
 # 4	1	[1, 2, 3, 4]	4
