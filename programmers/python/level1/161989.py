@@ -1,11 +1,10 @@
 def solution(n, m, section):
   answer = 1
-  idx = section[0] -1
-  for key in section:
-    if idx + m < key:
-      # print('next')
-      answer+=1
-      idx += m
+  prev = section[0]
+  for sec in section:
+    if sec - prev >= m:
+      prev = sec
+      answer += 1
 
   return answer
 
