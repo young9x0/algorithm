@@ -5,28 +5,20 @@ def solution(answers):
     3:[3,3,1,1,2,2,4,4,5,5]
   }
 
-  score={
-    1:0,
-    2:0,
-    3:0
-  }
+  score=[0,0,0]
 
-  for key in score.keys():
+  for key, value in enumerate(score):
     for idx, answer in enumerate(answers):
-      if (answer ==  pattern[key][idx % len(pattern[key])]):
+      if (answer ==  pattern[key+1][idx % len(pattern[key+1])]):
         score[key] += 1
 
   # print('score', score)
-  max = 0
-  result = []
-  for key, value in score.items():
-      if max < value:
-        max = value
 
-  # print('max',max)
-  for key, value in score.items():
-   if max == value:
-    result.append(key)
+  result = []
+  for idx, value in enumerate(score):
+      if value == max(score):
+        result.append(idx+1)
+
 
   return result
 
