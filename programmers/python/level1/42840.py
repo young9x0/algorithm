@@ -13,9 +13,11 @@ def solution(answers):
 
   for key in score.keys():
     for idx, answer in enumerate(answers):
-      if answer ==  pattern[key][idx-len(pattern[key])]:
+      if (idx>0 and idx % len(pattern[key]) == 0 and answer ==  pattern[key][-1]) or (answer ==  pattern[key][idx % len(pattern[key])]):
         score[key] += 1
 
+
+  # print('score', score)
   max = 0
   result = []
   for key, value in score.items():
