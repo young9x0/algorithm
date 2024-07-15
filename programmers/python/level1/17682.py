@@ -34,12 +34,12 @@ def solution(dartResult):
     # print('str', str)
     # print('temp', temp)
     if str == '#':
-        if idx == 2:
-          temp[1] *= -1
+        if idx == 1:
+          temp[0] *= -1
         elif idx == len(strList) -1:
           temp[2] *= -1
         else:
-          temp[0] *= -1
+          temp[1] *= -1
 
     if str == '*':
       if idx == 1:
@@ -56,11 +56,11 @@ def solution(dartResult):
   return sum(temp)
 
 # print(solution('1S2D*3T'))
-# print(solution('1D2S#10S'))
-# print(solution('1D2S0T'))
-# print(solution('1S*2T*3S'))
-# print(solution('1D#2S*3S'))
-# print(solution('1T2D3D#'))
+print(solution('1D2S#10S'))
+print(solution('1D2S0T'))
+print(solution('1S*2T*3S'))
+print(solution('1D#2S*3S'))
+print(solution('1T2D3D#'))
 print(solution('1D2S3T*'))
 
 # 1	1S2D*3T	37	11 * 2 + 22 * 2 + 33
