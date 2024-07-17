@@ -1,27 +1,35 @@
+from collections import deque
 def solution(s):
+  q = deque(s)
+  print(q)
   answer = 0
-  save1 = 0
-  save2 = 0
-  print('s',s)
-  for ch in s:
-    print('---ch',ch)
-    print('save1',save1,s[save1])
-    print('save2',save2,s[save2])
-    if save1 == save2:
-      answer += 1
-      target = ch
 
-    print('target:', target)
-    if ch == target:
-      save1 += 1
-    else:
-      save2 += 1
+  print('s',s)
+  while q:
+    a, b = 1, 0
+    print('---q',q)
+    target = q.popleft()
+
+    while q:
+      other = q.popleft()
+      print('target',target)
+      print('other',other)
+      if target == other:
+        a+=1
+      else:
+        b+=1
+
+      print('a:',a)
+      print('b:',b)
+      if a == b:
+        answer+=1
+        break
 
   return answer
 
-print(solution("bznako"))
+# print(solution("bznako"))
 # print(solution("abracadabra"))
-# print(solution("aaabbaccccabba"))
+print(solution("aaabbaccccabba"))
 # "banana"	3
 # "abracadabra"	6
 # "aaabbaccccabba"	3
