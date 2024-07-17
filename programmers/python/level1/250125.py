@@ -1,13 +1,13 @@
 def solution(board, h, w):
   answer = 0
-  if h-1>=0 and board[h][w] == board[h-1][w]:
-    answer += 1
-  if h+1<len(board) and board[h][w] == board[h+1][w]:
-    answer += 1
-  if w-1>=0 and board[h][w] == board[h][w-1]:
-    answer += 1
-  if w+1<len(board) and  board[h][w] == board[h][w+1]:
-    answer += 1
+  length = len(board)
+  dh, dw = [0,1-1,0],[1,0,0,-1]
+
+  for idx in range(4):
+    h_check, w_check = h+dh[idx], w+dw[idx]
+    if 0 <= h_check < length and 0 <= w_check < length:
+      if board[h][w] == board[h_check][w_check]:
+        answer += 1
 
   return answer
 
