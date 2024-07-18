@@ -1,23 +1,17 @@
 def solution(X, Y):
-  temp = ''
-  x_idx = 0
+  answer = ''
 
-  while len(X) > x_idx and len(Y) > 0:
-    if X[x_idx] in Y:
-      temp += X[x_idx]
-      Y = Y.replace(X[x_idx],'',1)
-        # print('Y',Y)
-    x_idx += 1
+  for idx in range(9, -1, -1):
+    # print(idx)
+    answer += str(idx) * min(X.count(str(idx)), Y.count(str(idx)))
 
-  # print('temp',temp)
-  if len(temp) == 0:
-    return "-1"
-  elif int(temp) == 0:
-    return "0"
+  if answer == '':
+    return '-1'
+  elif len(answer) == answer.count('0'):
+    return '0'
   else:
-    sorted_temp = sorted(temp, reverse=True)
-    # print(sorted_temp)
-    return ''.join(sorted_temp)
+    return answer
+
 
 
 print(solution("100"	,"2345"))
