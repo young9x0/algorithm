@@ -1,13 +1,11 @@
 def solution(X, Y):
-  x_list = sorted([int(ch) for ch in X], reverse=True)
-  sorted_x = ''.join(map(lambda x: str(x), x_list))
-  # print(sorted_x)
   temp = ''
   x_idx = 0
+
   while len(X) > x_idx and len(Y) > 0:
-    if sorted_x[x_idx] in Y:
-      temp += sorted_x[x_idx]
-      Y = Y.replace(sorted_x[x_idx],'',1)
+    if X[x_idx] in Y:
+      temp += X[x_idx]
+      Y = Y.replace(X[x_idx],'',1)
         # print('Y',Y)
     x_idx += 1
 
@@ -17,7 +15,9 @@ def solution(X, Y):
   elif int(temp) == 0:
     return "0"
   else:
-    return temp
+    sorted_temp = sorted(temp, reverse=True)
+    # print(sorted_temp)
+    return ''.join(sorted_temp)
 
 
 print(solution("100"	,"2345"))
