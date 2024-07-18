@@ -1,25 +1,23 @@
 def solution(X, Y):
-  x_list = sorted([int(str) for str in X], reverse=True)
-  y_list = sorted([int(str) for str in Y], reverse=True)
-  # print(x_list)
-  temp = []
+  x_list = sorted([int(ch) for ch in X], reverse=True)
+  sorted_x = ''.join(map(lambda x: str(x), x_list))
+  # print(sorted_x)
+  temp = ''
   x_idx = 0
-  while len(x_list) > x_idx and len(y_list) > 0:
-    # print('x_idx', x_idx)
-    # print('y_list', y_list)
-    for y_num in y_list:
-      if x_list[x_idx] == y_num:
-        temp.append(x_list[x_idx])
-        y_list.remove(y_num)
+  while len(X) > x_idx and len(Y) > 0:
+    if sorted_x[x_idx] in Y:
+      temp += sorted_x[x_idx]
+      Y = Y.replace(sorted_x[x_idx],'',1)
+        # print('Y',Y)
     x_idx += 1
 
-  # print(temp)
+  # print('temp',temp)
   if len(temp) == 0:
     return "-1"
-  elif sum(temp) == 0:
+  elif int(temp) == 0:
     return "0"
   else:
-    return ''.join(map(lambda x: str(x), temp))
+    return temp
 
 
 print(solution("100"	,"2345"))
