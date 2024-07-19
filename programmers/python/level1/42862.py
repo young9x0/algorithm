@@ -5,6 +5,9 @@ def solution(n, lost, reserve):
   # print(r_dict)
 
   for num in lost:
+    if num in reserve:
+      r_dict[num] = 1
+      continue
     if (num - 1) in reserve:
       r_dict[num-1] = 1
       continue
