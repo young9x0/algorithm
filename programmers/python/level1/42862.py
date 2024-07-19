@@ -7,6 +7,9 @@ def solution(n, lost, reserve):
   for num in lost:
     if (num - 1) in reserve:
       r_dict[num-1] = 1
+      continue
+    if (num + 1) in reserve:
+      r_dict[num+1] = 1
 
   # print(r_dict)
   # print(sum(r_dict.values()))
