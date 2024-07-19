@@ -1,24 +1,16 @@
 def solution(n, lost, reserve):
-  r_dict = {}
-  for key in reserve:
-    if key not in lost:
-      r_dict[key] = 0
-    else:
-      r_dict[key] = 1
-  print(r_dict)
-  for num in sorted(lost):
-    if num in reserve:
-      continue
-    if (num - 1) in reserve and r_dict[num-1] == 0:
-      r_dict[num-1] = 1
-      continue
-    if (num + 1) in reserve and r_dict[num+1] == 0:
-      r_dict[num+1] = 1
+  _reserve = [r for r in reserve if r not in lost]
+  _lost = [r for r in lost if r not in reserve]
 
-  print(r_dict)
-  # print(sum(r_dict.values()))
+  for r in _reserve:
+    f = r-1
+    b = r+1
 
-  return n - (len(lost) - sum(r_dict.values()))
+    if f in _lost:
+      _lost.remove(f)
+    if b in _lost:
+      _lost.remove(b)
+  return n - len(_lost)
 
 # print(solution(5,	[2, 4],	[1, 3, 5]))
 # print(solution(5,	[2, 4],	[3]))
