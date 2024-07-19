@@ -5,13 +5,13 @@ def solution(n, lost, reserve):
   # print(r_dict)
 
   for num in lost:
-    if num in reserve:
+    if num in reserve and r_dict[num] == 0:
       r_dict[num] = 1
       continue
-    if (num - 1) in reserve:
+    if (num - 1) in reserve and r_dict[num-1] == 0:
       r_dict[num-1] = 1
       continue
-    if (num + 1) in reserve:
+    if (num + 1) in reserve and r_dict[num+1] == 0:
       r_dict[num+1] = 1
 
   # print(r_dict)
