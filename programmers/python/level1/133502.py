@@ -1,20 +1,13 @@
 def solution(ingredient):
-
   cnt = 0
-  ingredient_str = ''.join(str(ch) for ch in ingredient)
+  temp = []
 
-  idx = 0
-  while idx < len(ingredient_str):
-    # print('---',ingredient_str[idx])
-    # print('ingredient_str',ingredient_str)
-    if ingredient_str[idx:idx+4] == '1231':
-      # print('hello')
+  for i in ingredient:
+    temp.append(i)
+    if temp[-4:] == [1,2,3,1]:
       cnt += 1
-      ingredient_str = ingredient_str[:idx] + ingredient_str[idx+4:]
-      idx = 0
-    else:
-      idx += 1
-
+      for n in range(4):
+        temp.pop()
   return cnt
 
 # print(solution([2, 1, 1, 2, 3, 1, 2, 3, 1]))
