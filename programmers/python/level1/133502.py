@@ -1,42 +1,19 @@
 def solution(ingredient):
-  cnt = 0
-  in_dict = {}
-  order = [1,2,3,1]
-  cur_idx = 0
 
-  for idx, num in enumerate(ingredient):
-    in_dict[idx] = 1
+  cnt = 0
+  ingredient_str = ''.join(str(ch) for ch in ingredient)
 
   idx = 0
-  while idx < len(ingredient):
-    # print('-----idx',idx, 'ingredient[idx]', ingredient[idx])
-    # print('cur_idx', cur_idx, 'order[cur_idx]',order[cur_idx])
-    # print('in_dict[idx]', in_dict[idx])
-    if in_dict[idx] == 0:
-      idx += 1
-      continue
-
-    if ingredient[idx] == order[cur_idx]:
-      # print('hello', cur_idx)
-      if cur_idx == 3:
-        cnt += 1
-        for i in range(4):
-          # print('i',i, idx-i)
-          in_dict[idx-i] = 0
-        # print('in_dict',in_dict)
-        idx, cur_idx = 0, 0
-        continue
-
-      cur_idx += 1
+  while idx < len(ingredient_str):
+    # print('---',ingredient_str[idx])
+    # print('ingredient_str',ingredient_str)
+    if ingredient_str[idx:idx+4] == '1231':
+      # print('hello')
+      cnt += 1
+      ingredient_str = ingredient_str[:idx] + ingredient_str[idx+4:]
+      idx = 0
     else:
-      # print('reset')
-      if cur_idx > 0:
-        cur_idx = 0
-        continue
-
-    idx += 1
-    # print('in_dict', in_dict)
-
+      idx += 1
 
   return cnt
 
