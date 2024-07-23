@@ -22,7 +22,8 @@ def solution(board, moves):
       temp.pop(idx+1)
       temp.pop(idx)
       # print('temp', temp)
-      idx -= 1
+      if idx > 0:
+        idx -= 1
       continue
     else:
       idx += 1
