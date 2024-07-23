@@ -18,18 +18,13 @@ def solution(survey, choices):
     'A':0,
     'N':0,
   }
-  # survey_score={
-  #   'RT':(0,0),
-  #   'CF':(0,0),
-  #   'JM':(0,0),
-  #   'AN':(0,0)
-  # }
+
 
   for idx,type in enumerate(survey):
     if choices[idx] > 4:
-      survey_score[type[1]] = choice_dict[choices[idx]]
+      survey_score[type[1]] += choice_dict[choices[idx]]
     elif choices[idx] < 4:
-      survey_score[type[0]] = choice_dict[choices[idx]]
+      survey_score[type[0]] += choice_dict[choices[idx]]
 
   # print(survey_score)
   def check_score(val1,val2):
