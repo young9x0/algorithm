@@ -2,18 +2,39 @@ import re
 
 def solution(new_id):
   # print(new_id)
-  first = new_id.lower()
-  second = re.sub('[^a-z0-9-_.]','',first)
-  # print('s:',second)
-  third = re.sub('[.]+','.',second)
-  fourth = re.sub('^[.]|[.]$',"",third)
-  fifth = "a" if fourth == "" else fourth
-  sixth = re.sub('^[.]|[.]$',"",fifth[:15])
-  answer = sixth.ljust(3,sixth[-1])
+  new_id = new_id.lower()
+  answer = ''
+  for ch in new_id:
+    if ch.isalpha() or ch.isdigit() or ch in ['-','_','.']:
+      answer += ch
+
+  while '..' in answer:
+    answer = answer.replace('..','.')
+
+  # print(answer)
+  if len(answer) > 0:
+    if answer[0] == '.':
+     answer = answer[1:] if len(answer) > 1 else '.'
+
+    if answer[-1] == '.':
+      answer = answer[:-1]
+
+  # print(answer)
+  if answer == '':
+    answer = 'a'
+
+  if len(answer)>15:
+    answer = answer[:15]
+    if answer[-1] == '.':
+      answer = answer[:-1]
+
+  while len(answer) <3:
+    answer += answer[-1]
 
   return answer
 
-print(solution("...!@BaT#*..y.abcdefghijklm"))
+print(solution("=="))
+# print(solution("...!@BaT#*..y.abcdefghijklm"))
 # print(solution("z-+.^."))
 # print(solution("=.="))
 # print(solution("123_.def"))
