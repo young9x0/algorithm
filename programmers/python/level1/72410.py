@@ -13,7 +13,7 @@ def solution(new_id):
 
   # print(answer)
   if len(answer) > 0:
-    if len(answer) > 0 and answer[0] == '.':
+    if answer[0] == '.':
      answer = answer[1:] if len(answer) > 1 else '.'
 
     if answer[-1] == '.':
