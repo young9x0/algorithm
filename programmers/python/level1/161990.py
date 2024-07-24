@@ -1,14 +1,12 @@
 def solution(wallpaper):
-  answer = [50,50,0,0]
-  for row, line in enumerate(wallpaper):
-    for col, paper in enumerate(line):
-      if paper == '#':
-        # print('paper', row, col)
-        answer[:2] = min(row, answer[0]), min(col, answer[1])
-        answer[2:] = max(row+1, answer[2]), max(col+1, answer[3])
-        # print('answer',answer)
+  on, off = [],[]
+  for row in range(len(wallpaper)):
+    for col in range(len(wallpaper[row])):
+      if wallpaper[row][col] == '#':
+        on.append(row)
+        off.append(col)
 
-  return answer
+  return [min(row), min(col), max(row)+1, max(col)+1]
 
 # print(solution([".#...",
 #                 "..#..",
