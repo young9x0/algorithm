@@ -9,9 +9,8 @@ def solution(new_id):
   fourth = re.sub('^[.]|[.]$',"",third)
   fifth = "a" if fourth == "" else fourth
   sixth = re.sub('^[.]|[.]$',"",fifth[:15])
-  answer = sixth
-  while len(answer) < 3:
-    answer += answer[-1]
+  answer = sixth.ljust(3,sixth[-1])
+
   return answer
 
 print(solution("...!@BaT#*..y.abcdefghijklm"))
