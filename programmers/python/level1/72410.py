@@ -11,11 +11,14 @@ def solution(new_id):
   while '..' in answer:
     answer = answer.replace('..','.')
 
-  if answer[0] == '.':
-    answer = answer[1:] if len(answer) > 1 else '.'
+  # print(answer)
+  if len(answer) > 0:
+    if len(answer) > 0 and answer[0] == '.':
+     answer = answer[1:] if len(answer) > 1 else '.'
 
-  if answer[-1] == '.':
-    answer = answer[:-1]
+    if answer[-1] == '.':
+      answer = answer[:-1]
+
   # print(answer)
   if answer == '':
     answer = 'a'
@@ -30,7 +33,8 @@ def solution(new_id):
 
   return answer
 
-print(solution("...!@BaT#*..y.abcdefghijklm"))
+print(solution("=="))
+# print(solution("...!@BaT#*..y.abcdefghijklm"))
 # print(solution("z-+.^."))
 # print(solution("=.="))
 # print(solution("123_.def"))
