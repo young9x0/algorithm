@@ -1,12 +1,19 @@
 def solution(wallpaper):
-  on, off = [],[]
+  lux, luy = 50,50
+  rdx, rdy = 0,0
   for row in range(len(wallpaper)):
     for col in range(len(wallpaper[row])):
       if wallpaper[row][col] == '#':
-        on.append(row)
-        off.append(col)
+        if row < lux:
+          lux = row
+        if col < luy:
+          luy = col
+        if row+1 > rdx:
+          rdx = row+1
+        if col+1 > rdy:
+          rdy = col+1
 
-  return [min(row), min(col), max(row)+1, max(col)+1]
+  return [lux,luy,rdx,rdy]
 
 # print(solution([".#...",
 #                 "..#..",
