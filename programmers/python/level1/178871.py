@@ -1,9 +1,12 @@
 def solution(players, callings):
-  for call in callings:
-    rank = players.index(call)
-    players[rank] = players[rank-1]
-    players[rank-1] = call
-    # print('players',players)
+  player_dic = {key:idx for idx, key in enumerate(players)}
+
+  for name in callings:
+    idx = player_dic[name]
+    player_dic[name] -= 1
+    player_dic[players[idx-1]] += 1
+    players[idx-1], players[idx] = players[idx], players[idx-1]
+
   return players
 
 print(solution( ["mumu", "soe", "poe", "kai", "mine"],	["kai", "kai", "mine", "mine"]))
