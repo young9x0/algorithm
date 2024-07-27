@@ -1,45 +1,41 @@
 def solution(today, terms, privacies):
   answer = []
   term_dic={term[0]:int(term[2:]) for term in terms}
-  privacy_dic={idx+1:[privacy[-1],list(map(int,privacy[:-2].split('.')))] for idx, privacy in enumerate(privacies)}
+  privacy_dic={int(idx+1):list(map(int,privacy[:-2].split('.'))) for idx, privacy in enumerate(privacies)}
 
   today_arr = list(map(int,today.split('.')))
   # print(term_dic)
   # print(privacy_dic)
 
-  for idx, [plus_key, privacy] in privacy_dic.items():
-    # print(privacy)
-    if privacy[2] == 1:
-      privacy_dic[idx][1][1] -= 1
-      privacy_dic[idx][1][2] = 28
+  for idx in privacy_dic.keys():
+    if privacy_dic[idx][2] == 1:
+      privacy_dic[idx][1] -= 1
+      privacy_dic[idx][2] = 28
     else:
-      privacy_dic[idx][1][2] -= 1
-    # print('privacy_dic[idx][1]',privacy_dic[idx][1])
-    # print('term_dic[plus_key]',term_dic[plus_key])
+      privacy_dic[idx][2] -= 1
 
-    if privacy_dic[idx][1][1] + term_dic[plus_key] >12:
-      privacy_dic[idx][1][0] +=1
-      privacy_dic[idx][1][1]=privacy_dic[idx][1][1] + term_dic[plus_key] - 12
+    plus_month= term_dic[privacies[idx-1][-1]]
+    if privacy_dic[idx][1] + plus_month >12:
+      privacy_dic[idx][0] += 1
+      privacy_dic[idx][1]= privacy_dic[idx][1] + plus_month - 12
     else:
-      privacy_dic[idx][1][1] += term_dic[plus_key]
-    # print('final',  privacy_dic[idx][1])
-
+      privacy_dic[idx][1] += plus_month
 
   t_year, t_month, t_day = today_arr
   # print('t:',t_year,t_month,t_day)
-  for idx, [plus_key, privacy] in privacy_dic.items():
-    year, month, day = privacy
+  for idx, date in privacy_dic.items():
+    year, month, day = date
     # print('p:',year,month,day)
     # print('t_year > year:',t_year > year)
     if t_year > year:
       answer.append(idx)
       continue
     # print('t_month > month:',t_month > month)
-    if t_month > month:
+    if t_year == year and t_month > month:
       answer.append(idx)
       continue
     # print('t_day > day:',t_day > day)
-    if t_day > day:
+    if t_year == year and t_month == month and t_day > day:
       answer.append(idx)
 
   return answer
