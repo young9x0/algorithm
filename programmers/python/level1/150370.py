@@ -15,9 +15,13 @@ def solution(today, terms, privacies):
       privacy_dic[idx][2] -= 1
 
     plus_month= term_dic[privacies[idx-1][-1]]
+    divided_month= (privacy_dic[idx][1] + plus_month) % 12
     if privacy_dic[idx][1] + plus_month >12:
       privacy_dic[idx][0] += (privacy_dic[idx][1] + plus_month) // 12
-      privacy_dic[idx][1]=  (privacy_dic[idx][1] + plus_month) % 12
+      privacy_dic[idx][1]= divided_month % 12
+      if divided_month == 0:
+        privacy_dic[idx][0] -= 1
+        privacy_dic[idx][1]= 12
     else:
       privacy_dic[idx][1] += plus_month
 
