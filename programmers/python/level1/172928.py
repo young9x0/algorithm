@@ -12,12 +12,12 @@ def solution(park, routes):
           obstacle_list.append([row, idx])
 
   # print(current, obstacle_list)
-  max_row= len(routes)-1
-  max_col = len(routes[0])-1
+  max_row= len(park)-1
+  max_col = len(park[0])-1
   route_dir =  [(route[0],int(route[-1])) for route in routes]
   for (op, n) in route_dir:
     cur_row, cur_col =current
-    # print(current)
+    # print(cur_row, cur_col)
     # print('-'*50)
     # print(op,n)
     block=False
@@ -47,7 +47,7 @@ def solution(park, routes):
       if cur_col - n <0:
         continue
       for obstacle in obstacle_list:
-        if cur_row == obstacle[0] and cur_row >  obstacle[1] and cur_col-n <= obstacle[1]:
+        if cur_row == obstacle[0] and cur_col >  obstacle[1] and cur_col-n <= obstacle[1]:
            block=True
            break
       if block:
@@ -58,7 +58,7 @@ def solution(park, routes):
       if cur_col + n > max_col:
         continue
       for obstacle in obstacle_list:
-        if cur_row == obstacle[0] and cur_row <  obstacle[1] and cur_col+n >= obstacle[1]:
+        if cur_row == obstacle[0] and cur_col <  obstacle[1] and cur_col+n >= obstacle[1]:
           block=True
           break
       if block:
@@ -67,9 +67,9 @@ def solution(park, routes):
 
   return current
 
-print(solution(["SOO","OOO","OOO"],	["E 2","S 2","W 1"]	))
+# print(solution(["OOO","OOO","OOS"],	["E 2","S 2","W 1"]	))
 # print(solution(["SOO","OXX","OOO"],	["E 2","S 2","W 1"]))
-# print(solution(["OSO","OOO","OXO","OOO"],	["E 2","S 3","W 1"]))
+print(solution(["OSO","OOO","OXO","OOO"],	["E 2","S 3","W 1"]))
 # ["SOO","OOO","OOO"]	["E 2","S 2","W 1"]	[2,1]
 # ["SOO","OXX","OOO"]	["E 2","S 2","W 1"]	[0,1]
 # ["OSO","OOO","OXO","OOO"]	["E 2","S 3","W 1"]	[0,0]
