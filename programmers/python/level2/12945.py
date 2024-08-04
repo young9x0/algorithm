@@ -8,7 +8,7 @@ def solution(n):
 
   # print(fibonacci_number)
 
-  return fibonacci_number[n]
+  return fibonacci_number[n] % 1234567
 
 # print(solution(3))
 print(solution(5))
