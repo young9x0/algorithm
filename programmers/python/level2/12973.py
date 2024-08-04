@@ -1,16 +1,16 @@
 def solution(s):
-  answer = []
+  temp = ["", s[0]]
 
-  for ch in s:
-    if not(answer):
-      answer.append(ch)
+  for ch in s[1:]:
+    print('ch',ch)
+    print('last',temp[-1])
+    if temp[-1] != ch:
+      temp.append(ch)
     else:
-      if answer[-1] == ch:
-        answer.pop()
-      else:
-        answer.append(ch)
+      temp.pop()
+    print('temp',temp)
 
-  return 1 if len(answer) == 0 else 0
+  return 1 if len(temp) == 1 else 0
 # print(solution("abcdef"))
 print(solution("baabaa"))
 # print(solution("cdcd"))
