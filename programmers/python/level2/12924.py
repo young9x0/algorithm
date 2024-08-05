@@ -2,13 +2,11 @@ def solution(n):
   answer = 1
   for i in range(1,n):
     cnt=0
-    for j in range(i,n):
-      cnt += j
-      if cnt==n:
-        answer+=1
-        break
-      elif cnt > n:
-        break
+    while cnt < n:
+      cnt += i
+      i+=1
+    if cnt == n:
+      answer+=1
   return answer
 
 # print(solution(15))
