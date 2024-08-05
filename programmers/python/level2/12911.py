@@ -1,69 +1,41 @@
+# Bitwise 연산자: https://sdc-james.gitbook.io/onebook/3./3.4./1.1.1.
 def solution(n):
-  answer = 0
-  int2bin='{0:b}'.format(n)
-  print('int2bin',int2bin)
-  count = int2bin.count("1")
-  print("count", count)
-  bin_len= len(int2bin)
+  print('bin(n)',bin(n))
+  #-1111
+  #110
 
-  if count == bin_len:
-    answer = '0'+int2bin
-    print('1:',int(answer,2))
-    return int(answer,2)
+  print('bin(-n)',bin(-n))
+  #-1111
+  #110
 
-  # 가능한 경우는?
-  if count-1 == bin_len:
-    for i in range(0,count):
-      answer+='1'
-    print('2:',int('0'+answer,2))
-    return int('0'+answer,2)
+  pivot=n&-n
+  print('pivot', pivot)
+  #1
+  #2
 
-  r_int2char = int2bin[::-1]
-  print('r_int2char:',r_int2char)
-  index=0
-  flag=0
-  if r_int2char[0:1] == '0':
-    print('r_int2char[0:1] == 0')
-    for i in range(1, bin_len):
-      if index != 0:
-        break
-      if r_int2char[i:].find('1') == 0:
-        print('r_int2char[i:] have 1 at index 0')
-        flag=1
-      if r_int2char[i:].find('0') == 0 and flag == 1:
-        print('r_int2char[i:] have 0 at index 0 and flag=1')
-        index=i
-  else:
-    print('r_int2char[0:1] != 0')
-    for i in range(0, bin_len):
-      if index != 0:
-        break
-      if r_int2char[i:].find('0') == 0:
-        print('r_int2char[i:] have 0 at index 0')
-        index=i
-  print('index', index)
-  real_index = bin_len - index - 1
-  print('real_index',real_index)
-  answer=int2bin[0:real_index]
-  print('answer',answer)
-  answer += '1'
-  r_count=count-answer.count('1')
-  print('r_count',r_count)
-  banswer = ''
-  for i in range(0,r_count):
-    banswer+='1'
-  for i in range(0, bin_len):
-    if (len(answer)+len(banswer)) == bin_len:
-      print('(len(answer)+len(banswer)) == bin_len')
-      return int(answer+banswer,2)
-    else:
-      banswer='0'+banswer
+  print('bin(n+pivot)',bin((n+pivot)))
+  #10000
+  #1000
 
+  print('n ^ (n+pivot)',bin(n ^ (n+pivot)))
+  #11111
+  #1110
+  print('n ^ (n+pivot)',(n ^ (n+pivot)))
+  print('(n ^ (n+pivot)) // pivot',(n ^ (n+pivot)) // pivot)
+  print('(n ^ (n+pivot)) // pivot',bin((n ^ (n+pivot)) // pivot))
+  #11111
+  #111
+  before = ((n ^ (n+pivot)) // pivot) >> 2
+  print('bin(before)',bin(before))
+  # 111
+  #1
+  answer= (n+pivot)|before
+  print('bin(answer)',bin(answer))
   return answer
 
 # print(solution(78))
-# print(solution(15))
+print(solution(15))
 # print(solution(6))
-print(solution(949250))
+# print(solution(949250))
 # 78	83
 # 15	23
