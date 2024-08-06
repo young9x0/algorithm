@@ -1,14 +1,10 @@
 def solution(s):
-  answer = ''
+  answer = s.split(' ')
+  print(answer)
+  for idx,ch in enumerate(answer):
+    answer[idx] = ch.capitalize()
 
-  for ch in s.lower().split(' '):
-    print("ch",ch.capitalize() == '')
-    if answer == '':
-      answer += ch.capitalize()
-    else:
-      answer += ' '+ ch.capitalize()
-
-  return answer
+  return ' '.join(answer)
 
 # print(solution("3people unFollowed me"))
 # print(solution("3People unFollowed me"))
