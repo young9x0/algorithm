@@ -3,14 +3,16 @@ def solution(s):
   process_cnt=0
 
   while s != "1":
+    zero_cnt += s.count("0")
     process_cnt += 1
-    one_cnt = s.count("1")
-    zero_cnt += len(s) - one_cnt
-    s = str('{0:b}'.format(one_cnt))
+    new = s.replace("0","")
+    # print('new',new)
+    s = str('{0:b}'.format(len(new)))
+    # print('s',s)
 
   return [process_cnt,zero_cnt]
 
-# print(solution("110010101001"))
+print(solution("110010101001"))
 print(solution("01110"))
 print(solution("1111111"))
 # "110010101001"	[3,8]
