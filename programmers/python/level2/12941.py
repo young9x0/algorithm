@@ -1,49 +1,39 @@
 def solution(A,B):
-  dp=[]
-  for aIdx, aVal in enumerate(A):
-    dp.append([])
-    for bIdx, bVal in enumerate(B):
-        dp[aIdx].append(aVal*bVal)
-  # print('dp',dp)
-  def pick_el(list,temp,cnt):
-    # print('-'*50)
-    # print('list',list)
-    # print('temp',temp)
-    cnt += 1
-    for row, arr in enumerate(list):
-      if sum(arr) != 1*len(list):
-        for col, num in enumerate(arr):
-          if num != 1:
-            # print('num',num)
-            temp += num
-            for i in range(len(list)):
-              list[i][col] = 1
-              list[row][i] = 1
-
-            # print('list',list)
-            if cnt == len(list):
-              # print('finish', temp)
-              return temp
-            else:
-              return pick_el(list, temp, cnt)
-
   answer = set()
-  for row,arr in enumerate(dp):
-    for col, multiple in enumerate(arr):
-      copy_list = [[copy_num for copy_num in copy_arr]  for copy_arr in dp]
-      # print('='*50)
-      # print('copy_list',copy_list)
-      for i in range(len(copy_list)):
-        copy_list[i][col] = 1
-        copy_list[row][i] = 1
-      # print('start')
-      result= pick_el(copy_list, multiple, 1)
+
+  def add_multiple(a_list,b_list, temp):
+    # print('-'*50)
+    # print('a_list',a_list)
+    # print('b_list',b_list)
+    if len(a_list) > 0:
+      for a_idx, a_val in enumerate(a_list):
+        for b_idx, b_val in enumerate(b_list):
+          if a_val in a_list and b_val in b_list:
+            a_temp.pop(a_idx)
+            b_temp.pop(b_idx)
+            temp += a_val*b_val
+            # print('temp',temp)
+            return add_multiple(a_list,b_list,temp)
+    else:
+      return temp
+
+  for a_idx, a_val in enumerate(A):
+    for b_idx, b_val in enumerate(B):
+      a_temp = [copy_a for copy_a in A]
+      a_temp.pop(a_idx)
+      b_temp = [copy_b for copy_b in B]
+      b_temp.pop(b_idx)
+      # print('a_temp',a_temp)
+      # print('b_temp',b_temp)
+      temp = a_val*b_val
+      # print('temp',temp)
+      result = add_multiple(a_temp,b_temp,temp)
       # print('result',result)
       answer.add(result)
 
-  # return answer
   return min(answer)
 
+# print(solution([1, 4, 2],	[5, 4, 3]))
 # print(solution([1, 4, 2],	[5, 4, 4]))
 print(solution([1,2],	[3,4]))
 # [1, 4, 2]	[5, 4, 4]	29
