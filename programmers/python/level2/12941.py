@@ -1,5 +1,5 @@
 def solution(A,B):
-  return sum([a*b for a,b in zip(sorted(A), sorted(B,reverse=True))])
+  return sum(A.pop( A.index(min(A))) * B.pop(B.index(max(B))) for i in range(len(A)))
 
 # print(solution([1, 4, 2],	[5, 4, 3]))
 # print(solution([1, 4, 2],	[5, 4, 4]))
