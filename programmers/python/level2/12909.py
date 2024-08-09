@@ -1,12 +1,21 @@
 def solution(s):
-  for i in range(len(s)//2):
-    s = s.replace('()','',1)
-  return len(s) == 0
+  st = list()
+  for ch in s:
+    if ch =='(':
+      st.append(ch)
+    if ch == ')':
+      try:
+        st.pop()
+      except IndexError:
+        return False
+  print(st)
+  return len(st) == 0
 
-# print(solution("()()"))
-# print(solution("(())()"))
-# print(solution(")()("))
+print(solution("()()"))
+print(solution("(())()"))
+print(solution(")()("))
 print(solution("(()("))
+# print(solution("(()(()()()()()()()()"))
 # "()()"	true
 # "(())()"	true
 # ")()("	false
