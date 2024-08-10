@@ -1,9 +1,9 @@
 def solution(s):
-  splited = list(map(int,s.split(' ')))
+  sort_s = sorted(map(int,s.split(' ')))
 
-  return f"{min(splited)} {max(splited)}"
+  return f"{sort_s[0]} {sort_s[-1]}"
 
-# print(solution("1 2 3 4"))
+print(solution("1 2 3 4"))
 print(solution("-1 -2 -3 -4"))
 print(solution("-1 -1"))
 # "1 2 3 4"	"1 4"
