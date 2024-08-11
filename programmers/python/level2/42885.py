@@ -1,34 +1,35 @@
 def solution(people, limit):
+  people = sorted(people, reverse=True)
   answer = 0
   boat_idx= 0
   saved=[]
-  p_len = len(people)
-  while p_len-1> boat_idx:
-    # print('-'*50)
-    # print('boat_idx',boat_idx)
-    # print('saved',saved)
-    for remain_idx in range(boat_idx+1,p_len):
-      # print('remain_idx',remain_idx)
-      if remain_idx in saved:
-        if remain_idx == p_len - 1:
-          # print('finish')
-          answer += 1
-          boat_idx += 1
+  while boat_idx < len(people):
+    # print('--boat_idx',boat_idx, people[boat_idx])
+    if boat_idx in saved:
+      boat_idx += 1
+      continue
+
+    for cur_idx in range(boat_idx+1,len(people)):
+      # print('boat_idx',boat_idx, people[boat_idx])
+      # print('cur_idx',cur_idx, people[cur_idx])
+      if cur_idx in saved:
         continue
-      if people[boat_idx] + people[remain_idx] <= limit:
+      if people[boat_idx] + people[cur_idx] <= limit:
         # print('hello')
-        answer += 1
         boat_idx += 1
-        saved.append(remain_idx)
-        continue
-      if remain_idx == p_len - 1:
-        # print('finish')
-        answer += 1
-        boat_idx += 1
+        answer+=1
+        saved.append(cur_idx)
+        break
+    else:
+      answer+=1
+      boat_idx+=1
+      # print('next')
 
-  return answer + 1 - len(saved)
+  return answer
 
-print(solution([70, 50, 80, 50],	100	))
-# print(solution([70, 80, 50],	100	))
+# print(solution([70, 50, 80, 50, 50 ],	100	))
+# print(solution([70, 50, 80, 50],	100	))
+print(solution([70, 80, 50],	100	))
+# print(solution([50, 50, 50,60,70,80,40],	110	))
 # [70, 50, 80, 50]	100	3
 # [70, 80, 50]	100	3
