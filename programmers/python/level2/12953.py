@@ -1,34 +1,22 @@
-import math
 def solution(arr):
-  multiple_arr = 1
+  def gcd(a,b):
+    print('a',a)
+    print('b',b)
+    if b == 0:
+      return a
+    return gcd(b, a%b)
+
+  answer = arr[0]
   for num in arr:
-    multiple_arr *= num
+    print('num',num)
+    print('answer',answer)
+    print('gcd',gcd(num, answer))
+    answer = num*answer // gcd(num, answer)
 
-  temp = sorted(arr)
-  factor_list = set()
-  for num in range(1,math.ceil(temp[0]**(1/2))+1):
-    # print('divisor', divisor)
-    if temp[0] % num == 0:
-      factor_list.add(num)
-      factor_list.add(temp[0]//num)
+  return answer
 
-  first_factors = sorted(factor_list)[1:]
-  # print('first_factors',first_factors)
-  divisor = 1
-  for factor in first_factors:
-    # print('factor',factor)
-    if temp[0] == 1:
-      # print('finish')
-      break
-
-    new = []
-    for num in temp:
-      if num % factor == 0:
-        new.append(num//factor)
-      else:
-        break
-    # print('new',new)
-    if len(new) == len(temp):
-      divisor *= factor
-  # print('divisor',divisor)
-  return multiple_arr // (divisor ** (len(arr)-1))
+# print(solution([2,6,8,14]))
+print(solution([14,24,36,18]))
+# print(solution([1,2,3]))
+# [2,6,8,14]	168
+# [1,2,3]	6
