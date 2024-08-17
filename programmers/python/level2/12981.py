@@ -1,24 +1,10 @@
 import math
 def solution(n, words):
-  history=[words[0]]
-  for index,word in enumerate(words):
-    if index == 0:
-      continue
-    # print('--word', word)
-    # print('history', history)
-    # print('history[-1][-1]', history[-1][-1])
-    # print('word[0]', word[0])
-    if history[-1][-1] == word[0] and word not in history:
-      history.append(word)
-    else:
-      # print('break')
-      cur= (len(history)+1)
-      print('cur',cur)
-      print('math.ceil(cur//n)',math.ceil(cur//n))
-      idx = cur% n
-      return [n if idx == 0 else idx, math.ceil(cur/n)]
-
-  return [0,0]
+ for idx in range(1, len(words)):
+   if words[idx][0] != words[idx-1][-1] or words[idx] in words[:idx]:
+     return [idx%n+1, idx//n+1]
+   else:
+     return [0,0]
 
 # print(solution(3,	["tank", "kick", "know", "wheel", "land", "dream", "mother", "robot", "tank"]))
 # print(solution(5,	["hello", "observe", "effect", "take", "either", "recognize", "encourage", "ensure", "establish", "hang", "gather", "refer", "reference", "estimate", "executive"]))
