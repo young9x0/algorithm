@@ -1,29 +1,24 @@
-def is_valid(s):
-  stack=[]
-  for ch in s:
-    if not stack:
-      stack.append(ch)
-    elif stack[-1] == '(':
-      if ch == ')' : stack.pop()
-      else: stack.append(ch)
-    elif stack[-1] == '{':
-      if ch == '}' : stack.pop()
-      else: stack.append(ch)
-    elif stack[-1] == '[':
-      if ch == ']' : stack.pop()
-      else: stack.append(ch)
-  return False if stack else True
+from collections import deque
+def check(s):
+  while True:
+    if "()" in s: s=s.replace("()","")
+    elif "{}" in s: s=s.replace("{}","")
+    elif "[]" in s: s=s.replace("[]","")
+    else:
+      print('s',s)
+      return False if s else True
 
 def solution(s):
   answer = 0
+  que=deque(s)
   for idx in range(len(s)):
-    temp = is_valid(s[idx:]+s[:idx])
-    print(idx,'temp',temp)
-    answer+=temp
+    if check(''.join(que)): answer+=1
+    que.rotate(-1)
+    print('que',que)
   return answer
 
-# print(solution("[](){}"))
-print(solution("}]()[{"))
+print(solution("[](){}"))
+# print(solution("}]()[{"))
 # print(solution("[)(]"))
 # print(solution("}}}"))
 # print(solution("[))((]"))
