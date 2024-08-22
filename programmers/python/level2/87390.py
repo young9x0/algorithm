@@ -1,7 +1,8 @@
 def solution(n, left, right):
   answer = []
   for idx in range(left, right+1):
-    answer.append(max(idx//n,idx%n)+1)
+    row, col = divmod(idx,n)
+    answer.append(max(row, col)+1)
   return answer
 
 print(solution(3,	2,	5))
