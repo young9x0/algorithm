@@ -1,11 +1,16 @@
-from collections import Counter
 def solution(want, number, discount):
-  want_dict = {key:number[idx] for idx, key in enumerate(want)}
-
   answer = 0
-  for idx in range(len(discount)-9):
-    print(Counter(discount[idx:idx+10]))
-    if want_dict == Counter(discount[idx:idx+10]):
+  for idx in range(len(discount)-sum(number)+1):
+    wn={key:cnt for key,cnt in zip(want,number)}
+    for item in discount[idx:idx+sum(number)]:
+      if item not in want:
+        break
+      else:
+        wn[item] -= 1
+        if wn[item]<0:
+          break
+
+    if set(wn.values()) == {0}:
       answer+=1
   return answer
 
