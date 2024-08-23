@@ -1,19 +1,6 @@
+import numpy as np
 def solution(arr1, arr2):
-  answer=[]
-  for arr1_row in arr1:
-    new_row=[]
-    for arr2_col in zip(*arr2):
-      print(arr2_col)
-      multiple_sum=0
-      for a,b in zip(arr1_row, arr2_col):
-        print('a',a,'b',b)
-        multiple_sum += (a*b)
-      new_row.append(multiple_sum)
-    answer.append(new_row)
-  return answer
-  # return [[sum(a*b for a,b in zip(arr1_row, arr2_col)) for arr2_col in zip(*arr2)] for arr1_row in arr1]
-
-
+  return (np.matrix(arr1) * np.matrix(arr2)).tolist()
 
 # print(solution([[1, 4], [3, 2], [4, 1]],	[[1, 2], [3, 4]]))
 # print(solution([[1, 4], [3, 2], [4, 1]],	[[3, 3], [3, 3]]))
