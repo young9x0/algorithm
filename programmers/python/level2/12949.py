@@ -1,30 +1,19 @@
 def solution(arr1, arr2):
   answer=[]
-
-  arr1_row_len=len(arr1)
-  arr1_col_len=len(arr1[0])
-  arr2_col_len=len(arr2[0])
-
-  for row in range(arr1_row_len):
-    temp=[]
-    for col in  range(arr2_col_len):
-      temp.append(0)
-    answer.append(temp)
-
-  # print(answer)
-
-  for arr1_row_idx in range(arr1_row_len):
-    # print('arr1_row_idx',arr1_row_idx)
-    for arr1_col_idx in range(arr1_col_len):
-      # print('arr1_col_idx',arr1_col_idx)
-      for arr2_col_idx in range(arr2_col_len):
-        # print('arr2_col_idx',arr2_col_idx)
-        # print('arr1[arr1_row_idx][arr1_col_idx]',arr1[arr1_row_idx][arr1_col_idx])
-        # print('arr2[arr1_col_idx][arr2_col_idx]',arr2[arr1_col_idx][arr2_col_idx])
-        answer[arr1_row_idx][arr2_col_idx] += arr1[arr1_row_idx][arr1_col_idx] * arr2[arr1_col_idx][arr2_col_idx]
-    # print('answer',answer)
-
+  for arr1_row in arr1:
+    new_row=[]
+    for arr2_col in zip(*arr2):
+      print(arr2_col)
+      multiple_sum=0
+      for a,b in zip(arr1_row, arr2_col):
+        print('a',a,'b',b)
+        multiple_sum += (a*b)
+      new_row.append(multiple_sum)
+    answer.append(new_row)
   return answer
+  # return [[sum(a*b for a,b in zip(arr1_row, arr2_col)) for arr2_col in zip(*arr2)] for arr1_row in arr1]
+
+
 
 # print(solution([[1, 4], [3, 2], [4, 1]],	[[1, 2], [3, 4]]))
 # print(solution([[1, 4], [3, 2], [4, 1]],	[[3, 3], [3, 3]]))
