@@ -1,8 +1,10 @@
 def solution(citations):
-  citations.sort(reverse=True)
-  # print(list(map(min,enumerate(citations,start=1))))
-
-  return max(map(min,enumerate(citations,start=1)))
+  citations.sort()
+  c_len=len(citations)
+  for idx in range(c_len):
+    if citations[idx] >= c_len-idx:
+      return c_len-idx
+  return 0
 
 # print(solution([3, 0, 6, 1, 5]))
 # print(solution([0]))
