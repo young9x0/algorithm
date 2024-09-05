@@ -1,7 +1,7 @@
 from collections import deque
 def solution(cacheSize, cities):
   answer = 0
-  cache=deque()
+  cache=deque(maxlen=cacheSize)
   for city in cities:
     city = city.lower()
     # print('-'*50)
@@ -11,12 +11,11 @@ def solution(cacheSize, cities):
     if city in cache:
       answer += 1
       cache.remove(city)
-      cache.appendleft(city)
+      cache.append(city)
     else:
       answer += 5
-      cache.appendleft(city)
-      if len(cache) > cacheSize:
-        cache.pop()
+      cache.append(city)
+
   return answer
 
 print(solution(3,	["Jeju", "Pangyo", "Seoul", "NewYork", "LA", "Jeju", "Pangyo", "Seoul", "NewYork", "LA"]))
