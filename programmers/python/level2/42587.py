@@ -1,18 +1,22 @@
 def solution(priorities, location):
-  queue=[(i,p) for i,p in enumerate(priorities)]
   answer=0
+  p_max = max(priorities)
   while True:
-    cur = queue.pop(0)
-    print('cur',cur)
-    print('queue',queue)
-    if any(cur[1] < q[1] for q in queue):
-      queue.append(cur)
-    else:
+    cur= priorities.pop(0)
+    if p_max == cur:
       answer+=1
-      print('answer',answer)
-      if cur[0] == location:
-        return answer
-
+      if location == 0:
+        break
+      else:
+        location-=1
+      p_max=max(priorities)
+    else:
+      priorities.append(cur)
+      if location == 0:
+        location = len(priorities)-1
+      else:
+        location-=1
+  return answer
 # print(solution([2, 1, 3, 2],	2))
 print(solution([1, 1, 9, 1, 1, 1],	0	))
 # [2, 1, 3, 2]	2	1
