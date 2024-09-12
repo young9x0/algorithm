@@ -1,11 +1,12 @@
 def solution(phone_book):
-  sorted_book=sorted(phone_book)
-  # print(sorted_book)
-
-  for prev, next in zip(sorted_book, sorted_book[1:]):
-      if next.startswith(prev):
+  hash_map=set(phone_book)
+  print('hash_map',hash_map)
+  for phone in phone_book:
+    temp=''
+    for number in phone[:-1]:
+      temp+=number
+      if temp in hash_map:
         return False
-
   return True
 
 # print(solution(["119", "97674223", "1195524421"]))
