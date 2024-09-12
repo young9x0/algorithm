@@ -1,11 +1,9 @@
 def solution(phone_book):
-  phone_book.sort()
-  # print(phone_book)
-  p_len= len(phone_book)
+  sorted_book=sorted(phone_book)
+  # print(sorted_book)
 
-  for pre_idx in range(p_len-1):
-      pre_len= len(phone_book[pre_idx])
-      if phone_book[pre_idx] == phone_book[pre_idx+1][:pre_len]:
+  for prev, next in zip(sorted_book, sorted_book[1:]):
+      if next.startswith(prev):
         return False
 
   return True
