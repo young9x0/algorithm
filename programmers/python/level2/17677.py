@@ -1,26 +1,16 @@
-
-
-import re
-import math
+from  collections import Counter
 def solution(str1, str2):
-  # for i in range(0, len(str1)-1):
-  #   find1=re.findall('[^a-zA-Z]+', str1[i:i+2])
-  #   print('find1',find1)
-  str1 = [str1[i:i+2].lower() for i in range(0, len(str1)-1) if not re.findall('[^a-zA-Z]+', str1[i:i+2])]
-  # print('str1',str1)
-  str2 = [str2[i:i+2].lower() for i in range(0, len(str2)-1) if not re.findall('[^a-zA-Z]+', str2[i:i+2])]
+  s1 = [str1[i:i+2].lower() for i in range(len(str1)-1) if str1[i:i+2].isalpha()]
+  s2 = [str2[i:i+2].lower() for i in range(len(str2)-1) if str2[i:i+2].isalpha()]
+  if not s1 and not s2:
+    print('hello')
+    return 65536
 
-  intersection=set(str1)&set(str2)
-  union=set(str1)|set(str2)
+  c1=Counter(s1)
+  c2=Counter(s2)
+  print('c',c1,c2,c1&c2,c1|c2)
 
-  multiple_constant=65536
-  if len(union) == 0:
-    return multiple_constant
-
-  intersection_sum=sum([min(str1.count(str), str2.count(str)) for str in intersection])
-  union_sum=sum([max(str1.count(str), str2.count(str)) for str in union])
-
-  return math.floor((intersection_sum/union_sum)*multiple_constant)
+  return int(float(sum((c1&c2).values())) / float(sum((c1|c2).values())) * 65536)
 
 
 # print(solution("FRANCE",	"french"))
