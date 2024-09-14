@@ -1,17 +1,46 @@
-from  collections import Counter
+import re
+from collections import deque
 def solution(str1, str2):
-  s1 = [str1[i:i+2].lower() for i in range(len(str1)-1) if str1[i:i+2].isalpha()]
-  s2 = [str2[i:i+2].lower() for i in range(len(str2)-1) if str2[i:i+2].isalpha()]
-  if not s1 and not s2:
-    print('hello')
-    return 65536
+  str1_list = re.split('[^a-z]',str1.lower())
+  str2_list = re.split('[^a-z]',str2.lower())
+  # print('str1_list',str1_list)
+  # print('str2_list',str2_list)
+  multi_1=deque()
+  for str in str1_list:
+    if str == '':
+      continue
+    else:
+      for idx in range(len(str)-1):
+        multi_1.append(str[idx]+str[idx+1])
 
-  c1=Counter(s1)
-  c2=Counter(s2)
-  print('c',c1,c2,c1&c2,c1|c2)
+  multi_2=deque()
+  for str in str2_list:
+    if str == '':
+      continue
+    else:
+      for idx in range(len(str)-1):
+        multi_2.append(str[idx]+str[idx+1])
 
-  return int(float(sum((c1&c2).values())) / float(sum((c1|c2).values())) * 65536)
+  # print('multi',multi_1,multi_2)
 
+  intersection_len=0
+  for idx1, mstr1 in enumerate(multi_1):
+    # print('mstr1',mstr1)
+    idx2=0
+    while idx1 < len(multi_1) or len(multi_2)>0:
+      if idx2 == len(multi_2):
+        break
+      elif mstr1 == multi_2[idx2]:
+        # print('mstr2',multi_2[idx2])
+        multi_2.remove(multi_2[idx2])
+        intersection_len+=1
+        break
+      else:
+        idx2+=1
+
+  union_len=len(multi_1)+len(multi_2)
+  # print('inter uni',intersection_len, union_len, (intersection_len/union_len))
+  return int((1 if union_len == 0 else (intersection_len/union_len)) * 65536)
 
 # print(solution("FRANCE",	"french"))
 # print(solution("handshake",	"shake hands"))
