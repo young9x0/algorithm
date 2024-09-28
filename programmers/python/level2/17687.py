@@ -1,23 +1,29 @@
-DIGITS = list('0123456789ABCDEF')
-def n2base(n,base):
-  if n==0:
-    return DIGITS[0]
-  digits=[]
-  while n>0:
-    digits.append(DIGITS[n%base])
-    n //= base
 
-  return ''.join(digits[::-1])
 
 def solution(n, t, m, p):
+  DIGITS = list('0123456789ABCDEF')
   #진법 n, 미리 구할 숫자의 갯수 t, 게임에 참가하는 인원 m, 튜브의 순서 p
-  answer = []
-  num=0
-  while len(answer)<t*m:
-    answer+=list(n2base(num, n))
-    num+=1
+  def _rep(num, base):
+    print('-'*50)
+    print('num',num)
+    share,rest=divmod(num,base)
+    str=DIGITS[rest]
+    print('share',share)
+    print('rest',rest)
+    print('str',str)
+    return ('' if share==0 else _rep(share,base)) + str
 
-  return ''.join(answer[p-1::m][:t])
+  numbers=''
+  for idx in range(0,t*m):
+    numbers+=_rep(idx,n)
+    if len(numbers)>=t*m:
+      break
+
+  answer = ''
+  for idx in range(p-1,t*m,m):
+    answer+=numbers[idx]
+
+  return answer
 
 # print(solution(2,	4,	2,	1))
 print(solution( 16,	16,	2,	1))
