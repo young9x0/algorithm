@@ -6,11 +6,14 @@ def solution(dirs):
     "L":-1,
     "R":1,
   }
-  hist=[]
-  recur = False
+  hist= {
+    'point':['00'],
+    'process':['0000'],
+         }
 
   answer = 0
   cur = [0,0]
+  prev_str='00'
 
   for dir in dirs:
     # print('dir',dir)
@@ -25,24 +28,26 @@ def solution(dirs):
       else:
         cur[1]+=move_dict[dir]
 
-    # print('final',cur)
+    cur_str=''.join(map(str,cur))
+    cur_mv = prev_str+cur_str
+    # print('cur_str',cur_str)
+    # print('cur_mv',cur_mv)
     # print('hist',hist)
-    cur_str = ''.join(map(str,cur))
-    if cur_str not in hist:
-      recur=False
-      # print('cur_str',cur_str)
-      hist.append(cur_str)
+
+    if cur_mv not in hist['process']:
+      hist['point'].append(cur_str)
+      hist['process'].append(cur_mv)
       answer+=1
-      # print('answer',answer)
-      if recur == True:
-        recur = False
-    elif recur == False:
-      recur = True
-      answer+=1
+
+    prev_str = cur_str
+
+    # print('---answer',answer)
 
   return answer
 
 # print(solution("ULURRDLLU"))
-print(solution("LULLLLLLU"))
+# print(solution("LULLLLLLU"))
+print(solution("ULDRULDRURDL"))
 # "ULURRDLLU"	7
 # "LULLLLLLU"	7
+# "ULDRULDRURDL"	7
