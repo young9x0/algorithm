@@ -16,14 +16,15 @@ def solution(dirs):
   prev_str='00'
 
   for dir in dirs:
-    # print('dir',dir)
+    # print('===dir',dir)
+    # print('cur',cur)
     if dir in type[0]:
-      if cur[0]==5 or cur[0]==-5:
+      if (cur[0]==5 and dir==type[0][0]) or (cur[0]==-5 and dir==type[0][1]):
         continue;
       else:
         cur[0]+=move_dict[dir]
     elif dir in type[1]:
-      if cur[1]==5 or cur[1]==-5:
+      if (cur[1]==5 and dir==type[1][1]) or (cur[1]==-5 and dir==type[1][0]):
         continue;
       else:
         cur[1]+=move_dict[dir]
@@ -40,14 +41,15 @@ def solution(dirs):
       answer+=1
 
     prev_str = cur_str
-
     # print('---answer',answer)
 
   return answer
 
 # print(solution("ULURRDLLU"))
 # print(solution("LULLLLLLU"))
-print(solution("ULDRULDRURDL"))
+# print(solution("ULDRULDRURDL"))
+print(solution("UUUUUURDLUU"))
 # "ULURRDLLU"	7
 # "LULLLLLLU"	7
 # "ULDRULDRURDL"	7
+# "UUUUUURDLUU"	8
