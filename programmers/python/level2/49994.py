@@ -8,7 +8,7 @@ def solution(dirs):
   }
   hist= {
     'point':['00'],
-    'process':['0000'],
+    'process':[],
          }
 
   answer = 0
@@ -30,15 +30,17 @@ def solution(dirs):
         cur[1]+=move_dict[dir]
 
     cur_str=''.join(map(str,cur))
-    cur_mv = prev_str+cur_str
+    pc_mv = prev_str+cur_str
+    cp_mv = cur_str+prev_str
     # print('cur_str',cur_str)
-    # print('cur_mv',cur_mv)
     # print('hist',hist)
 
-    if cur_mv not in hist['process']:
-      hist['point'].append(cur_str)
-      hist['process'].append(cur_mv)
+    if (pc_mv not in hist['process']) or (cp_mv not in hist['process']):
+      hist['process'].append(pc_mv)
+      hist['process'].append(cp_mv)
       answer+=1
+      if cur_str not in hist['point']:
+        hist['point'].append(cur_str)
 
     prev_str = cur_str
     # print('---answer',answer)
@@ -48,7 +50,9 @@ def solution(dirs):
 # print(solution("ULURRDLLU"))
 # print(solution("LULLLLLLU"))
 # print(solution("ULDRULDRURDL"))
-print(solution("UUUUUURDLUU"))
+# print(solution("UUUUUURDLUU"))
+# print(solution("DDDDDDLURDD"))
+print(solution("RLRL"))
 # "ULURRDLLU"	7
 # "LULLLLLLU"	7
 # "ULDRULDRURDL"	7
