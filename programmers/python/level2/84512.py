@@ -3,6 +3,7 @@ from itertools import product
 def solution(word):
   word_type="AEIOU"
   total =[]
+
   for r_idx in range(len(word_type)+1):
     for w_tuple in product([type for type in word_type], repeat=r_idx):
       # print(w_tuple)
