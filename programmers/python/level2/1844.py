@@ -7,6 +7,9 @@ def solution(maps):
     # print('-'*50)
     # print('cnt',cnt, 'x,y',c_x,c_y)
     # print('prev',prev)
+    if c_x == 0 and c_y == 0:
+      cnt = 1
+
     if c_x == c_len-1 and c_y == r_len-1:
       return cnt
 
@@ -14,15 +17,15 @@ def solution(maps):
     # print('hist',hist)
 
     cur=""
-    # down
-    if  c_x+1 < c_len and maps[c_x+1][c_y] == 1 and prev != 'U':
-      c_x+=1
-      cur='D'
-
     # right
-    elif c_y+1 < r_len and maps[c_x][c_y+1] == 1 and prev != 'L':
+    if c_y+1 < r_len and maps[c_x][c_y+1] == 1 and prev != 'L':
       c_y+=1
       cur='R'
+
+    # down
+    elif  c_x+1 < c_len and maps[c_x+1][c_y] == 1 and prev != 'U':
+      c_x+=1
+      cur='D'
 
     # up
     elif c_x-1 > -1 and maps[c_x-1][c_y] == 1 and prev != 'D':
@@ -45,8 +48,12 @@ def solution(maps):
 
   return move(0,0,1,"")
 
+print(solution([[1,1,1],[1,0,1],[1,0,1]]))
+# print(solution([[1,1,0],[1,0,0],[1,1,1]]))
 # print(solution([[1,0,1,1,1],[1,0,1,0,1],[1,0,1,1,1],[1,1,1,0,1],[0,0,0,0,1]]))
-print(solution([[1,0,1,1,1],[1,0,1,0,1],[1,0,1,1,1],[1,1,1,0,0],[0,0,0,0,1]]))
+# print(solution([[1,0,1,1,1],[1,0,1,0,1],[1,0,1,1,1],[1,1,1,0,0],[0,0,0,0,1]]))
 
+# [[1,1,1],[1,0,1],[1,0,1]]	5
+# [[1,1,1],[1,0,1],[1,0,1]]	5
 # [[1,0,1,1,1],[1,0,1,0,1],[1,0,1,1,1],[1,1,1,0,1],[0,0,0,0,1]]	11
 # [[1,0,1,1,1],[1,0,1,0,1],[1,0,1,1,1],[1,1,1,0,0],[0,0,0,0,1]]	-1
