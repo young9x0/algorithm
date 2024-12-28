@@ -1,31 +1,22 @@
-from collections import deque
 def solution(maps):
-  x_move=[1,0,-1,0]
-  y_move=[0,1,0,-1]
-  x_h, y_h=(len(maps[0]), len(maps))
-  queue = deque([(0,0,1)])
+  stack=[(0,0,1)]
+  dx=[0,0,-1,1]
+  dy=[1,-1,0,0]
 
-  while queue:
-    print('-'*50)
-    print('queue',queue)
-    x,y,d= queue.popleft()
-    print('x,y,d',x,y,d)
-
-    for i in range(len(x_move)):
-      nx = x+x_move[i]
-      ny = y+y_move[i]
-
-      print(i,'nx,ny',nx,ny)
-
-      if nx>-1 and ny>-1 and nx<x_h and ny<y_h:
-        print('maps[ny][nx]',maps[ny][nx])
+  while stack:
+    x,y,d=stack.pop(0)
+    for q in range(len(dx)):
+      ny=y+dy[q]
+      nx=x+dx[q]
+      if ny<0 or nx<0 or ny>= len(maps) or nx>=len(maps[0]):
+        continue
+      else:
         if maps[ny][nx] == 1 or maps[ny][nx]>d+1:
-          maps[ny][nx] = d+1
-          if nx==x_h-1 and ny == y_h-1:
+          maps[ny][nx]= d+1
+          if ny == len(maps) -1 and nx == len(maps[0])-1:
             return d+1
 
-          print('=nx,ny,d',nx,ny,d+1)
-          queue.append((nx,ny,d+1))
+          stack.append((nx,ny,d+1))
 
   return -1
 
