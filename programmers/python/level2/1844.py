@@ -1,102 +1,33 @@
+from collections import deque
 def solution(maps):
-  r_len=len(maps)
-  c_len=len(maps[0])
-  result=[]
+  x_move=[1,0,-1,0]
+  y_move=[0,1,0,-1]
+  x_h, y_h=(len(maps[0]), len(maps))
+  queue = deque([(0,0,1)])
 
-  def move_bfs(c_x, c_y, cnt, hist):
-    # print('move_bfs')
-    # print('-'*50)
-    # print('cnt',cnt, 'x,y',c_x,c_y)
+  while queue:
+    print('-'*50)
+    print('queue',queue)
+    x,y,d= queue.popleft()
+    print('x,y,d',x,y,d)
 
-    if c_x == r_len-1 and c_y == c_len-1:
-      return result.append(cnt)
+    for i in range(len(x_move)):
+      nx = x+x_move[i]
+      ny = y+y_move[i]
 
-    hist.append((c_x,c_y))
-    # print('hist',hist)
+      print(i,'nx,ny',nx,ny)
 
-    prev=(c_x,c_y)
-    # right
-    if c_y+1 < c_len and maps[c_x][c_y+1] == 1 and (c_x,c_y+1) not in hist:
-      c_y+=1
-      # print('R')
+      if nx>-1 and ny>-1 and nx<x_h and ny<y_h:
+        print('maps[ny][nx]',maps[ny][nx])
+        if maps[ny][nx] == 1 or maps[ny][nx]>d+1:
+          maps[ny][nx] = d+1
+          if nx==x_h-1 and ny == y_h-1:
+            return d+1
 
-    # down
-    elif c_x+1 < r_len and maps[c_x+1][c_y] == 1 and (c_x+1,c_y) not in hist:
-      c_x+=1
-      # print('D')
+          print('=nx,ny,d',nx,ny,d+1)
+          queue.append((nx,ny,d+1))
 
-    # up
-    elif c_x-1 > -1 and maps[c_x-1][c_y] == 1 and (c_x-1,c_y) not in hist:
-      c_x-=1
-      # print('U')
-
-    # left
-    elif c_y-1 > -1 and maps[c_x][c_y-1] == 1 and (c_x,c_y-1) not in hist:
-      c_y-=1
-      # print('L')
-
-    # print('x,y',c_x,c_y)
-    if (c_x,c_y) == prev:
-      # print('all block!')
-      return result.append(-1)
-    else:
-      # print('next')
-      move_bfs(c_x,c_y,cnt+1,hist)
-
-  def move_dfs(c_x, c_y, cnt, hist):
-    # print('move_dfs')
-    # print('-'*50)
-    # print('cnt',cnt, 'x,y',c_x,c_y)
-
-    if c_x == r_len-1 and c_y == c_len-1:
-      return result.append(cnt)
-
-    hist.append((c_x,c_y))
-    # print('hist',hist)
-
-    prev=(c_x,c_y)
-    # down
-    if  c_x+1 < r_len and maps[c_x+1][c_y] == 1 and (c_x+1,c_y) not in hist:
-      c_x+=1
-      # print('D')
-
-    # right
-    elif c_y+1 < c_len and maps[c_x][c_y+1] == 1 and (c_x,c_y+1) not in hist:
-      c_y+=1
-      # print('R')
-
-    # up
-    elif c_x-1 > -1 and maps[c_x-1][c_y] == 1 and (c_x-1,c_y) not in hist:
-      c_x-=1
-      # print('U')
-
-    # left
-    elif c_y-1 > -1 and maps[c_x][c_y-1] == 1 and (c_x,c_y-1) not in hist:
-      c_y-=1
-      # print('L')
-
-    # print('x,y',c_x,c_y)
-    if (c_x,c_y) == prev:
-      # print('all block!')
-      return result.append(-1)
-    else:
-      # print('next')
-      move_dfs(c_x,c_y,cnt+1,hist)
-
-
-  move_bfs(0,0,1,[])
-  move_dfs(0,0,1,[])
-
-  # print('result', result)
-  if sum(result) == -2:
-    return -1
-  elif result[0] == -1:
-    return result[1]
-  elif result[1] == -1:
-    return result[0]
-  else:
-    return min(result)
-
+  return -1
 
 # print(solution([[1,1,1],[1,1,1],[1,0,0],[1,1,1]]))
 # print(solution([[1,1,1],[1,0,1],[1,0,1]]))
