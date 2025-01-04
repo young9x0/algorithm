@@ -14,33 +14,30 @@ def solution(n, k):
     result=str(rest)+result
     return to_k_notation(num//k,result)
 
-  def make_prime_list(num):
-    result=[n for n in range(4,num+1)]
-    for i in range(2,math.floor(math.sqrt(num))):
-      for idx, target in enumerate(result):
-        if target!=i and target%i==0:
-          result.pop(idx)
-
-    return result
+  def is_prime(num):
+    for i in range(2, math.floor(math.sqrt(num))):
+      if target!=i and target%i==0:
+        return False
+    return True
 
   target=to_k_notation(n,'')
   # print('=target',target)
   sorted_target= sorted(target.split('0'), key= lambda x : len(x), reverse=True)
   # print('sorted_target',sorted_target)
   filtered_target=(filter(lambda x:len(x)>0, sorted_target))
-  # print('filter',(filtered_target))
-  target_to_decimal= list(map(int, filtered_target))
-  # print('target_to_decimal',target_to_decimal)
-  prime_list= [2,3]+make_prime_list(target_to_decimal[0])
-  # print('prime_list', prime_list)
-  for num in target_to_decimal:
-    if num in prime_list:
+  # print('filter',filtered_target)
+  handle_as_decimal= list(map(int, filtered_target))
+  # print('handle_as_decimal',handle_as_decimal)
+  for target in handle_as_decimal:
+    if target>1 and is_prime(target):
+      # print('prime target',target)
       answer+=1
 
   return answer
 
-# print(solution(4,	2))
-print(solution(437674,	3))
-print(solution(110011,	10))
+
+# print(solution(437674,	3))
+# print(solution(110011,	10))
+# print(solution(7777,	9))
 # 437674	3	3
 # 110011	10	2
