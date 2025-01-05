@@ -1,18 +1,15 @@
 def solution(numbers):
-  stack=[]
   answer = [-1]*len(numbers)
 
-  for idx in range(len(numbers)):
+  for idx in range(len(numbers)-1,-1,-1):
     print('-'*50)
-    print('idx',idx)
-    # if stack:
-    #   print('test')
-    print('stack',stack)
-    while stack and numbers[stack[-1]] < numbers[idx]:
-      print('numbers[stack[-1]]',numbers[stack[-1]])
-      answer[stack.pop()]=numbers[idx]
+    print('idx',idx, numbers[idx])
+    for prev in range(idx-1,-1,-1):
+      print('prev',prev, numbers[prev])
+      if numbers[prev] >= numbers[idx]: break
+      answer[prev] = numbers[idx]
+      print('answer',answer)
 
-    stack.append(idx)
   return answer
 
 # print(solution([3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3]))
