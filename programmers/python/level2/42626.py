@@ -8,13 +8,18 @@ def solution(scoville, K):
   heapify(scoville)
   # print('scoville',scoville)
 
-  while len(scoville) > 1 and scoville[0] < K:
+  while True:
     # print('-'*50)
     # print(scoville[0],'scoville',scoville)
-    a=heappop(scoville)
-    b=heappop(scoville)
+    f=heappop(scoville)
+    if f>=K:
+      break
+    if len(scoville)==0:
+      return -1
+
+    s=heappop(scoville)
     # print('a,b',a,b)
-    mixed=mix_food(a,b)
+    mixed=mix_food(f,s)
     answer+=1
     # print('mixed',mixed)
     heappush(scoville,mixed)
