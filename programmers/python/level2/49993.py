@@ -3,17 +3,15 @@ def solution(skill, skill_trees):
 
   for tree in skill_trees:
     print('-'*50)
-    skill_list=list(skill)
+    skill_list=''
 
     for t in tree:
       print('tree t',t)
       if t in skill:
-        s=skill_list.pop(0)
-        print('skill s',s)
-        if t != s:
-          print('break!!')
-          break
-    else:
+        skill_list+=t
+
+    print('skill_list',skill_list)
+    if skill_list == skill[0:len(skill_list)]:
       answer+=1
       print('answer',answer)
 
