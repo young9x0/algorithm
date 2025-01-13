@@ -1,25 +1,20 @@
 def solution(order):
-  o_len=len(order)
   stack=[]
+  answer=0
 
-  o_idx, box_num = 0,1
-  while box_num<o_len+1:
-    print('-'*50)
-    print('box_num',box_num)
-    stack.append(box_num)
-    while stack[-1] == order[o_idx]:
-      o_idx+=1
+  for idx, num in enumerate(order):
+    print('order', num)
+
+    stack.append(idx+1)
+    print('stack',stack)
+    while stack and stack[-1] == order[answer]:
       stack.pop()
-      print('stack',stack)
+      answer+=1
+      print('answer',answer)
 
-      if len(stack) == 0:
-        break
+  return answer
 
-    box_num+=1
-
-  return o_idx
-
-print(solution([4, 3, 1, 2, 5]))
-# print(solution([5, 4, 3, 2, 1]))
+# print(solution([4, 3, 1, 2, 5]))
+print(solution([5, 4, 3, 2, 1]))
 # [4, 3, 1, 2, 5]	2
 # [5, 4, 3, 2, 1]	5
