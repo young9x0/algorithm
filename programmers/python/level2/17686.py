@@ -1,75 +1,14 @@
 import re
 
 def solution(files):
-  regex=re.compile("[0-9]+")
-  temp=[]
+  a= sorted(files, key=lambda file: int(re.findall('\d+', file)[0]))
+  print('a',a)
+  b= sorted(a, key=lambda file: re.split('\d+', file.lower())[0])
+  for file in files:
+    print("re.split('\d+', file.lower())",re.split('\d+', file.lower()))
+  print('b',b)
 
-  for raw_idx, file in enumerate(files):
-    splited=regex.search(file)
-    # print(splited.span())
-    start,end=splited.span()
-    # print(start,end)
-    temp.append((raw_idx,file[:start],file[start:end],file[end:]))
-
-  # print("temp",temp)
-  t_len=len(temp)
-  i=0
-  j=i+1
-
-  def change_idx(prev,next):
-    tmp=temp[prev]
-    temp[prev]=temp[next]
-    temp[next]=tmp
-
-
-  while i < t_len:
-    # print('-'*50)
-    # print('i',i)
-    # print('j',j)
-
-    if j == t_len:
-      # print('j == t_len', j)
-      i+=1
-      j=i+1
-      continue
-
-    i_idx, h_i, n_i, t_i =temp[i]
-    j_idx, h_j, n_j, t_j =temp[j]
-    h_i = h_i.lower()
-    h_j = h_j.lower()
-    n_i = int(n_i)
-    n_j = int(n_j)
-    # print('h_i, n_i, t_i',i_idx, h_i, n_i, t_i)
-    # print('h_j, n_j, t_j',j_idx, h_j, n_j, t_j)
-
-    if h_i+str(n_i) == h_j+str(n_j):
-      # print("h_i+n_i == h_j+n_j")
-      if i_idx > j_idx:
-        change_idx(i,j)
-      j+=1
-      continue
-
-    elif h_i == h_j:
-      if n_i <= n_j:
-        # print("n_i < n_j")
-        j+=1
-        continue
-      else:
-        # print("change!!")
-        change_idx(i,j)
-        j+=1
-        continue
-
-    elif h_i < h_j:
-      j+=1
-      continue
-    else:
-      change_idx(i,j)
-      j+=1
-
-  # print(temp)
-
-  return ["".join(w_tuple[1:]) for w_tuple in temp]
+  return b
 
 print(solution([ "img1.png", "IMG01.GIF", "imd2.JPG"]))
 # print(solution(["img12.png", "img10.png", "img02.png", "img1.png","img01.gif", "IMG01.GIF", "img2.JPG"]))
