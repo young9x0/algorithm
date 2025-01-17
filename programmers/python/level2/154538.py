@@ -11,33 +11,36 @@ def solution(x,y,n):
     idx+=1
     # print('-'*50)
     # print('idx',idx)
-
-    for tmp in temp:
-      temp.popleft()
-      next = [tmp+n, tmp*2, tmp*3]
+    next=[]
+    while len(temp)>0:
+      tmp= temp.popleft()
+      next_tmp = [tmp+n, tmp*2, tmp*3]
       # print('tmp',tmp)
-      # print('next',next)
+      # print('next_tmp',next_tmp)
 
-      if y in next:
+      if y in next_tmp:
         # print('match!')
         return idx
 
-      plus, two, three = next
+      plus, two, three = next_tmp
       if plus < y:
-        temp.append(plus)
+        next.append(plus)
       if two < y:
-        temp.append(two)
+        next.append(two)
       if three < y:
-        temp.append(three)
+        next.append(three)
+
+    if len(next)>0:
+      temp = deque(next)
 
   return -1
 
-# print(solution(10,	40,	5))
-# print(solution(10,	40,	30))
-# print(solution(2,	5,	4))
-print(solution(1,1,1))
+print(solution(10,	40,	5))
+print(solution(10,	40,	30))
+print(solution(2,	5,	4))
+# print(solution(1,1,1))
 # print(solution(2,	14,	5))
-# print(solution(2,	14,	1))
+print(solution(2,	14,	1))
 
 # 10	40	5	2
 # 10	40	30	1
