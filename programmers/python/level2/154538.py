@@ -1,52 +1,43 @@
+from collections import deque
 def solution(x,y,n):
-  answer = 0
-  desc_divided = [3,2]
-  min=y-x
-  tmp=y-x
+  # print(x,y,n)
+  if x == y:
+    return 0
 
-  while tmp >= n:
-    # print('minus')
-    tmp -= n
-    answer+=1
-  #   print('while answer',answer)
-  #
-  # print('tmp',tmp)
-  if tmp <= 1:
-    if tmp == 0:
-      min= answer
-    tmp=y
-    answer = 0
+  idx = 0
+  temp=deque([x])
 
-
-  # print('answer',answer)
-  # print('min',min)
-
-  def divide(target, by):
-    # print('divide')
+  while len(temp)>0:
+    idx+=1
     # print('-'*50)
-    # print('target',target)
-    # print('by',by)
+    # print('idx',idx)
 
-    nonlocal answer
-    if target%by>0:
-      return target
+    for tmp in temp:
+      temp.popleft()
+      next = [tmp+n, tmp*2, tmp*3]
+      # print('tmp',tmp)
+      # print('next',next)
 
-    answer+=1
-    # print('answer',answer)
-    return divide(target//by, by)
+      if y in next:
+        # print('match!')
+        return idx
 
-  for div in desc_divided:
-    # print('div',div)
-    if tmp % (div*x) == 0:
-      tmp = divide(tmp/x,div)
-      if min > answer:
-        min = answer
+      plus, two, three = next
+      if plus < y:
+        temp.append(plus)
+      if two < y:
+        temp.append(two)
+      if three < y:
+        temp.append(three)
 
-  return -1 if tmp >1 and min == y-x else min
+  return -1
 
 # print(solution(10,	40,	5))
 # print(solution(10,	40,	30))
-print(solution(2,	5,	4))
+# print(solution(2,	5,	4))
+print(solution(1,1,1))
+# print(solution(2,	14,	5))
+# print(solution(2,	14,	1))
 
 # 10	40	5	2
 # 10	40	30	1
