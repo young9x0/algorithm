@@ -1,47 +1,41 @@
-from collections import deque
+
 def solution(x,y,n):
-  # print(x,y,n)
-  if x == y:
-    return 0
+  answer = 0
+  tmp_set=set()
+  tmp_set.add(x)
 
-  idx = 0
-  temp=deque([x])
+  while tmp_set:
+    if y in tmp_set:
+      return answer
 
-  while len(temp)>0:
-    idx+=1
-    # print('-'*50)
-    # print('idx',idx)
-    next=[]
-    while len(temp)>0:
-      tmp= temp.popleft()
-      next_tmp = [tmp+n, tmp*2, tmp*3]
-      # print('tmp',tmp)
-      # print('next_tmp',next_tmp)
+    next=set()
+    for tmp in tmp_set:
+      if tmp+n <= y:
+        next.add(tmp+n)
+      if tmp*2 <= y:
+        next.add(tmp*2)
+      if tmp*3 <= y:
+        next.add(tmp*3)
 
-      if y in next_tmp:
-        # print('match!')
-        return idx
-
-      plus, two, three = next_tmp
-      if plus < y:
-        next.append(plus)
-      if two < y:
-        next.append(two)
-      if three < y:
-        next.append(three)
-
-    if len(next)>0:
-      temp = deque(next)
+    tmp_set=next
+    answer+=1
 
   return -1
 
 print(solution(10,	40,	5))
 print(solution(10,	40,	30))
 print(solution(2,	5,	4))
-# print(solution(1,1,1))
-# print(solution(2,	14,	5))
+print(solution(1,1,1))
+print(solution(2,	14,	5))
 print(solution(2,	14,	1))
+print(solution(4,	20,	1))
+print(solution(4,	23,	1))
+print(solution(7,	23,	12))
+print(solution(7,	31,	5))
 
-# 10	40	5	2
-# 10	40	30	1
-# 2	5	4	-1
+# 2
+# 1
+# -1
+# 0
+# 2
+# 3
