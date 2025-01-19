@@ -1,24 +1,18 @@
-
+from collections import deque
 def solution(x,y,n):
-  answer = 0
-  tmp_set=set()
-  tmp_set.add(x)
+  visited=[0]*1000001
+  q=deque()
+  q.append((x,0))
+  visited[x]=1
 
-  while tmp_set:
-    if y in tmp_set:
-      return answer
-
-    next=set()
-    for tmp in tmp_set:
-      if tmp+n <= y:
-        next.add(tmp+n)
-      if tmp*2 <= y:
-        next.add(tmp*2)
-      if tmp*3 <= y:
-        next.add(tmp*3)
-
-    tmp_set=next
-    answer+=1
+  while q:
+    num, cnt = q.popleft()
+    if num == y:
+      return cnt
+    for next in (num+n,num*2,num*3):
+      if next <= y and not visited[next]:
+        visited[next]=1
+        q.append((next, cnt+1))
 
   return -1
 
