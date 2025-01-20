@@ -1,11 +1,9 @@
 def solution(n):
-  dp=[0,1,2,3]
+  a,b=1,1
+  for i in range(n):
+    a,b = b,a+b
 
-  if n > 3:
-    for idx in range(4,n+1):
-      dp.append((dp[idx-2] + dp[idx-1])% 1_000_000_007)
-
-  return dp[n]
+  return a % 1000000007
 
 # print(solution(4))
 print(solution(5))
