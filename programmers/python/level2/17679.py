@@ -1,30 +1,30 @@
+def pop_num(m,n,field):
+  pop_set = set()
+
+  # search
+  for i in range(1, n):
+    for j in range(1, m):
+      if field[i][j] == field[i - 1][j - 1] == field[i - 1][j] == field[i][j - 1] != '_':
+        pop_set |= set([(i, j), (i - 1, j - 1), (i - 1, j), (i, j - 1)])
+
+  # set_board
+  for i, j in pop_set:
+    field[i][j] = 0
+  for i, row in enumerate(field):
+    empty = ['_'] * row.count(0)
+    field[i] = empty + [block for block in row if block != 0]
+
+  return len(pop_set)
 def solution(m, n, board):
   answer=0
-  for cols in zip(*board):
-    print('cols',cols)
-  field = [list(cols) for cols in zip(*board)]
-  print('field',field)
+
+  field = list(map(list, zip(*board)))
+  # print('field',field)
+
   while True:
-    bomb = set()
-    for row in range(n - 1):
-      for col in range(m - 1):
-        try:
-          if field[row][col] == field[row + 1][col] == field[row][col + 1] == field[row + 1][col + 1]:
-            bomb.update({(row, col), (row + 1, col), (row, col + 1), (row + 1, col + 1)})
-        except:
-          break
-
-    print('bomb',bomb)
-    if not len(bomb):
-      break
-
-    for r, c in bomb:
-      field[r][c] = ''
-      answer += 1
-
-    for row in range(n):
-      field[row] = list(''.join(field[row]))
-    print('field',field)
+    pop=pop_num(m,n,field)
+    if pop==0:return answer
+    answer+=pop
 
   return answer
 
