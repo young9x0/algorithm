@@ -1,39 +1,60 @@
-
 def solution(numbers):
   answer = []
 
-  def compared(target, object, diff):
-    # print('target, object, diff',target, object, diff)
-    if target%2 != object%2:
-      # print('diff')
-      diff+=1
+  def to_bit(target, obj, diff_cnt, make_bit):
+    if target % 2 != obj %2:
+      diff_cnt+=1
 
-    if target == 1 and object > 1:
-      # print('last target, remain object')
-      target = 0
+    make_bit.append((target % 2, obj %2))
 
-    if object == 1:
-      return diff
+    if target == 1:
+      target=0
+
+    if obj == 1:
+      return (diff_cnt, make_bit)
     else:
-      return compared(target//2, object//2, diff)
+      return to_bit(target//2, obj//2, diff_cnt, make_bit)
 
+  def converted(gap, t_bit):
+    res=0
+
+    for idx, bit_tuple in enumerate(t_bit):
+      # print('idx',idx)
+      if gap ==2:
+        return res
+
+      tgt, obj = bit_tuple
+      if tgt == obj:
+        continue
+      elif obj == 0:
+        # print('obj',obj)
+        res+= (2**idx)
+        gap-=1
+      # print('=gap',gap)
+
+    return res
 
   for num in numbers:
-    min= 100000_00000_00000
-    idx=1
+    min= 0
+    idx = 1
 
-    while num+idx < min+1:
-      gap = compared(num, num+idx,0)
-
-      if 0 <gap< 3 and min > num+idx:
-        min = num+idx
-        # print('h min',min)
-
-      idx+=1
+    gap, m_bit = to_bit(num, num+idx,0, [])
+    # print('gap,m_bit', gap, m_bit)
+    if gap < 3:
+      min = num+idx
+    else:
+      min = converted(gap, m_bit) + num+idx
+      # print('c min',min)
 
     answer.append(min)
+
   return answer
 
-print(solution([2,7]))
+# print(solution([2,7]))
 # print(solution([7]))
+# print(solution([11]))
+# print(solution([15]))
+# print(solution([16]))
+# print(solution([17]))
+print(solution([19]))
 # [3,11]
