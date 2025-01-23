@@ -1,34 +1,36 @@
-def f(number):
-  bin_num = bin(number)[2:]
-  print('bin_num',bin(number),bin_num)
-
-  if '0' not in bin_num:
-    print("'10' + bin_num[1:]",'10' + bin_num[1:])
-    return int('10' + bin_num[1:], 2)
-
-  bin_num = list(bin_num)
-  for i in range(len(bin_num)):
-    print('bin_num[-i-1]',bin_num[-i-1])
-    if bin_num[-i-1] == '0':
-      bin_num[-i-1] = '1'
-      break
-
-    if i > 0:
-      bin_num[-i] = '0'
-
-    print('bin_num',bin_num)
-
-  return int(''.join(bin_num), 2)
-
 
 def solution(numbers):
-  answer = [f(number) for number in numbers]
+  answer = []
+  # result = 7 & 2
+  # print(result)
+  #         7 = 0000 0111
+  #      &  2 = 0000 0010
+  #-----------------------
+  # result, 2 = 0000 0010
+  for number in numbers:
+    # print('number & 1',number & 1)
+    if number %2 == 1:
+    # if number & 1:
+      # 홀수
+      target = number
+      idx = 0
+      while number > 0:
+        if number % 2 == 0:
+          break
+        number //= 2
+        idx += 1
+      # print('idx',idx)
+      answer.append(target + 2 ** (idx) - 2 ** (idx-1))
+    else:
+      # 짝수
+      answer.append(number+1)
+
   return answer
 
 # print(solution([2,7]))
 # print(solution([2]))
-# print(solution([7]))
-print(solution([11]))
+print(solution([7]))
+# print(solution([11]))
 # 14
 # print(solution([15]))
 # 16
