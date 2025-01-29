@@ -1,14 +1,18 @@
 def solution(number, k):
-  stack = [number[0]]
-  for num in number[1:]:
-    while stack and stack[-1]<num and k>0:
+  i=0
+  while i < len(number)-1 and k>0:
+    print('i',i,number[i])
+    if number[i]<number[i+1]:
+      number=number[:i]+number[i+1:]
+      if i>0:
+        i-=1
       k-=1
-      stack.pop()
-    stack.append(num)
+    else:
+      i+=1
   if k>0:
-    stack=stack[:-k]
+    return number[:-k]
 
-  return "".join(stack)
+  return number
 
 # print(solution("1924",	2))
 # print(solution("1231234",	3))
