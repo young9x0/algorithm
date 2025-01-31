@@ -18,11 +18,8 @@ def solution(number, k):
 # print(solution("1231234",	3))
 # print(solution("4177252841",	4))
 # print(solution("11111",	4))
-# print(solution("1080201",	4))
-# print(solution("1120074",	3))
-# print(solution("1010100",	5))
-# print(solution("8761639",	3))
-print(solution("1769481",	4))
+# print(solution("1080210",	4))
+
 
 # "1924"	2	"94"
 # "1231234"	3	"3234"
