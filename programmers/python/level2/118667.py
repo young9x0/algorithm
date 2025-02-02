@@ -1,40 +1,42 @@
-from collections import deque
 def solution(queue1, queue2):
-  if (sum(queue1) + sum(queue2))%2 > 0:
+  q_full = queue1+queue2
+  # print('half', half)
+  if sum(q_full)%2 > 0:
     return -1
 
-  half = (sum(queue1) + sum(queue2)) // 2
-  # print('half', half)
+  s_idx, l_idx, cnt = 0, len(queue1), 0
+  half = sum(q_full) // 2
+  q1_sum=sum(queue1)
 
-  dq1=deque(queue1)
-  dq2=deque(queue2)
-  cnt=0
-
-  while sum(dq1) != half:
-    dq_sum= sum(dq1)
-    # print('dq1',dq1)
-    # print('dq_sum',dq_sum)
+  while q1_sum != half:
+    # print('-'*50)
+    # print('q_full[s_idx:l_idx]',q_full[s_idx:l_idx])
+    # print('s_idx',s_idx)
+    # print('l_idx',l_idx)
     # print('cnt',cnt)
 
-    if cnt > 0 and dq1 == deque(queue1):
-      # print('reset', dq1, deque(queue1))
+    if (s_idx == l_idx) or (l_idx == len(q_full)):
       return -1
 
-    if dq_sum > half:
-      el = dq1.popleft()
-      dq2.append(el)
+    if q1_sum > half:
+      q1_sum-=q_full[s_idx]
+      s_idx+=1
       cnt+=1
-    elif dq_sum < half:
-      el = dq2.popleft()
-      dq1.append(el)
+    elif q1_sum < half:
+      q1_sum+=q_full[l_idx]
+      l_idx+=1
       cnt+=1
 
   return cnt
 
 # print(solution([3, 2, 7, 2],	[4, 6, 5, 1]))
 # print(solution([1, 2, 1, 2],	[1, 10, 1, 2]))
-print(solution([1, 1],	[1, 5]))
+# print(solution([1, 1],	[1, 5]))
+# print(solution([1,1,9,8],	[1,5,1]))
+print(solution([1,2,1,6],	[1,1,1,15]))
 
 # [3, 2, 7, 2]	[4, 6, 5, 1]	2
 # [1, 2, 1, 2]	[1, 10, 1, 2]	7
 # [1, 1]	[1, 5]	-1
+#2
+#-1
