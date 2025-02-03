@@ -2,8 +2,10 @@ from collections import deque
 def solution(bridge_length, weight, truck_weights):
   answer = 0
   ing_arr =deque([])
+  ing_sum=0
   t_len=len(truck_weights)
   t_idx=0
+
   while t_idx < t_len:
     # print('-'*50)
     # print('1 t_idx',t_idx)
@@ -14,8 +16,9 @@ def solution(bridge_length, weight, truck_weights):
       answer+=1
       # print('answer',answer)
       # print('1 t_idx',t_idx)
-      if t_idx < t_len and sum(ing_arr) + truck_weights[t_idx] <= weight:
+      if t_idx < t_len and ing_sum + truck_weights[t_idx] <= weight:
         ing_arr.append(truck_weights[t_idx])
+        ing_sum+=truck_weights[t_idx]
         t_idx+=1
       else:
         ing_arr.append(0)
@@ -23,19 +26,21 @@ def solution(bridge_length, weight, truck_weights):
 
     if t_idx < t_len:
       out= ing_arr.popleft()
+      ing_sum -= out
       # print('while out',out)
 
   # print('f ing_arr',ing_arr)
-  while sum(ing_arr) > 0:
+  while ing_sum > 0:
     out= ing_arr.popleft()
+    ing_sum-=out
     # print('f out',out)
     answer+=1
 
   return answer
 
 print(solution(2,	10,	[7,4,5,6]))
-# print(solution(100,	100,	[10]))
-# print(solution(100,	100,	[10,10,10,10,10, 10,10,10,10,10]))
+print(solution(100,	100,	[10]))
+print(solution(100,	100,	[10,10,10,10,10, 10,10,10,10,10]))
 # print(solution(100,	100,	[1,2,3,4,5,6,7,8,9,10]))
 
 # 2	10	[7,4,5,6]	8
