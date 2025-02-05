@@ -1,33 +1,38 @@
 from itertools import chain
 
 def solution(n):
-  answer = []
-  [row, col, cnt] = [-1,0,1]
-  board=[[None]* i for i in range(1,n+1)]
+  # down, next, up
+  dx = [0,1,-1]
+  dy = [1,0,-1]
+
+  board=[[0]* i for i in range(1,n+1)]
   # print(board)
 
-  for i in range(n):
-    for _ in range(n-i):
-      if i%3==0:
-        # down
-        row+=1
-      elif i%3==1:
-        # next
-        col+=1
-      else:
-        # up
-        row-=1
-        col-=1
+  x,y=0,0
+  num=1
+  direction=0
+  last_num = (n+1)*n//2
+  print('last_num',last_num)
+  # n=6 -> 6+5+...+1 -> (7*6) // 2
+  while num <= last_num:
+    board[y][x]=num
+    ny=y+dy[direction]
+    nx=x+dx[direction]
+    num+=1
 
-      board[row][col] = cnt
-      cnt+=1
+    if 0<= ny < n and 0 < nx <= ny and board[ny][nx] == 0:
+      y,x=ny,nx
+    else:
+      direction=(direction+1)%3
+      y+=dy[direction]
+      x+=dx[direction]
 
   print(board)
-  return list(chain(*board))
+  return sum(board,[])
 
 # print(solution(4))
-# print(solution(5))
-print(solution(6))
+print(solution(5))
+# print(solution(6))
 # print(solution(7))
 
 # 4	[1,2,9,3,10,8,4,5,6,7]
