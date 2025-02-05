@@ -1,55 +1,34 @@
+from itertools import chain
+
 def solution(n):
-  temp = []
-  for l_idx in range(1,n+1):
-    box=[]
-    idx=l_idx
-    for e_idx in range(l_idx):
-      box.append(idx)
-      idx+=1
-    temp.append(box)
-  # print('temp',temp)
+  answer = []
+  [row, col, cnt] = [-1,0,1]
+  board=[[None]* i for i in range(1,n+1)]
+  # print(board)
 
-  cnt_idx, arr_idx=n-1,1
-  direction="up"
-  prev_level= cnt_idx
-  while cnt_idx>1:
-    # print('-'*50)
-    # print('cnt_idx',cnt_idx)
-    # print('arr_idx',arr_idx)
-    # print('direction',direction)
-    # print('prev_level',prev_level)
-    for f_idx in range(1,cnt_idx):
-      # print('f_idx',f_idx)
-      if direction == 'up':
-        prev_level-=1
-        temp[prev_level][-arr_idx] = temp[prev_level+1][-arr_idx] + 1
-      elif direction == 'down':
-        temp[prev_level+1][arr_idx] = temp[prev_level][arr_idx] + 1
-        prev_level+=1
+  for i in range(n):
+    for _ in range(n-i):
+      if i%3==0:
+        # down
+        row+=1
+      elif i%3==1:
+        # next
+        col+=1
       else:
-        temp[prev_level][arr_idx+f_idx] = temp[prev_level][arr_idx+f_idx-1] + 1
+        # up
+        row-=1
+        col-=1
 
-    cnt_idx-=1
-    if direction == 'down':
-      direction = 'next'
-    elif direction == 'up':
-      direction='down'
-    else:
-      direction = 'up'
-      arr_idx+=1
-    # print('temp',temp)
+      board[row][col] = cnt
+      cnt+=1
 
-  answer=[]
-  for arr in temp:
-    for num in arr:
-      answer.append(num)
-
-  return answer
+  print(board)
+  return list(chain(*board))
 
 # print(solution(4))
 # print(solution(5))
-# print(solution(6))
-print(solution(7))
+print(solution(6))
+# print(solution(7))
 
 # 4	[1,2,9,3,10,8,4,5,6,7]
 # 5	[1,2,12,3,13,11,4,14,15,10,5,6,7,8,9]
