@@ -1,15 +1,18 @@
 def solution(sequence, k):
   answer=[]
-  start,sum=0,0
-
-  for idx, num in enumerate(sequence):
-    end=idx
-    sum+=num
-    while sum > k:
-      sum -= sequence[start]
+  start,end=0,0
+  sum=sequence[0]
+  while end < len(sequence)-1:
+    if sum < k:
+      end+=1
+      sum+=sequence[end]
+    elif sum>k:
+      sum-=sequence[start]
       start+=1
-    if sum == k:
+    elif sum == k:
       answer.append([start,end])
+      sum-=sequence[start]
+      start+=1
 
   answer.sort(key=lambda x: (x[1]-x[0],x[0]))
 
