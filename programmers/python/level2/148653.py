@@ -10,7 +10,7 @@ def solution(storey):
       return answer
 
     # print('floor%10',floor%10)
-    if floor%10 > 5:
+    if floor%10 > 5 or (floor%10 == 5  and floor>=10 and int(str(floor)[-2])%10 + 1> 5):
       # print('up')
       answer+=(10-floor%10)
       floor+=(10-floor%10)
@@ -25,7 +25,12 @@ def solution(storey):
   return answer
 
 # print(solution(16))
-print(solution(2554))
+# print(solution(2554))
+# print(solution(1))
+# print(solution(10105))
+print(solution(555))
 
 # 16	6
 # 2554	16
+# 1
+# 7
