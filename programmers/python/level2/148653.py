@@ -1,9 +1,24 @@
 def solution(storey):
-  if storey < 10:
-    return min(storey, 11-storey)
+  answer=0
+  s_list = sorted(map(int,str(storey)),reverse=True)
+  print(s_list)
 
-  left=storey%10
-  return min(left+solution(storey//10), 10 - left + solution(storey//10 + 1))
+  s_len = len(s_list)
+  for floor in range(s_len):
+    if s_list[floor] < 5:
+      answer+=s_list[floor]
+    elif s_list[floor] == 5:
+      answer+=5
+      if floor+1<s_len and s_list[floor+1] > 4:
+        s_list[floor+1] += 1
+    else:
+      answer += 10 - s_list[floor]
+      if floor+1<s_len:
+        s_list[floor+1] += 1
+      else:
+        answer+=1
+
+  return answer
 
 # print(solution(16))
 # print(solution(2554))
