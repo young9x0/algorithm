@@ -1,4 +1,5 @@
 def solution(book_time):
+  book_time = sorted(book_time)
   rooms=[[book_time[0]]]
   b_len = len(book_time)
   for idx in range(1, b_len):
@@ -9,18 +10,27 @@ def solution(book_time):
     n_f_hour, n_f_min = n_finish.split(":")
     r_len = len(rooms)
     is_search = True
-    if is_search:
-      for r_idx in range(r_len):
+    for r_idx in range(r_len):
+      if is_search:
         # print('r_idx', r_idx, rooms[r_idx])
         for book in rooms[r_idx]:
           # print('book', book)
           r_start, r_finish = book
           r_s_hour, r_s_min = r_start.split(":")
           r_f_hour, r_f_min = r_finish.split(":")
-          if (int(n_f_hour) <= int(r_s_hour) and int(n_f_min)+10 <= int(r_s_min)) or (int(r_f_hour) <= int(n_s_hour) and  int(r_f_min)+10 <= int(n_s_min)):
+          if (
+            (int(n_f_hour) < int(r_s_hour) and ((int(r_s_min)>0 and int(n_f_min)+10 <= int(r_s_min))
+              or (int(r_s_min)==0 and int(n_f_min)+10 == int(r_s_min)+60)))
+          or (int(r_f_hour) < int(n_s_hour) and ((int(n_s_min)>0 and int(r_f_min)+10 <= int(n_s_min))
+              or (int(n_s_min)==0 and int(r_f_min)+10 == int(n_s_min)+60)))
+          or (int(r_f_hour) == int(n_s_hour) and int(r_f_min)+10 <= int(n_s_min))
+          or (int(n_f_hour) == int(r_s_hour) and int(n_f_min)+10 <= int(r_s_min))
+          ):
             # print('possible')
             rooms[r_idx].append(book_time[idx])
             is_search = False
+      else:
+        break
 
     if is_search:
       rooms.append([book_time[idx]])
