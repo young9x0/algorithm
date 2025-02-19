@@ -1,45 +1,59 @@
 def solution(book_time):
   book_time = sorted(book_time)
-  rooms=[[book_time[0]]]
+  # print('book_time', book_time)
   b_len = len(book_time)
+  splited_list = []
+  for idx in range(b_len):
+    new_start, new_finish = book_time[idx]
+    new_s = new_start.split(":")
+    new_f = new_finish.split(":")
+    splited_list.append([int(num) for num in new_s]+[int(num) for num in new_f])
+
+  rooms=[splited_list[0][2:]]
+  room_cnt=1
+
+  def is_possible(prev, new):
+    # print('prev, new',prev, new)
+    if new == prev:
+      return False
+
+    prev_f_hour, prev_f_min = prev
+    new_s_hour, new_s_min = new
+    if (
+        (prev_f_hour+1 < new_s_hour
+        or (prev_f_hour+1 == new_s_hour and (new_s_min>=10 or (new_s_min < 10 and (60+new_s_min) - prev_f_min >= 10))))
+        or (prev_f_hour == new_s_hour and prev_f_min + 10 <= new_s_min)
+    ):
+      return True
+    else:
+      return False
+
   for idx in range(1, b_len):
-    # print('-'*50)
-    # print(' book_time[idx]', book_time[idx])
-    n_start, n_finish= book_time[idx]
-    n_s_hour, n_s_min = n_start.split(":")
-    n_f_hour, n_f_min = n_finish.split(":")
     r_len = len(rooms)
-    is_search = True
+    is_booked = False
+    new_start_time = splited_list[idx][:2]
+    new_finish_time = splited_list[idx][2:]
+    # print('-'*50)
+    # print(idx, 'new_start_time', new_start_time)
     for r_idx in range(r_len):
-      if is_search:
-        # print('r_idx', r_idx, rooms[r_idx])
-        for book in rooms[r_idx]:
-          # print('book', book)
-          r_start, r_finish = book
-          r_s_hour, r_s_min = r_start.split(":")
-          r_f_hour, r_f_min = r_finish.split(":")
-          if (
-            (int(n_f_hour) < int(r_s_hour) and ((int(r_s_min)>0 and int(n_f_min)+10 <= int(r_s_min))
-              or (int(r_s_min)==0 and int(n_f_min)+10 == int(r_s_min)+60)))
-          or (int(r_f_hour) < int(n_s_hour) and ((int(n_s_min)>0 and int(r_f_min)+10 <= int(n_s_min))
-              or (int(n_s_min)==0 and int(r_f_min)+10 == int(n_s_min)+60)))
-          or (int(r_f_hour) == int(n_s_hour) and int(r_f_min)+10 <= int(n_s_min))
-          or (int(n_f_hour) == int(r_s_hour) and int(n_f_min)+10 <= int(r_s_min))
-          ):
-            # print('possible')
-            rooms[r_idx].append(book_time[idx])
-            is_search = False
-      else:
+      if is_booked:
         break
 
-    if is_search:
-      rooms.append([book_time[idx]])
+      if is_possible(rooms[r_idx], new_start_time):
+        rooms[r_idx]= new_finish_time
+        is_booked = True
+
+    if is_booked == False:
+      rooms.append(new_finish_time)
+      room_cnt+=1
+
     # print('rooms', rooms)
 
-  return len(rooms)
+  return room_cnt
 
-# print(solution([["15:00", "17:00"], ["16:40", "18:20"], ["14:20", "15:20"], ["14:10", "19:20"], ["18:20", "21:20"]]))
-# print(solution([["09:10", "10:10"], ["10:20", "12:20"]]))
+print(solution([["00:00", "07:00"], ["01:40", "03:20"], ["03:20", "05:20"], ["00:10", "03:10"], ["05:20", "07:20"]]))
+print(solution([["15:00", "17:00"], ["16:40", "18:20"], ["14:20", "15:20"], ["14:10", "19:20"], ["18:20", "21:20"]]))
+print(solution([["09:10", "10:10"], ["10:20", "12:20"]]))
 print(solution([["10:20", "12:30"], ["10:20", "12:30"], ["10:20", "12:30"]]))
 
 # [["15:00", "17:00"], ["16:40", "18:20"], ["14:20", "15:20"], ["14:10", "19:20"], ["18:20", "21:20"]]	3
