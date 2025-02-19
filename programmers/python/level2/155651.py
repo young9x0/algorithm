@@ -1,18 +1,25 @@
 def solution(book_time):
-  time_table = [0 for _ in range(60*24)]
-  # print('time table', time_table)
+    def change_min(str_time: str):
+        return int(str_time[0:2]) * 60 + int(str_time[3:])
 
-  for start, end in book_time:
-    start_minutes=60* int(start[:2]) + int(start[3:5])
-    end_minutes=60* int(end[:2]) + int(end[3:]) + 10
-    if end_minutes> 60*24 - 1:
-      end_minutes = 60*24 - 1
+    book_times = [[change_min(i[0]), change_min(i[1]) + 10] for i in book_time]
+    book_times.sort()
 
-    for idx in range(start_minutes, end_minutes):
-      time_table[idx] += 1
+    rooms = []
+    for book_time in book_times:
+      print('book_time',book_time)
+      print('rooms',rooms)
+      if not rooms:
+          rooms.append(book_time)
+          continue
+      for index, room in enumerate(rooms):
+          if book_time[0] >= room[-1]:
+              rooms[index] = room + book_time
+              break
+      else:
+          rooms.append(book_time)
 
-  print('time table', time_table)
-  return max(time_table)
+    return len(rooms)
 
 # print(solution([["00:00", "07:00"], ["01:40", "03:20"], ["03:20", "05:20"], ["00:10", "03:10"], ["05:20", "07:20"]]))
 print(solution([["15:00", "17:00"], ["16:40", "18:20"], ["14:20", "15:20"], ["14:10", "19:20"], ["18:20", "21:20"]]))
