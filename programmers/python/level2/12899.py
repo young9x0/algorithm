@@ -1,22 +1,22 @@
 def solution(n):
-  num=['1','2','4']
-  answer=""
+  if n<=3:
+    return '124'[n-1]
+  else:
+    q,r=divmod(n-1,3)
+    print('q',q)
+    print('r',r)
+    return solution(q) + '124'[r]
 
-  while n>0:
-    n-=1
-    answer = num[n%3] + answer
-    n//=3
 
-  return answer
 
-print(solution(1))
-print(solution(2))
-print(solution(3))
-print(solution(4))
-
-print(solution(10))
-print(solution(13))
-print(solution(14))
+# print(solution(1))
+# print(solution(2))
+# print(solution(3))
+# print(solution(4))
+#
+# print(solution(10))
+# print(solution(13))
+# print(solution(14))
 print(solution(15))
 
 # 1	1
