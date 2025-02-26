@@ -1,13 +1,17 @@
+import math
+
 def solution(arrayA, arrayB):
   def prime_factorization(limit):
-    arr = []
+    arr = [limit]
     # print('limit', limit)
-    for div in range(limit,1,-1):
+    for div in range(math.floor(math.sqrt(limit)),1,-1):
       # print('div', div)
       if limit % div == 0:
         arr.append(div)
+        if limit != div**2:
+          arr.append(limit//div)
 
-    return arr
+    return sorted(arr, reverse=True)
 
   def find_max(a_set, b_set, prev_max, div_arr):
     t_max = prev_max
