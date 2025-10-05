@@ -1,17 +1,26 @@
-def solution(topping):
-  t_len=len(topping)
-  # print('t_len', t_len)
-  idx = 1
-  cnt=0
-  while(idx < t_len):
-    # print('= idx', idx)
-    # print('left:',set(topping[:idx]))
-    # print('right:',set(topping[idx:]))
+ # https://velog.io/@k_bobin/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4Python-%EB%A1%A4%EC%BC%80%EC%9D%B4%ED%81%AC-%EC%9E%90%EB%A5%B4%EA%B8%B0
 
-    if len(set(topping[:idx])) == len(set(topping[idx:])):
+from collections import Counter
+def solution(topping):
+  # right=dict()
+  # for t in topping:
+  #   if t in right:
+  #     right[t] += 1
+  #   else:
+  #     right[t] = 1
+  right = Counter(topping)
+  # print(right)
+
+  left=set()
+  cnt=0
+  for t in topping:
+    right[t] -= 1
+    left.add(t)
+
+    if right[t] == 0:
+      right.pop(t)
+    if len(left) == len(right):
       cnt+=1
-      # print('cnt', cnt)
-    idx+=1
 
   return cnt
 
